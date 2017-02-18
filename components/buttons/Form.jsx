@@ -57,10 +57,10 @@ class CreateOrEditButtonForm extends React.Component {
         throw 'Button must have a name';
       if (button.name.length > 50)
         throw 'Button name limited to 50 characters';
-      if (!button.uriMatch)
-        throw 'URI match does not exist';
-      if (button.uriMatch.length > 500)
-        throw 'URI match value limited to 500 characters';
+      if (!button.urlMatch)
+        throw 'URL match does not exist';
+      if (button.urlMatch.length > 500)
+        throw 'URL match value limited to 500 characters';
       if (!button.script && !button.repository)
         throw 'No script file or repository link provided';
       if (button.domains && button.length > 100)
@@ -234,7 +234,7 @@ CreateOrEditButtonForm.propTypes = {
 
 CreateOrEditButtonForm.defaultProps = {
   button: {
-    name: '', uriMatch: '.*', script: '', repository: '', description: '',
+    name: '', urlMatch: '.*', script: '', repository: '', description: '',
     domains: '*', isListed: false, tooltip: '', icon: '', styles: ''
   }
 };
