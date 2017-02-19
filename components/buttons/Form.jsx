@@ -2,6 +2,8 @@ import React from 'react';
 
 // react-md
 import { ExpansionList, ExpansionPanel } from 'react-md/lib/ExpansionPanels';
+import SelectField from 'react-md/lib/SelectFields';
+import TextField from 'react-md/lib/TextFields';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
 import Button from 'react-md/lib/Buttons/Button';
 
@@ -23,8 +25,11 @@ class CreateOrEditButtonForm extends React.Component {
 
   /**
    * Validate the provided data. If data is valid call this.props.onSuccess().
+   * @param {Event} [e]
    */
-  onValidate() {
+  onValidate(e) {
+    e && e.preventDefault();
+
     const data = {
       name: this.refs.name.value,
       urlMatch: this.refs.urlMatch.value,
@@ -103,35 +108,33 @@ class CreateOrEditButtonForm extends React.Component {
     return (
       <form onSubmit={(e) => this.onValidate(e)}>
         <TextField
-            id='text--name'
-            ref='name'
-            type='text'
-            label='Button Name'
-            className='md-cell'
-            defaultValue={b.name}
+          id='text--name'
+          ref='name'
+          type='text'
+          label='Button Name'
+          className='md-cell'
+          defaultValue={b.name}
         />
 
         <TextField
-            id='text--url-match'
-            ref='urlMatch'
-            type='text'
-            label='URL Match Expression'
-            helpText='Your button will only be injected if the url matches'
-            className='md-cell'
-            defaultValue={b.urlMatch}
+          id='text--url-match'
+          ref='urlMatch'
+          type='text'
+          label='URL Match Expression'
+          helpText='Your button will only be injected if the url matches'
+          className='md-cell'
+          defaultValue={b.urlMatch}
         />
 
-        <Divider />
-
         <SelectField
-            id='select--script-source'
-            label='Script Source'
-            value={this.state.scriptSource}
-            menuItems={[
-                'Remote', 'Local'
-            ]}
-            onChange={v => this.setState({ scriptSource: v })}
-            className='md-cell'
+          id='select--script-source'
+          label='Script Source'
+          value={this.state.scriptSource}
+          menuItems={[
+            'Remote', 'Local'
+          ]}
+          onChange={v => this.setState({ scriptSource: v })}
+          className='md-cell'
         />
 
         {this.state.scriptSource == 'remote' ? (
