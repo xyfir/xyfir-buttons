@@ -4,10 +4,10 @@ const path = require('path');
 module.exports = {
   
   entry: {
-    app: './extension/app.js',
-    inject: './extension/inject.js',
-    background: './extension/background.js',
-    contentScript: './extension/content-script.js'
+    app: './main/app.js',
+    inject: './main/inject.js',
+    background: './main/background.js',
+    contentScript: './main/content-script.js'
   },
   
   output: {
@@ -18,7 +18,7 @@ module.exports = {
   resolve: {
     modules: [
       path.resolve(__dirname, './'),
-      "node_modules"
+      'node_modules'
     ],
     extensions: ['.js', '.jsx']
   },
@@ -30,6 +30,7 @@ module.exports = {
       include: [
         path.resolve(__dirname, 'components'),
         path.resolve(__dirname, 'constants'),
+        path.resolve(__dirname, 'main'),
         path.resolve(__dirname, 'lib')
       ],
       exclude: /node_modules/,
