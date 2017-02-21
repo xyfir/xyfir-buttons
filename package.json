@@ -4,13 +4,14 @@
   "description": "Xyfir Buttons client application and browser extension",
   "scripts": {
     "build:app": "webpack --colors",
-    "build:app-css": "node-sass --output-style compressed styles/style.scss build/style.css",
-    "prebuild:extension": "del /Q build\\* & copy extension/*.* build",
-    "build:extension": "npm run build:app & npm run build:app-css",
-    "postbuild:extension": "@powershell Add-Type -A System.IO.Compression.FileSystem; [IO.Compression.ZipFile]::CreateFromDirectory('build', 'build/ext.zip')"
+    "build:app-css": "node-sass --output-style compressed main/app.scss build/app.css",
+    "build:inject-css": "node-sass --output-style compressed main/inject.scss build/inject.css",
+    "prebuild:extension": "rm -rf build/*; cp main/* build; cp -r res build/res",
+    "build:extension": "npm run build:app & npm run build:app-css & npm run build:inject-css",
+    "postbuild:extension": "cd build; zip -r build.zip *"
   },
   "author": "Xyfir, LLC <contact@xyfir.com> (https://xyfir.com/)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "brace": "^0.9.1",
     "chrome-promise": "^2.0.2",
