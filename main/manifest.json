@@ -1,0 +1,44 @@
+{
+  "name": "Xyfir Buttons",
+  "short_name": "xyButtons",
+  "description": "Control the web with floating buttons added to web pages.",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "default_locale": "en",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+B"
+      }
+    }
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "res/icons/16.png",
+      "48": "res/icons/48.png",
+      "128": "res/icons/128.png",
+      "1024": "res/icons/1024.png"
+    },
+    "default_title": "Xyfir Buttons",
+    "default_popup": "app.html"
+  },
+  "options_page": "app.html",
+  "content_scripts": {
+    "matches": ["<all_urls>"],
+    "run_at": "document_start",
+    "js": ["contentScript.js"]
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "icons": {
+    "16": "res/icons/16.png",
+    "48": "res/icons/48.png",
+    "128": "res/icons/128.png",
+    "1024": "res/icons/1024.png"
+  },
+  "permissions": [
+      "tabs",
+      "storage"
+    ]
+}
