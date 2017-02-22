@@ -14,6 +14,8 @@ chrome.p = new chromePromise();
 export default class App extends React.Component {
 
   constructor(props) {
+    super(props);
+    
     this.state = { drawer: true, storage: {}, toasts: [] };
   }
 
@@ -143,7 +145,10 @@ onStorageChange(changes, areaName) {
           type={Drawer.DrawerTypes.TEMPORARY}
         />
 
-        {React.cloneElement(this.props.children, { App: this })}
+        {React.cloneElement(this.props.children, {
+          App: this, storage: this.state.storage, params: this.props.params,
+          location: this.props.location
+        })}
 
         <Snackbar
           toasts={this.state.toasts}

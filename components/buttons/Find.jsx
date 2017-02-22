@@ -88,7 +88,7 @@ class FindButtons {
       else {
         const buttons = [];
         
-        Object.entries(this.props.App.state.storage).map(s => {
+        Object.entries(this.props.storage).map(s => {
           if (s[0].indexOf('button_') == 0)
             buttons.push(s[1]);
         });

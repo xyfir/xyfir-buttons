@@ -15,7 +15,7 @@ class EditButton extends React.Component {
   constructor(props) {
     super(props);
 
-    const button = this.props.App.state.storage[
+    const button = this.props.storage[
       'button_' + this.props.params.button
     ];
 
