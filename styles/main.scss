@@ -1,0 +1,23 @@
+body {
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding-bottom: 1em;
+}
+body.popup {
+  width: 800px;
+}
+p {
+	width: 80%;
+	margin: auto;
+}
+a {
+	color: $blue;
+  cursor: pointer;
+	text-decoration: none;
+}
+a:hover, a:focus {
+	color: $lblue;
+}
+.link-lg {
+	font-size: 125%;
+}
