@@ -1,0 +1,15 @@
+.find-buttons {
+  flex: 1;
+
+  .controls, .buttons-list {
+    @include md-box-shadow(1);
+  }
+
+  .controls {
+    margin-bottom: 1em;
+
+    >.md-grid {
+      justify-content: center;
+    }
+  }
+}
