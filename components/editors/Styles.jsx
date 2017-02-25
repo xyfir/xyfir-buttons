@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import Editor from 'lib/editors/Editor';
+import Editor from 'components/editors/Editor';
 
 // react-md
 import Button from 'react-md/lib/Buttons/Button';
