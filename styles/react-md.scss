@@ -4,6 +4,6 @@ $md-primary-color: $md-blue-500;
 
 @include react-md-everything;
 
-.md-tabs-content > div > div {
-  height: 100% !important;
+.md-no-scroll {
+  width: 100%;
 }
