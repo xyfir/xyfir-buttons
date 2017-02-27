@@ -26,17 +26,33 @@ class CreateButton extends React.Component {
       .post(XYBUTTONS_URL + 'api/buttons')
       .send(button)
       .end((err, res) => {
-        if (err || res.body.error)
-          this.props.App.onAlert(res.body.message);
-        else
-          chrome.storage.set({ ['button_' + req.body.id]: button });
+        if (err || res.body.error) {
+          this.props.App._alert(res.body.message);
+        }
+        else {
+          // Download and save button
+          request
+            .get(XYBUTTONS_URL + 'api/buttons/download')
+            .query({ buttons: JSON.stringify([{ id: res.body.id }]) })
+            .end((err, res) => {
+              if (err || res.body.error) {
+                this.props.App._alert(res.body.error);
+              }
+              else {
+                button = res.body.buttons[0];
+
+                chrome.storage.local.set({ ['button_' + button.id]: button });
+                location.hash = '#/buttons/' + button.id;
+              }
+            });
+        }
       });
   }
 
   render() {
     return (
       <Paper zDepth={1} className='create-button'>
-        <Form onSuccess={this.onCreate} />
+        <Form {...this.props} onSuccess={b => this.onCreate(b)} />
       </Paper>
     );
   }
