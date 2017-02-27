@@ -1,7 +1,6 @@
 import React from 'react';
 
 // react-md
-import { ExpansionList, ExpansionPanel } from 'react-md/lib/ExpansionPanels';
 import SelectField from 'react-md/lib/SelectFields';
 import TextField from 'react-md/lib/TextFields';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
@@ -12,15 +11,17 @@ import ScriptEditor from 'components/editors/Script';
 import StylesEditor from 'components/editors/Styles';
 import IconEditor from 'components/editors/Icon';
 
-class CreateOrEditButtonForm extends React.Component {
+class ButtonForm extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      scriptSource: 'Remote', toasts: [], optionalData1: false,
-      optionalData2: false
-    }
+      scriptSource: this.props.button.name
+        ? this.props.button.repository
+          ? 'Remote' : 'Local'
+        : 'Remote'
+    };
   }
 
   /**
@@ -29,30 +30,24 @@ class CreateOrEditButtonForm extends React.Component {
    */
   onValidate(e) {
     e && e.preventDefault();
-
+    
     const data = {
-      name: this.refs.name.value,
-      urlMatch: this.refs.urlMatch.value,
+      name: this.refs.name._field.getValue(),
+      urlMatch: this.refs.urlMatch._field.getValue(),
       repository: (
         this.state.scriptSource == 'Remote'
-          ? this.refs.repository.value : ''
+          ? this.refs.repository._field.getValue() : ''
       ), script: (
         this.state.scriptSource == 'Local'
           ? this.refs.scriptEditor.value : ''
       ),
+      domains: this.refs.domains._field.getValue(),
+      isListed: document.getElementById('cb--is-listed').checked,
+      description: this.refs.description._field.getValue(),
+      icon: this.refs.iconEditor.value,
+      styles: this.refs.stylesEditor.value,
+      tooltip: this.refs.tooltip._field.getValue()
     };
-    
-    if (this.state.optionalData1) {
-      data.domains = this.refs.domains.value,
-      data.isListed = this.refs.isListed.checked,
-      data.description = this.refs.description.value;
-    }
-
-    if (this.state.optionalData2) {
-      data.icon = this.refs.iconEditor.value,
-      data.styles = this.refs.stylesEditor.value,
-      data.tooltip = this.refs.tooltip.value;
-    }
 
     const button = Object.assign({}, data);
 
@@ -83,20 +78,11 @@ class CreateOrEditButtonForm extends React.Component {
           throw 'Button script must have a non-empty main.js file';
       }
 
-      if (button.styles) {
-        try {
-          button.styles = JSON.parse(button.styles);
-        }
-        catch (e) {
-          throw 'Invalid button styles';
-        }
-      }
-
       if (button.tooltip && button.tooltip.length > 255)
         throw 'Tooltip cannot be longer than 255 characters';
     }
     catch (e) {
-      this.props.App.onAlert(e);
+      this.props.App._alert(e);
     }
 
     this.props.onSuccess(data);
@@ -107,6 +93,8 @@ class CreateOrEditButtonForm extends React.Component {
 
     return (
       <form onSubmit={(e) => this.onValidate(e)}>
+        <h2>Required Data</h2>
+        
         <TextField
           id='text--name'
           ref='name'
@@ -137,7 +125,7 @@ class CreateOrEditButtonForm extends React.Component {
           className='md-cell'
         />
 
-        {this.state.scriptSource == 'remote' ? (
+        {this.state.scriptSource == 'Remote' ? (
           <TextField
             id='text--repository'
             ref='repository'
@@ -151,79 +139,80 @@ class CreateOrEditButtonForm extends React.Component {
           <ScriptEditor
             ref='scriptEditor'
             value={b.script}
-            onError={this.props.App.onAlert}
+            onError={this.props.App._alert}
           />
         )}
+      
+        <hr className='divider' />
 
-        <ExpansionList>
-          <ExpansionPanel
-            label='Optional Public Data'
-            onExpandToggle={v => this.setState({ optionalData1: v })}
-          >
-            <Checkbox
-              id='cb--is-listed'
-              ref='isListed'
-              name='cb--is-listed'
-              label='Listed Publicly'
-              defaultChecked={!!b.isListed}
-            />
+        <h2>Optional Public Data</h2>
 
-            <TextField
-              id='textarea--description'
-              ref='description'
-              rows={10}
-              type='text'
-              label='Description'
-              helpText='Let others know what your button does if its public'
-              className='md-cell'
-              defaultValue={b.description}
-              lineDirection='right'
-            />
+        <Checkbox
+          id='cb--is-listed'
+          name='cb--is-listed'
+          label='List Publicly'
+          defaultChecked={!!b.isListed}
+        />
 
-            <TextField
-              id='text--domains'
-              ref='domains'
-              type='text'
-              label='Domains'
-              helpText={
-                'Domains that your button works on. Has no effect on button'
-                + ' behavior. Use * for global or ** for too many sites to'
-                + ' list.'
-              }
-              className='md-cell'
-              defaultValue={b.domains}
-            />
-          </ExpansionPanel>
+        <TextField
+          id='textarea--description'
+          ref='description'
+          rows={10}
+          type='text'
+          label='Description'
+          helpText='Let others know what your button does if its public'
+          className='md-cell'
+          defaultValue={b.description}
+          lineDirection='right'
+        />
 
-          <ExpansionPanel
-            label='Optional Button Data'
-            onExpandToggle={v => this.setState({ optionalData2: v })}
-          >
-            <TextField
-              id='text--tooltip'
-              ref='tooltip'
-              type='text'
-              label='Tooltip'
-              helpText={
-                'Text that is shown when the user hovers over your button'
-              }
-              className='md-cell'
-              defaultValue={b.tooltip}
-            />
+        <TextField
+          id='text--domains'
+          ref='domains'
+          type='text'
+          label='Domains'
+          helpText={
+            'Domains that your button works on. Has no effect on button'
+            + ' behavior. Use * for global or ** for too many sites to'
+            + ' list.'
+          }
+          className='md-cell'
+          defaultValue={b.domains}
+        />
+        
+        <hr className='divider' />
 
-            <StylesEditor ref='stylesEditor' value={b.styles} />
-            <IconEditor ref='iconEditor' value={b.icon} />
-          </ExpansionPanel>
-        </ExpansionList>
+        <h2>Optional Button Data</h2>
 
-        <Button raised label='Submit' onClick={() => this.onValidate()} />
+        <TextField
+          id='text--tooltip'
+          ref='tooltip'
+          type='text'
+          label='Tooltip'
+          helpText={
+            'Text that is shown when the user hovers over your button'
+          }
+          className='md-cell'
+          defaultValue={b.tooltip}
+        />
+
+        <StylesEditor ref='stylesEditor' value={b.styles} />
+        <IconEditor ref='iconEditor' value={b.icon} />
+
+        <hr className='divider' />
+
+        <Button
+          raised primary
+          label='Submit'
+          onClick={() => this.onValidate()}
+        />
       </form>
     );
   }
 
 }
 
-CreateOrEditButtonForm.propTypes = {
+ButtonForm.propTypes = {
   /**
    * Called when provided data is valid. Passes button data object.
    */
@@ -235,11 +224,11 @@ CreateOrEditButtonForm.propTypes = {
   button: React.PropTypes.object
 };
 
-CreateOrEditButtonForm.defaultProps = {
+ButtonForm.defaultProps = {
   button: {
     name: '', urlMatch: '.*', script: '', repository: '', description: '',
     domains: '*', isListed: false, tooltip: '', icon: '', styles: ''
   }
 };
 
-export default CreateOrEditButtonForm;
+export default ButtonForm;
