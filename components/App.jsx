@@ -9,6 +9,9 @@ import Divider from 'react-md/lib/Dividers';
 import Drawer from 'react-md/lib/Drawers';
 import Button from 'react-md/lib/Buttons/Button';
 
+// Constants
+import { ENVIRONMENT } from 'constants/config';
+
 chrome.p = new chromePromise();
 
 export default class App extends React.Component {
@@ -17,61 +20,67 @@ export default class App extends React.Component {
     super(props);
     
     this.state = { drawer: true, storage: {}, toasts: [] };
+
+    if (ENVIRONMENT == 'dev') {
+      window.__app = this;
+    }
   }
 
   componentWillMount() {
-    let data;
+    const data = {};
 
     chrome.p.storage.sync
       .get('account')
       .then(res => {
-        data = res;
+        data.account = res.uid != undefined ? res : { uid: 0 };
 
         return chrome.p.storage.local.get(null);
       })
       .then(res => {
-        res.account = data.account;
-        data = res;
+        Object.assign(data, res);
 
         this.setState({ storage: data });
       });
     
-    chrome.storage.onChanged.addListener(this.onStorageChange);
+    chrome.storage.onChanged.addListener(
+      (c, a) => this.onStorageChange(c, a)
+    );
+  }
+
+  /**
+   * Listen for changes to chrome.storage.local and update the application's
+   * state.storage to reflect the changes made to the actual storage.
+   * @param {object} changes - A key:value object holding the properties that
+   * were changed. Each key's value is a StorageChange object that holds oldValue
+   * and newValue properties.
+   * @param {string} areaName - The name of the storage area. Possible values are
+   * 'sync', 'local', or 'managed'.
+   */
+  onStorageChange(changes, areaName) {
+    if (areaName != 'local') return;
+
+    const storage = Object.assign({}, this.state.storage);
+
+    Object.keys(changes).forEach(change => {
+      if (changes[change].newValue)
+        storage[change] = changes[change].newValue;
+      else
+        delete storage[change];
+    });
+
+    this.setState({ storage });
   }
 
   /**
    * Creates a 'toast' for react-md Snackbar component.
    * @param {string} message - The text content of the toast.
    */
-  onAlert(message) {
+  _alert(message) {
     this.setState({
       toasts: this.state.toasts.concat([{ text: message }])
     });
   }
 
-  /**
- * Listen for changes to chrome.storage.local and update the application's
- * state.storage to reflect the changes made to the actual storage.
- * @param {object} changes - A key:value object holding the properties that
- * were changed. Each key's value is a StorageChange object that holds oldValue
- * and newValue properties.
- * @param {string} areaName - The name of the storage area. Possible values are
- * 'sync', 'local', or 'managed'.
- */
-onStorageChange(changes, areaName) {
-  if (areaName != 'local') return;
-
-  const storage = Object.assign({}, this.state.storage);
-
-  Object.keys(changes).forEach(change => {
-    if (changes[change].newValue)
-      storage[change] = changes[change].newValue;
-    else
-      delete storage[change];
-  });
-
-  this.setState({ storage });
-}
 
   render() {
     return (
