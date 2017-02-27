@@ -37,7 +37,7 @@
     "1024": "res/icons/1024.png"
   },
   "permissions": [
-      "tabs",
-      "storage"
-    ]
+    "tabs",
+    "storage"
+  ]
 }
