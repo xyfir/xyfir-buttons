@@ -3,8 +3,9 @@ import brace from 'brace';
 import Ace from 'react-ace';
 
 import 'brace/mode/javascript';
+import 'brace/mode/plain_text';
 import 'brace/theme/monokai';
-import 'brace/mode/svg';
+import 'brace/ext/searchbox';
 
 class Editor extends React.Component {
 
@@ -33,6 +34,7 @@ class Editor extends React.Component {
           value={this.state.value}
           height='100vh'
           tabSize={2}
+          fontSize={15}
           onChange={value => this.setState({ value })}
           wrapEnabled={true}
           showPrintMargin={false}
@@ -49,10 +51,10 @@ Editor.propTypes = {
    */
   value: React.PropTypes.string,
   /**
-   * The editor mode (syntax). Possible values: 'javascript', 'svg'. Defaults
-   * to 'javascript'.
+   * The editor mode (syntax). Possible values: 'javascript', 'plain_text'.
+   * Defaults to 'javascript'.
    */
-  mode: React.PropTypes.mode
+  mode: React.PropTypes.string
 };
 
 Editor.defaultProps = {
