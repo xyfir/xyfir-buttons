@@ -6,6 +6,7 @@ import Paper from 'react-md/lib/Papers';
 
 // Components
 import Form from 'components/buttons/Form';
+import Tabs from 'components/buttons/Tabs';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -18,10 +19,11 @@ class EditButton extends React.Component {
     const button = this.props.storage[
       'button_' + this.props.params.button
     ];
-
-    if (!button) location.hash = '#/buttons';
-
-    this.state = { button };
+    
+    if (!button || button.creator != this.props.storage.account.uid)
+      location.hash = '#/buttons', this.state = {};
+    else
+      this.state = { button };
   }
 
   /**
@@ -37,17 +39,27 @@ class EditButton extends React.Component {
       .send(button)
       .end((err, res) => {
         if (err || res.body.error)
-          this.props.App.onAlert(res.body.message);
+          this.props.App._alert(res.body.message);
         else
-          chrome.storage.set({ ['button_' + id]: button });
+          chrome.storage.local.set({ ['button_' + id]: button });
       });
   }
 
   render() {
+    if (!this.state.button) return <div />;
+    
+    const base = '#/buttons/' + this.state.button.id;
+    
     return (
-      <Paper zDepth={1} className='create-button'>
-        <Form onSuccess={this.onCreate} button={this.state.button} />
-      </Paper>
+      <Tabs id={this.state.button.id} activeTabIndex={2} isCreator={true}>
+        <Paper zDepth={1} className='create-button'>
+          <Form
+            {...this.props}
+            onSuccess={b => this.onEdit(b)}
+            button={this.state.button}
+          />
+        </Paper>
+      </Tabs>
     );
   }
 
