@@ -53,19 +53,31 @@ class IconEditor extends React.Component {
         visible={true}
         className='icon-editor editor'
       >
+        {/*
+          ** TODO - Use SVG or XML mode
+          Mode is plain_text because for some reason UglifyJS breaks certain
+          modes like xml and svg.
+          A fix might possibly be found here:
+          https://groups.google.com/forum/#!topic/ace-discuss/OBobcIIv0Pg
+        */}
         <Editor
           ref='editor'
-          mode='svg'
+          mode='plain_text'
           value={this.state.value}
         />
 
         <div className='floating-controls'>
           <Button
             floating primary fixed
+            tooltipPosition='top'
+            fixedPosition='bl'
+            tooltipLabel='Save Icon'
             onClick={() => this.onSaveIcon()}
           >save</Button>
           <Button
-            floating fixed
+            floating secondary fixed
+            tooltipPosition='top'
+            tooltipLabel='Close Editor'
             onClick={() => this.onToggleShowEditor()}
           >close</Button>
         </div>
@@ -79,19 +91,12 @@ class IconEditor extends React.Component {
    */
   _renderIcon() {
     return (
-      <Paper zDepth={2} className='icon-editor icon'>
-        <div
-          className='icon-viewer'
-          dangerouslySetInnerHTML={{__html: this.state.value}}
-        />
-
-        <Button
-          flat primary
-          label='Edit Icon'
-          onClick={() => this.onToggleShowEditor()}
-        >edit</Button>
-      </Paper>
-    )
+      <Button
+        flat
+        label='Edit Icon'
+        onClick={() => this.onToggleShowEditor()}
+      >edit</Button>
+    );
   }
 
   render() {
