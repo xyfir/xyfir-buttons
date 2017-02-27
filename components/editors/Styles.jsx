@@ -27,7 +27,7 @@ class StylesEditor extends React.Component {
    * Opens or closes the editor. Does not save editor's data on close.
    */
   onToggleShowEditor() {
-    this.setState({ view: !this.state.showEditor });
+    this.setState({ showEditor: !this.state.showEditor });
   }
 
   /**
@@ -47,6 +47,7 @@ class StylesEditor extends React.Component {
       <Dialog
         fullPage
         id='styles-editor-dialog'
+        title='Styles Editor'
         visible={true}
         className='styles-editor editor'
       >
@@ -58,10 +59,15 @@ class StylesEditor extends React.Component {
         <div className='floating-controls'>
           <Button
             floating primary fixed
+            tooltipPosition='top'
+            fixedPosition='bl'
+            tooltipLabel='Save Styles'
             onClick={() => this.onSaveStyles()}
           >save</Button>
           <Button
-            floating fixed
+            floating secondary fixed
+            tooltipPosition='top'
+            tooltipLabel='Close Editor'
             onClick={() => this.onToggleShowEditor()}
           >close</Button>
         </div>
@@ -76,8 +82,8 @@ class StylesEditor extends React.Component {
   _renderButton() {
     return (
       <Button
-        flat primary
-        label='Custom Styles'
+        flat
+        label='Edit Styles'
         onClick={() => this.onToggleShowEditor()}
       >edit</Button>
     )
