@@ -4,6 +4,7 @@ import React from 'react';
 import Editor from 'components/editors/Editor';
 
 // react-md
+import TextField from 'react-md/lib/TextFields';
 import ListItem from 'react-md/lib/Lists/ListItem';
 import Button from 'react-md/lib/Buttons/Button';
 import Dialog from 'react-md/lib/Dialogs';
@@ -16,7 +17,7 @@ class ButtonScriptEditor extends React.Component {
     super(props);
 
     this.state = {
-      script: JSON.parse(this.props.script), view: 'files', viewing: '',
+      script: JSON.parse(this.props.value), view: 'files', viewing: '',
       selected: '', rename: false
     };
   }
@@ -77,13 +78,15 @@ class ButtonScriptEditor extends React.Component {
    * Deletes the selected file from the script object.
    */
   onDeleteFile() {
+    const file = this.state.selected;
+
     if (file == 'main.js') return;
 
     const script = Object.assign({}, this.state.script);
 
     delete script[this.state.selected];
 
-    this.setState({ script });
+    this.setState({ script, selected: '' });
   }
 
   /**
@@ -113,8 +116,8 @@ class ButtonScriptEditor extends React.Component {
     }
     else {
       const script = Object.assign({}, this.state.script);
-
-      if (script[file]) {
+      
+      if (script[file] != undefined) {
         this.props.onError('That file already exists');
         return;
       }
@@ -148,10 +151,16 @@ class ButtonScriptEditor extends React.Component {
         <div className='floating-controls'>
           <Button
             floating primary fixed
+            tooltipPosition='top'
+            fixedPosition='bl'
+            tooltipLabel='Save File'
             onClick={() => this.onSaveFile()}
           >save</Button>
           <Button
-            floating fixed
+            floating secondary fixed
+            tooltipPosition='top'
+            fixedPosition='br'
+            tooltipLabel='Close Editor'
             onClick={() => this.onCloseFile()}
           >close</Button>
         </div>
@@ -192,14 +201,16 @@ class ButtonScriptEditor extends React.Component {
           <Button
             flat primary
             label='Add File'
-            onClick={() => this.onCreateFile(this.refs.filename.value)}
+            onClick={() =>
+              this.onCreateFile(this.refs.filename._field.getValue())
+            }
           >add box</Button>
         </div>
 
          <Dialog
           id='selected-file-dialog'
           onHide={() => this.onUnselectFile()}
-          visible={this.state.selected}
+          visible={!!this.state.selected}
          >{
            this.state.rename ? (
              <div className='rename-file'>
@@ -214,8 +225,10 @@ class ButtonScriptEditor extends React.Component {
 
               <Button
                 flat primary
-                label='Add File'
-                onClick={() => this.onRenameFile(this.refs.filerename.value)}
+                label='Rename File'
+                onClick={() =>
+                  this.onRenameFile(this.refs.filerename._field.getValue())
+                }
               >edit</Button>
              </div>
            ) : (
@@ -254,7 +267,7 @@ ButtonScriptEditor.propTypes = {
   /**
    * Stringified script object
    */
-  script: React.PropTypes.string,
+  value: React.PropTypes.string,
   /**
    * Sends an error message string on error.
    */
@@ -262,7 +275,7 @@ ButtonScriptEditor.propTypes = {
 };
 
 ButtonScriptEditor.defaultProps = {
-  script: '{"main.js":""}'
+  value: '{"main.js":""}'
 };
 
 export default ButtonScriptEditor;
