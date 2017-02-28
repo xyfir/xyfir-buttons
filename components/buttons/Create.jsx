@@ -10,6 +10,9 @@ import Form from 'components/buttons/Form';
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
 
+// Modules
+import downloadButtons from 'lib/app/buttons/download';
+
 class CreateButton extends React.Component {
 
   constructor(props) {
@@ -30,21 +33,8 @@ class CreateButton extends React.Component {
           this.props.App._alert(res.body.message);
         }
         else {
-          // Download and save button
-          request
-            .get(XYBUTTONS_URL + 'api/buttons/download')
-            .query({ buttons: JSON.stringify([{ id: res.body.id }]) })
-            .end((err, res) => {
-              if (err || res.body.error) {
-                this.props.App._alert(res.body.error);
-              }
-              else {
-                button = res.body.buttons[0];
-
-                chrome.storage.local.set({ ['button_' + button.id]: button });
-                location.hash = '#/buttons/' + button.id;
-              }
-            });
+          const next = () => location.hash = '#/buttons/' + res.body.id;
+          downloadButtons([{ id: res.body.id }]).then(next).catch(next);
         }
       });
   }
