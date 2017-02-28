@@ -48,8 +48,6 @@ class EditButton extends React.Component {
   render() {
     if (!this.state.button) return <div />;
     
-    const base = '#/buttons/' + this.state.button.id;
-    
     return (
       <Tabs id={this.state.button.id} activeTabIndex={2} isCreator={true}>
         <Paper zDepth={1} className='create-button'>
