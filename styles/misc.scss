@@ -58,7 +58,7 @@
   }
 }
 
-.delete-button, .fork-button {
+.delete-button, .fork-button, .view-button {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -69,5 +69,99 @@
   p {
     text-align: center;
     margin-bottom: 1em;
+  }
+}
+
+.view-button {
+  .md-paper {
+    width: 98%;
+    margin: 1em auto;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+  }
+
+  h2.name {
+    margin-bottom: 0.2em;
+
+    i.md-icon {
+      vertical-align: text-top;
+      margin-right: 0.2em;
+    }
+  }
+
+  span.domains {
+    font-size: 125%;
+  }
+
+  p.description {
+    margin-top: 1em;
+    font-size: 150%;
+  }
+
+  dl.info-list {
+    display: table;
+
+    >div {
+      display: table-row;
+
+      dt {
+        font-weight: bold;
+        padding-right: 0.5em;
+        vertical-align: middle;
+      }
+
+      dd, dt {
+        display: table-cell;
+        font-size: 125%;
+      }
+    }
+  }
+
+  div.url-match {
+    margin-bottom: 1em;
+    font-size: 125%;
+    
+    label {
+      font-weight: bold;
+      margin-right: 0.2em;
+    }
+
+    span {
+      color: gray;
+    }
+  }
+
+  .button-script.editor {
+    max-width: 40em;
+    width: 90%;
+
+    >ul.md-list {
+      width: 100%;
+    }
+  }
+}
+
+span.creator {
+  span.reputation {
+    margin-left: 0.2em;
+  }
+}
+
+div.votes {
+  display: flex;
+  align-items: center;
+
+  div.controls {
+    button {
+      min-width: initial;
+      padding: 0.2em;
+    }
   }
 }
