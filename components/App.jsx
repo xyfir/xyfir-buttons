@@ -24,6 +24,8 @@ export default class App extends React.Component {
     if (ENVIRONMENT == 'dev') {
       window.__app = this;
     }
+
+    this._alert = this._alert.bind(this);
   }
 
   componentWillMount() {
