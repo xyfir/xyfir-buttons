@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import brace from 'brace';
 import Ace from 'react-ace';
 
@@ -35,6 +35,7 @@ class Editor extends React.Component {
           height='100vh'
           tabSize={2}
           fontSize={15}
+          readOnly={this.props.readOnly}
           onChange={value => this.setState({ value })}
           wrapEnabled={true}
           showPrintMargin={false}
@@ -49,16 +50,20 @@ Editor.propTypes = {
   /**
    * String to set as the initial content in the editor.
    */
-  value: React.PropTypes.string,
+  value: PropTypes.string,
   /**
    * The editor mode (syntax). Possible values: 'javascript', 'plain_text'.
    * Defaults to 'javascript'.
    */
-  mode: React.PropTypes.string
+  mode: PropTypes.string,
+  /**
+   * Disables user's ability to edit the content.
+   */
+  readOnly: PropTypes.bool
 };
 
 Editor.defaultProps = {
-  value: '', mode: 'javascript'
+  value: '', mode: 'javascript', readOnly: false
 };
 
 export default Editor;

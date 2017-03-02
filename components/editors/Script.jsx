@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 // Components
 import Editor from 'components/editors/Editor';
@@ -17,8 +17,8 @@ class ButtonScriptEditor extends React.Component {
     super(props);
 
     this.state = {
-      script: JSON.parse(this.props.value), view: 'files', viewing: '',
-      selected: '', rename: false
+      script: JSON.parse(this.props.value || '{"main.js":""}'), view: 'files',
+      viewing: '', selected: '', rename: false
     };
   }
 
@@ -146,16 +146,19 @@ class ButtonScriptEditor extends React.Component {
         <Editor
           ref='editor'
           value={this.state.script[this.state.viewing]}
+          readOnly={this.props.readOnly}
         />
 
         <div className='floating-controls'>
-          <Button
-            floating primary fixed
-            tooltipPosition='top'
-            fixedPosition='bl'
-            tooltipLabel='Save File'
-            onClick={() => this.onSaveFile()}
-          >save</Button>
+          {!this.props.readOnly ? (
+            <Button
+              floating primary fixed
+              tooltipPosition='top'
+              fixedPosition='bl'
+              tooltipLabel='Save File'
+              onClick={() => this.onSaveFile()}
+            >save</Button>
+          ) : <span />}
           <Button
             floating secondary fixed
             tooltipPosition='top'
@@ -188,24 +191,26 @@ class ButtonScriptEditor extends React.Component {
            )}
          </List>
 
-        <div className='add-file'>
-          <TextField
-            id='text--add-file'
-            ref='filename'
-            type='text'
-            label='File Name'
-            helpText='File name with optional path: path/to/file.js'
-            className='md-cell'
-          />
+        {!this.props.readOnly ? (
+          <div className='add-file'>
+            <TextField
+              id='text--add-file'
+              ref='filename'
+              type='text'
+              label='File Name'
+              helpText='File name with optional path: path/to/file.js'
+              className='md-cell'
+            />
 
-          <Button
-            flat primary
-            label='Add File'
-            onClick={() =>
-              this.onCreateFile(this.refs.filename._field.getValue())
-            }
-          >add box</Button>
-        </div>
+            <Button
+              flat primary
+              label='Add File'
+              onClick={() =>
+                this.onCreateFile(this.refs.filename._field.getValue())
+              }
+            >add box</Button>
+          </div>
+        ) : <span />}
 
          <Dialog
           id='selected-file-dialog'
@@ -238,16 +243,21 @@ class ButtonScriptEditor extends React.Component {
                 label='Source'
                 onClick={() => this.onOpenFile()}
               >code</Button>
-              <Button
-                flat secondary
-                label='Rename'
-                onClick={() => this.onRenameFile()}
-              >edit</Button>
-              <Button
-                flat
-                label='Delete'
-                onClick={() => this.onDeleteFile()}
-              >delete</Button>
+
+              {!this.props.readOnly ? (
+                <div>
+                  <Button
+                    flat secondary
+                    label='Rename'
+                    onClick={() => this.onRenameFile()}
+                  >edit</Button>
+                  <Button
+                    flat
+                    label='Delete'
+                    onClick={() => this.onDeleteFile()}
+                  >delete</Button>
+                </div>
+              ) : <span />}
              </div>
            )
          }</Dialog>
@@ -271,11 +281,15 @@ ButtonScriptEditor.propTypes = {
   /**
    * Sends an error message string on error.
    */
-  onError: React.PropTypes.func.isRequired
+  onError: React.PropTypes.func.isRequired,
+  /**
+   * If true, the user cannot add, remove, or change files.
+   */
+  readOnly: PropTypes.bool
 };
 
 ButtonScriptEditor.defaultProps = {
-  value: '{"main.js":""}'
+  value: '{"main.js":""}', readOnly: false
 };
 
 export default ButtonScriptEditor;
