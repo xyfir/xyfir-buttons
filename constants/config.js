@@ -1,1 +1,0 @@
-export const XYBUTTONS_URL = 'http://localhost:2092/';
