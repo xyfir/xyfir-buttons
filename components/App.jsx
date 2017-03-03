@@ -19,7 +19,10 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = { drawer: true, storage: {}, toasts: [] };
+    this.state = {
+      drawer: true, toasts: [], loading: true,
+      storage: {}
+    };
 
     if (ENVIRONMENT == 'dev') {
       window.__app = this;
@@ -41,7 +44,7 @@ export default class App extends React.Component {
       .then(res => {
         Object.assign(data, res);
 
-        this.setState({ storage: data });
+        this.setState({ storage: data, loading: false });
       });
     
     chrome.storage.onChanged.addListener(
@@ -85,6 +88,8 @@ export default class App extends React.Component {
 
 
   render() {
+    if (this.state.loading) return <div />;
+
     return (
       <main className='xyfir-buttons'>
         <Toolbar
