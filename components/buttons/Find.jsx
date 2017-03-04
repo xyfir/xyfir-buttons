@@ -21,10 +21,17 @@ export default class FindButtons extends React.Component {
   constructor(props) {
     super(props);
 
+    let searchType = 'url', searchQuery = '';
+
+    if (this.props.location.query.preset)
+      searchType = 'preset', searchQuery = this.props.location.query.preset;
+    if (this.props.location.query.user)
+      searchType = 'user', searchQuery = this.props.location.query.user;
+
     this.state = {
       buttons: [], tab: 0, order: 'downloads', direction: 'desc',
       lastId: (this.props.location.query.lastId || 0),
-      searchType: 'url', searchQuery: ''
+      searchType, searchQuery
     };
 
     this._renderInstalled = this._renderInstalled.bind(this);
@@ -181,6 +188,7 @@ export default class FindButtons extends React.Component {
               value={this.state.searchType}
               menuItems={[
                 { label: 'Name', value: 'name' },
+                { label: 'Domain', value: 'site' },
                 { label: 'URL Match', value: 'url' }
               ]}
               onChange={v => this.onFilter('searchType', v)}
