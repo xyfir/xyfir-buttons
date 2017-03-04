@@ -6,7 +6,7 @@ import Paper from 'react-md/lib/Papers';
 import Button from 'react-md/lib/Buttons/Button';
 
 // Components
-import Tabs from 'components/buttons/Tabs';
+import Tabs from 'components/misc/Tabs';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -53,7 +53,7 @@ export default class DeleteButton extends React.Component {
   render() {
     return (
       <Tabs
-        id={+this.props.params.button}
+        base={'#/buttons/' + this.props.params.button}
         isCreator={true}
         activeTabIndex={3}
       >

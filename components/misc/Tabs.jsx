@@ -3,14 +3,14 @@ import React, { PropTypes } from 'react';
 // Components
 import LinkTabs from 'components/misc/LinkTabs';
 
-export default class ButtonTabs extends React.Component {
+export default class Tabs extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   render() {
-    const base = '#/buttons/' + this.props.id;
+    const base = this.props.base;
 
     const tabs = [
       { label: 'View', hash: base },
@@ -34,15 +34,19 @@ export default class ButtonTabs extends React.Component {
 
 }
 
-ButtonTabs.propTypes = {
+Tabs.propTypes = {
   /**
-   * The button's id. Used for the hash routes.
+   * The base string for the hash routes.
    */
-  id: PropTypes.number.isRequired,
+  base: PropTypes.string.isRequired,
   /**
    * The content to render.
    */
   children: PropTypes.element.isRequired,
+  /**
+   * If user is creator, 'Edit' and 'Delete' tabs are shown.
+   */
+  isCreator: PropTypes.bool.isRequired,
   /**
    * The index of the active tab.
    */

@@ -6,7 +6,7 @@ import Paper from 'react-md/lib/Papers';
 import Button from 'react-md/lib/Buttons/Button';
 
 // Components
-import Tabs from 'components/buttons/Tabs';
+import Tabs from 'components/misc/Tabs';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -68,7 +68,7 @@ export default class ForkButton extends React.Component {
 
     return (
       <Tabs
-        id={+this.props.params.button}
+        base={'#/buttons/' + this.props.params.button}
         isCreator={this.state.isCreator}
         activeTabIndex={1}
       >

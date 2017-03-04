@@ -12,7 +12,7 @@ import ScriptEditor from 'components/editors/Script';
 import Comments from 'components/misc/Comments';
 import Creator from 'components/misc/Creator';
 import Votes from 'components/misc/Votes';
-import Tabs from 'components/buttons/Tabs';
+import Tabs from 'components/misc/Tabs';
 
 // Modules
 import downloadButtons from 'lib/app/buttons/download';
@@ -119,7 +119,7 @@ export default class ViewButton extends React.Component {
 
     return (
       <Tabs
-        id={this.state.id}
+        base={'#/buttons/' + this.state.id}
         isCreator={this.state.isCreator}
         activeTabIndex={0}
       >

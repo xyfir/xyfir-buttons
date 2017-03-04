@@ -6,7 +6,7 @@ import Paper from 'react-md/lib/Papers';
 
 // Components
 import Form from 'components/buttons/Form';
-import Tabs from 'components/buttons/Tabs';
+import Tabs from 'components/misc/Tabs';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -49,7 +49,11 @@ class EditButton extends React.Component {
     if (!this.state.button) return <div />;
     
     return (
-      <Tabs id={this.state.button.id} activeTabIndex={2} isCreator={true}>
+      <Tabs
+        base={'#/buttons/' + this.state.button.id}
+        isCreator={true}
+        activeTabIndex={2}
+      >
         <Paper zDepth={1} className='create-button'>
           <Form
             {...this.props}
