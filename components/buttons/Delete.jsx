@@ -31,11 +31,7 @@ export default class DeleteButton extends React.Component {
           this.props.App._alert('Could not delete button');
         }
         else {
-          location.hash = '#/buttons';
-
-          // Delete button from this.props.storage
           const storage = Object.assign({}, this.props.storage);
-          delete storage['button_' + id];
 
           // Delete button from presets
           Object.keys(storage).map(key => {
@@ -45,7 +41,10 @@ export default class DeleteButton extends React.Component {
             }
           });
 
-          chrome.storage.set(storage);
+          chrome.p.storage.local.set(storage)
+            .then(() => chrome.p.storage.local.remove('button_' + id))
+            .then(() => location.hash = '#/buttons')
+            .catch(err => this.props.App._alert(err));
         }
       });
   }
