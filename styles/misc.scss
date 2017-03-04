@@ -1,7 +1,7 @@
-.find-buttons {
+.find-buttons, .find-presets {
   flex: 1;
 
-  .controls, .buttons-list {
+  .controls, .buttons-list, .presets-list {
     @include md-box-shadow(1);
   }
 
@@ -14,7 +14,7 @@
   }
 }
 
-.create-button {
+.create-button, .create-preset {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -58,7 +58,8 @@
   }
 }
 
-.delete-button, .fork-button, .view-button {
+.delete-button, .fork-button, .view-button,
+.delete-preset, .fork-preset, .view-preset {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -72,7 +73,7 @@
   }
 }
 
-.view-button {
+.view-button, .view-preset {
   .md-paper {
     width: 98%;
     margin: 1em auto;
