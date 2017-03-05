@@ -1,7 +1,7 @@
-.find-buttons, .find-presets {
+.find-buttons, .find-presets, .find-users {
   flex: 1;
 
-  .controls, .buttons-list, .presets-list {
+  .controls, .buttons-list, .presets-list, .users-list {
     @include md-box-shadow(1);
   }
 
@@ -193,4 +193,8 @@ div.comments {
       }
     }
   }
+}
+
+.find-users {
+  padding: 0.5em;
 }
