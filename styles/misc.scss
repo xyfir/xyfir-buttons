@@ -106,25 +106,6 @@
     font-size: 150%;
   }
 
-  dl.info-list {
-    display: table;
-
-    >div {
-      display: table-row;
-
-      dt {
-        font-weight: bold;
-        padding-right: 0.5em;
-        vertical-align: middle;
-      }
-
-      dd, dt {
-        display: table-cell;
-        font-size: 125%;
-      }
-    }
-  }
-
   div.url-match {
     margin-bottom: 1em;
     font-size: 125%;
@@ -197,4 +178,38 @@ div.comments {
 
 .find-users {
   padding: 0.5em;
+}
+
+dl.info-list {
+  display: table;
+
+  >div {
+    display: table-row;
+
+    dt {
+      font-weight: bold;
+      padding-right: 0.5em;
+      vertical-align: middle;
+    }
+
+    dd, dt {
+      display: table-cell;
+      font-size: 125%;
+    }
+  }
+}
+
+.view-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5em;
+
+  >.md-paper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1em;
+    width: 100%;
+  }
 }
