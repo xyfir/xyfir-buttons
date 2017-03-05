@@ -115,9 +115,6 @@ export default class App extends React.Component {
             <a href='#/buttons/create'>
               <ListItem primaryText='Create Button' />
             </a>,
-            <a href='#/buttons/manage'>
-              <ListItem primaryText='Manage Buttons' />
-            </a>,
             
             <Divider />,
 
@@ -126,9 +123,6 @@ export default class App extends React.Component {
             </a>,
             <a href='#/presets/create'>
               <ListItem primaryText='Create Preset' />
-            </a>,
-            <a href='#/presets/manage'>
-              <ListItem primaryText='Manage Presets' />
             </a>,
 
             <Divider />,
