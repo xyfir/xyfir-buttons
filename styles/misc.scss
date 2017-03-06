@@ -59,7 +59,8 @@
 }
 
 .delete-button, .fork-button, .view-button,
-.delete-preset, .fork-preset, .view-preset {
+.delete-preset, .fork-preset, .view-preset,
+.user-account > .login, .user-account > .account > .md-paper {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -211,5 +212,25 @@ dl.info-list {
     align-items: center;
     margin-bottom: 1em;
     width: 100%;
+  }
+}
+
+.user-account {
+  .login {
+    >div button {
+      width: 10em;
+      margin: 0em 0.5em;
+    }
+  }
+
+  .account {
+    >div.controls {
+      flex-direction: row;
+      justify-content: center;
+
+      button {
+
+      }
+    }
   }
 }
