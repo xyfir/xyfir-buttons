@@ -11,6 +11,9 @@ import Tabs from 'components/misc/Tabs';
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
 
+// Modules
+import deletePreset from 'lib/app/presets/delete';
+
 export default class DeletePreset extends React.Component {
 
   constructor(props) {
@@ -27,14 +30,10 @@ export default class DeletePreset extends React.Component {
     request
       .delete(`${XYBUTTONS_URL}api/presets/${id}`)
       .end((err, res) => {
-        if (err || res.body.error) {
+        if (err || res.body.error)
           this.props.App._alert('Could not delete preset');
-        }
-        else {
-          chrome.storage.local.remove(
-            'preset_' + id, () => location.hash = '#/presets'
-          );
-        }
+        else
+          deletePreset(id).then(() => location.hash = '#/presets');
       });
   }
 

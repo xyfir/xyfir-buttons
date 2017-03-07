@@ -15,6 +15,7 @@ import Tabs from 'components/misc/Tabs';
 
 // Modules
 import downloadPresets from 'lib/app/presets/download';
+import deletePreset from 'lib/app/presets/delete';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -65,32 +66,7 @@ export default class ViewPreset extends React.Component {
    * Deletes the preset from local storage.
    */
   onRemove() {
-    const storage = Object.assign({}, this.props.storage);
-    const buttons = storage['preset_' + this.state.id].buttons.slice(0);
-    const remove  = [];
-
-    delete storage['preset_' + this.state.id];
-    remove.push('preset_' + this.state.id);
-
-    // Loop through all presets and mark buttons from deleted preset that are
-    // in other presets
-    Object.keys(storage).forEach(key => {
-      if (key.indexOf('preset_') == 0) {
-        storage[key].buttons.forEach(b1 => {
-          const index = buttons.findIndex(b2 => b1.id == b2.id);
-
-          if (index > -1) buttons[index].keep = true;
-        });
-      }
-    });
-    
-    // Delete buttons that are in deleted preset and not in any other presets
-    buttons.forEach(button => {
-      if (!button.keep) remove.push('button_' + button.id);
-    });
-
-    // Delete keys from storage
-    chrome.storage.local.remove(remove, () => location.reload());
+    deletePreset(this.state.id).then(() => location.reload());
   }
 
   /**
