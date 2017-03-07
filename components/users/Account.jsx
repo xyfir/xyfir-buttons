@@ -103,7 +103,7 @@ export default class Account extends React.Component {
   render() {
     return (
       <div className='user-account'>{
-        !this.props.storage.account.uid
+        this.props.storage.account.uid
           ? this._renderAccount()
           : this._renderLogin()
       }</div>
