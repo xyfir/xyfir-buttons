@@ -12,7 +12,7 @@ import Tabs from 'components/misc/Tabs';
 import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
-import downloadButtons from 'lib/app/buttons/download';
+import downloadButtons from 'lib/shared/buttons/download';
 
 export default class ForkButton extends React.Component {
 

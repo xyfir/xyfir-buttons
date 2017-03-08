@@ -11,7 +11,7 @@ import Form from 'components/presets/Form';
 import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
-import downloadPresets from 'lib/app/presets/download';
+import downloadPresets from 'lib/shared/presets/download';
 
 class CreatePreset extends React.Component {
 

@@ -12,7 +12,7 @@ import Tabs from 'components/misc/Tabs';
 import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
-import deletePreset from 'lib/app/presets/delete';
+import deletePreset from 'lib/shared/presets/delete';
 
 export default class DeletePreset extends React.Component {
 

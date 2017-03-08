@@ -15,7 +15,7 @@ import Votes from 'components/misc/Votes';
 import Tabs from 'components/misc/Tabs';
 
 // Modules
-import downloadButtons from 'lib/app/buttons/download';
+import downloadButtons from 'lib/shared/buttons/download';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';

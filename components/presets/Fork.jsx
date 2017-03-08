@@ -12,7 +12,7 @@ import Tabs from 'components/misc/Tabs';
 import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
-import downloadPresets from 'lib/app/presets/download';
+import downloadPresets from 'lib/shared/presets/download';
 
 export default class ForkPreset extends React.Component {
 

@@ -11,7 +11,7 @@ import Form from 'components/buttons/Form';
 import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
-import downloadButtons from 'lib/app/buttons/download';
+import downloadButtons from 'lib/shared/buttons/download';
 
 class CreateButton extends React.Component {
 

@@ -14,8 +14,8 @@ import Votes from 'components/misc/Votes';
 import Tabs from 'components/misc/Tabs';
 
 // Modules
-import downloadPresets from 'lib/app/presets/download';
-import deletePreset from 'lib/app/presets/delete';
+import downloadPresets from 'lib/shared/presets/download';
+import deletePreset from 'lib/shared/presets/delete';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
