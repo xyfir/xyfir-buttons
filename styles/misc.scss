@@ -60,8 +60,8 @@
 
 .delete-button, .fork-button, .view-button,
 .delete-preset, .fork-preset, .view-preset,
-.user-account > .login, .user-account > .account > .md-paper,
-.purchase {
+.user-account > .login, .user-account > .account > .md-paper, .purchase,
+.documentation-list, .view-documentation {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -239,5 +239,13 @@ dl.info-list {
     >.md-text-field-container {
       flex: 1;
     }
+  }
+}
+
+.documentation-list {
+  padding: 0em;
+
+  >.md-list {
+    width: 100%;
   }
 }
