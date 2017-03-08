@@ -60,7 +60,8 @@
 
 .delete-button, .fork-button, .view-button,
 .delete-preset, .fork-preset, .view-preset,
-.user-account > .login, .user-account > .account > .md-paper {
+.user-account > .login, .user-account > .account > .md-paper,
+.purchase {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -227,6 +228,16 @@ dl.info-list {
     >div.controls {
       flex-direction: row;
       justify-content: center;
+    }
+  }
+}
+
+.purchase {
+  >div.expiration {
+    display: flex;
+
+    >.md-text-field-container {
+      flex: 1;
     }
   }
 }
