@@ -20,16 +20,24 @@ export default class Account extends React.Component {
    * Attempts to update the user's display name.
    */
   onUpdateName() {
+    const name = this.refs.name._field.getValue();
+
     request
-      .put(XYBUTTONS_URL + 'api/account')
-      .send({
-        name: this.refs.name._field.getValue()
-      })
+      .put(XYBUTTONS_URL + 'api/users/account')
+      .send({ name })
       .end((err, res) => {
-        if (err || res.body.error)
+        if (err || res.body.error) {
           this.props.App._alert(res.body.message);
-        else
-          location.reload();
+        }
+        else {
+          const account = Object.assign(
+            {}, this.props.storage.account, { name }
+          );
+
+          chrome.p.storage.sync.set({ account })
+            .then(() => chrome.p.storage.local.set({ account }))
+            .then(() => location.reload());
+        }
       });
   }
 
