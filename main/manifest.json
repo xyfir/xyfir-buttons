@@ -40,5 +40,9 @@
     "tabs",
     "storage"
   ],
-  "content_security_policy": "script-src 'self' https://js.stripe.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://js.stripe.com; object-src 'self'",
+  "web_accessible_resources": [
+    "inject.js",
+    "inject.css"
+  ]
 }
