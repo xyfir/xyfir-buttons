@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "Xyfir Buttons client application and browser extension",
   "scripts": {
-    "build:app": "webpack --colors",
+    "build:js": "webpack --colors",
     "build:app-css": "node-sass --output-style compressed main/app.scss build/app.css",
     "build:inject-css": "node-sass --output-style compressed main/inject.scss build/inject.css",
+    "build:css": "npm run build:app-css & npm run build:inject-css",
     "prebuild:extension": "del /S /Q build\\* & copy main\\*.* build & xcopy /E /I res build\\res",
-    "build:extension": "npm run build:app & npm run build:app-css & npm run build:inject-css",
+    "build:extension": "npm run build:js & npm run build:css",
     "zip": "@powershell Add-Type -A System.IO.Compression.FileSystem; [IO.Compression.ZipFile]::CreateFromDirectory('build', 'ext.zip')",
     "postzip": "move ext.zip build"
   },
