@@ -8,6 +8,9 @@ import Paper from 'react-md/lib/Papers';
 import Form from 'components/buttons/Form';
 import Tabs from 'components/misc/Tabs';
 
+// Modules
+import downloadButtons from 'lib/shared/buttons/download';
+
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
 
@@ -38,10 +41,13 @@ class EditButton extends React.Component {
       .put(XYBUTTONS_URL + 'api/buttons/' + id)
       .send(button)
       .end((err, res) => {
-        if (err || res.body.error)
+        if (err || res.body.error) {
           this.props.App._alert(res.body.message);
-        else
-          chrome.storage.local.set({ ['button_' + id]: button });
+        }
+        else {
+          const next = () => location.reload();
+          downloadButtons([{ id }]).then(next).catch(next);
+        }
       });
   }
 
