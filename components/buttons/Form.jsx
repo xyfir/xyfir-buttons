@@ -9,7 +9,6 @@ import Button from 'react-md/lib/Buttons/Button';
 // Components
 import ScriptEditor from 'components/editors/Script';
 import StylesEditor from 'components/editors/Styles';
-import IconEditor from 'components/editors/Icon';
 
 class ButtonForm extends React.Component {
 
@@ -33,20 +32,21 @@ class ButtonForm extends React.Component {
     
     const data = {
       name: this.refs.name._field.getValue(),
-      urlMatch: this.refs.urlMatch._field.getValue(),
-      repository: (
-        this.state.scriptSource == 'Remote'
-          ? this.refs.repository._field.getValue() : ''
-      ), script: (
+      styles: this.refs.stylesEditor.value,
+      script: (
         this.state.scriptSource == 'Local'
           ? this.refs.scriptEditor.value : ''
       ),
+      tooltip: this.refs.tooltip._field.getValue(),
       domains: this.refs.domains._field.getValue(),
+      content: encodeURIComponent(this.refs.content._field.getValue()),
+      urlMatch: this.refs.urlMatch._field.getValue(),
       isListed: document.getElementById('cb--is-listed').checked,
-      description: this.refs.description._field.getValue(),
-      icon: this.refs.iconEditor.value,
-      styles: this.refs.stylesEditor.value,
-      tooltip: this.refs.tooltip._field.getValue()
+      repository: (
+        this.state.scriptSource == 'Remote'
+          ? this.refs.repository._field.getValue() : ''
+      ),
+      description: this.refs.description._field.getValue()
     };
 
     const button = Object.assign({}, data);
@@ -196,8 +196,19 @@ class ButtonForm extends React.Component {
           defaultValue={b.tooltip}
         />
 
+        <TextField
+          id='text--content'
+          ref='content'
+          type='text'
+          label='Button Content'
+          helpText={
+            'The text content of the button; all characters / emojis accepted'
+          }
+          className='md-cell'
+          defaultValue={decodeURIComponent(b.content)}
+        />
+
         <StylesEditor ref='stylesEditor' value={b.styles} />
-        <IconEditor ref='iconEditor' value={b.icon} />
 
         <hr className='divider' />
 
@@ -227,7 +238,7 @@ ButtonForm.propTypes = {
 ButtonForm.defaultProps = {
   button: {
     name: '', urlMatch: '.*', script: '', repository: '', description: '',
-    domains: '*', isListed: false, tooltip: '', icon: '', styles: ''
+    domains: '*', isListed: false, tooltip: '', content: '', styles: ''
   }
 };
 
