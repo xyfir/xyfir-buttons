@@ -6,20 +6,19 @@ body {
 body.popup {
   width: 800px;
 }
+
 p {
 	width: 80%;
 	margin: auto;
 }
+
 a {
-	color: $blue;
+	color: $md-blue-500;
   cursor: pointer;
 	text-decoration: none;
 }
 a:hover, a:focus {
-	color: $lblue;
-}
-.link-lg {
-	font-size: 125%;
+	color: $md-light-blue-a-400;
 }
 
 hr.divider {
