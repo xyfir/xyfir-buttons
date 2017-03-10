@@ -7,7 +7,7 @@ module.exports = {
     app: './main/app.js',
     inject: './main/inject.js',
     background: './main/background.js',
-    contentScript: './main/content-script.js'
+    'content-script': './main/content-script.js'
   },
   
   output: {
