@@ -3,8 +3,12 @@ import onMessage from 'lib/inject/events/on-message';
 import getPreset from 'lib/inject/get-preset';
 
 window._xyb_ = {
-  transactions: {}, buttons: {}, presets: {
+  transactions: {}, buttons: {},
+  presets: {
     current: {}, matches: []
+  },
+  system: {
+    buttons: {}
   }
 };
 
