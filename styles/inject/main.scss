@@ -1,0 +1,27 @@
+div.xyfir-buttons-container {
+  all: initial;
+
+  >button {
+    all: initial;
+
+    border: none;
+    z-index: 9999999999;
+    overflow: hidden;
+    position: fixed;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.137255) 0px 4px 5px 0px, rgba(0, 0, 0, 0.117647) 0px 1px 10px 0px, rgba(0, 0, 0, 0.4) 0px 2px 4px -1px;
+    font-family: sans-serif;
+    border-radius: 50%;
+
+    /* Styles likely to be overridden */
+    background-color: #2196f3;
+    font-size: 14px;
+    height: 4em;
+    width: 4em;
+    color: white;
+
+    &:hover {
+      filter: brightness(110%);
+    }
+  }
+}
