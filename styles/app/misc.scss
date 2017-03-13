@@ -1,4 +1,4 @@
-.find-buttons, .find-presets, .find-users {
+.find-buttons, .find-presets, .find-users, .buttons-in-preset, .add-button-to-preset {
   flex: 1;
 
   .controls, .buttons-list, .presets-list, .users-list {
@@ -61,7 +61,10 @@
 .delete-button, .fork-button, .view-button,
 .delete-preset, .fork-preset, .view-preset,
 .user-account > .login, .user-account > .account > .md-paper, .purchase,
-.documentation-list, .view-documentation {
+.documentation-list, .view-documentation,
+.buttons-in-preset > .controls, .buttons-in-preset > .buttons-list,
+.add-button-to-preset > .buttons-list,
+.edit-button-in-preset {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -247,5 +250,23 @@ dl.info-list {
 
   >.md-list {
     width: 100%;
+  }
+}
+
+.buttons-in-preset, .add-button-to-preset {
+  .buttons-list {
+    align-items: stretch;
+  }
+}
+
+.add-button-to-preset {
+  >p {
+    text-align: center;
+  }
+}
+
+.edit-button-in-preset {
+  .md-icon {
+    width: 1em;
   }
 }
