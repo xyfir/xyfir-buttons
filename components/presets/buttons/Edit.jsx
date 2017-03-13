@@ -53,6 +53,25 @@ export default class EditPresetButton extends React.Component {
       });
   }
 
+  /**
+   * Attempts to remove the button from the preset.
+   */
+  onRemove() {
+    const { presetId, button } = this.state;
+
+    request
+      .delete(`${XYBUTTONS_URL}api/presets/${presetId}/buttons/${button.id}`)
+      .end((err, res) => {
+        if (err || res.body.error) {
+          this.props.App._alert('Could not remove button');
+        }
+        else {
+          const next = () => location.hash = `#/presets/${presetId}/buttons`;
+          downloadPresets([{ id: presetId }]).then(next).catch(next);
+        }
+      });
+  }
+
   render() {
     const { presetId, button } = this.state;
 
@@ -68,11 +87,19 @@ export default class EditPresetButton extends React.Component {
 
           <hr className='divider' />
 
-          <Button
-            raised primary
-            label='Update Styles'
-            onClick={() => this.onUpdate()}
-          >edit_mode</Button>
+          <div className='controls'>
+            <Button
+              raised secondary
+              label='Remove Button'
+              onClick={() => this.onRemove()}
+            >delete</Button>
+
+            <Button
+              raised primary
+              label='Update Button'
+              onClick={() => this.onUpdate()}
+            >edit_mode</Button>
+          </div>
         </Paper>
       </Tabs>
     );
