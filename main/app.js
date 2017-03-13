@@ -19,8 +19,12 @@ import CreateButton from 'components/buttons/Create';
 import CreatePreset from 'components/presets/Create';
 import DeleteButton from 'components/buttons/Delete';
 import DeletePreset from 'components/presets/Delete';
+import AddPresetButton from 'components/presets/buttons/Add';
+import EditPresetButton from 'components/presets/buttons/Edit';
 import DocumentationList from 'components/documentation/List';
 import ViewDocumentation from 'components/documentation/View';
+import ViewPresetButtons from 'components/presets/buttons/View';
+import PlacePresetButtons from 'components/presets/buttons/Place';
 import PurchaseSubscription from 'components/users/Purchase';
 
 render((
@@ -53,6 +57,14 @@ render((
           <Route path='edit' component={EditPreset} />
           <Route path='fork' component={ForkPreset} />
           <Route path='delete' component={DeletePreset} />
+
+          <Route path='buttons'>
+            <IndexRoute component={ViewPresetButtons} />
+
+            <Route path='add' component={AddPresetButton} />
+            <Route path='place' component={PlacePresetButtons} />
+            <Route path=':button' component={EditPresetButton} />
+          </Route>
         </Route>
       </Route>
 
