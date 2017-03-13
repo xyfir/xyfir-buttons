@@ -40,6 +40,7 @@ export default class DeletePreset extends React.Component {
   render() {
     return (
       <Tabs
+        type={2}
         base={'#/presets/' + this.props.params.preset}
         isCreator={true}
         activeTabIndex={3}

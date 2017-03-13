@@ -50,6 +50,7 @@ class EditPreset extends React.Component {
     
     return (
       <Tabs
+        type={2}
         base={'#/presets/' + this.state.preset.id}
         isCreator={true}
         activeTabIndex={2}

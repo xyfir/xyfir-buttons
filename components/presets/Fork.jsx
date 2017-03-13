@@ -68,6 +68,7 @@ export default class ForkPreset extends React.Component {
 
     return (
       <Tabs
+        type={2}
         base={'#/presets/' + this.props.params.preset}
         isCreator={this.state.isCreator}
         activeTabIndex={1}

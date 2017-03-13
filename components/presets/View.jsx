@@ -89,6 +89,7 @@ export default class ViewPreset extends React.Component {
 
     return (
       <Tabs
+        type={2}
         base={'#/presets/' + this.state.id}
         isCreator={this.state.isCreator}
         activeTabIndex={0}
