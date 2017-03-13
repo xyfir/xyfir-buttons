@@ -1,9 +1,6 @@
 import request from 'superagent';
 import React from 'react';
 
-// react-md
-import Dialog from 'react-md/lib/Dialogs';
-
 // Components
 import ButtonList from 'components/buttons/List';
 import Tabs from 'components/misc/Tabs';
