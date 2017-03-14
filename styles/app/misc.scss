@@ -266,7 +266,25 @@ dl.info-list {
 }
 
 .edit-button-in-preset {
-  .md-icon {
-    width: 1em;
+  >div.controls {
+    >button {
+      margin: auto 0.5em;
+
+      .md-icon {
+        width: 1em;
+      }
+    }
+  }
+}
+
+.buttons-in-preset {
+  >div.controls {
+    flex-direction: row;
+    justify-content: center;
+
+    >button {
+      margin: auto 0.5em;
+      width: 15em;
+    }
   }
 }
