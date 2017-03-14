@@ -3,9 +3,9 @@ import brace from 'brace';
 import Ace from 'react-ace';
 
 import 'brace/mode/javascript';
-import 'brace/mode/plain_text';
 import 'brace/theme/monokai';
 import 'brace/ext/searchbox';
+import 'brace/mode/json';
 
 class Editor extends React.Component {
 
@@ -52,7 +52,7 @@ Editor.propTypes = {
    */
   value: PropTypes.string,
   /**
-   * The editor mode (syntax). Possible values: 'javascript', 'plain_text'.
+   * The editor mode (syntax). Possible values: 'javascript', 'json'.
    * Defaults to 'javascript'.
    */
   mode: PropTypes.string,
