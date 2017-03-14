@@ -16,7 +16,7 @@ class StylesEditor extends React.Component {
   }
 
   /**
-   * A string (not JSON) representing an HTMLElement.style object.
+   * A JSON string representing an HTMLElement.style object.
    * @type {string}
    */
   get value() {
@@ -53,6 +53,7 @@ class StylesEditor extends React.Component {
       >
         <Editor
           ref='editor'
+          mode='json'
           value={this.state.value}
         />
 
@@ -99,14 +100,13 @@ class StylesEditor extends React.Component {
 
 StylesEditor.propTypes = {
   /**
-   * A string (not JSON) representing an HTMLElement.style object. Must be code
-   * that if eval()'d would return an object.
+   * A JSON string representing an HTMLElement.style object.
    */
   value: React.PropTypes.string,
 };
 
 StylesEditor.defaultProps = {
-  value: '{ backgroundColor: "blue", color: "white" }'
+  value: '{}'
 };
 
 export default StylesEditor;
