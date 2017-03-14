@@ -51,6 +51,12 @@ export default class ViewPresetButtons extends React.Component {
               label='Add Button'
               onClick={() => location.hash += '/add'}
             >add</Button>
+
+            <Button
+              raised secondary
+              label='Place Buttons'
+              onClick={() => location.hash += '/place'}
+            >open_with</Button>
           </div>
 
           <ButtonList
