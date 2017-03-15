@@ -22,10 +22,10 @@ export default class Tabs extends React.Component {
         { label: 'Edit', hash: base + '/edit' },
         { label: 'Delete', hash: base + '/delete' }
       );
-
-      if (this.props.type == 2)
-        tabs.push({ label: 'Buttons', hash: base + '/buttons' });
     }
+
+    if (this.props.type == 2)
+      tabs.push({ label: 'Buttons', hash: base + '/buttons' });
     
     return (
       <LinkTabs
