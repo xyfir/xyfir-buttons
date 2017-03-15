@@ -20,32 +20,54 @@ export default class PlacePresetButtons extends React.Component {
   constructor(props) {
     super(props);
 
-    const buttons = [];
-    
-    this.props.storage[
+    const preset = this.props.storage[
       'preset_' + this.props.params.preset
-    ].buttons.forEach(b1 => {
+    ],
+    localPresetData = this.props.storage[
+      'localpreset_' + this.props.params.preset
+    ] || {
+      buttons: []
+    },
+    buttons = [];
+    
+    preset.buttons.forEach(b1 => {
+      // b1 from preset_${id}.buttons[]
+      // b2 from button_${id}
+      // b3 from localpreset_${id}.buttons[]
       const b2 = this.props.storage['button_' + b1.id];
+      const b3 = localPresetData.buttons.find(b3 => b1.id == b3.id)
+        || { styles: '{}' };
 
-      b2.unparsedStyles = b2.styles; // needed in onSaveChanges()
-      b2.styles = JSON.parse(b2.styles), b1.styles = JSON.parse(b1.styles);
+      b2.unparsedStyles = b2.styles;
 
-      const positions = b1.position.split(',');
+      b3.styles = JSON.parse(b3.styles),
+      b2.styles = JSON.parse(b2.styles),
+      b1.styles = JSON.parse(b1.styles);
+
+      const positions = b3.position
+        ? b3.position.split(',')
+        : b1.position.split(',');
+      const size = b3.size || b1.size;
+      
       const style = {
         top: positions[0], left: positions[1],
-        height: b1.size, width: b1.size
+        height: size, width: size
       };
 
-      // Position / size -> preset-specific styles -> original button styles
-      Object.assign(b2.styles, b1.styles, style);
+      // Position / size -> local preset styles -> preset styles
+      // -> button styles
+      Object.assign(b2.styles, b1.styles, b3.styles, style);
 
       b2.size = b1.size, b2.position = b1.position;
       buttons.push(b2);
     });
 
     this.state = {
-      buttons, selectedButton: -1, showOverlay: false,
-      controls: { top: '25%', left: '25%' }
+      buttons, selectedButton: -1, controls: { top: '25%', left: '25%' },
+      showOverlay: false, isCreator: (
+        preset.creator == this.props.storage.account.uid &&
+        preset.creator != 0
+      )
     };
   }
 
@@ -95,51 +117,10 @@ export default class PlacePresetButtons extends React.Component {
   }
 
   /**
-   * Loops through all buttons and saves changes remotely and locally.
+   * Calls the appropriate save method based on the user's status.
    */
   onSaveChanges() {
-    const buttons = this.state.buttons.slice();
-
-    const save = index => {
-      if (buttons[index]) {
-        const button = buttons[index];
-
-        let styles = button.unparsedStyles;
-
-        // Leave styles untouched if able
-        if (buttons[index].styles.fontSize) {
-          const originalStyles = JSON.parse(styles);
-
-          if (originalStyles.fontSize != buttons[index].styles.fontSize) {
-            originalStyles.fontSize = buttons[index].styles.fontSize;
-            styles = JSON.stringify(originalStyles);
-          }
-        }
-
-        request
-          .put(
-            XYBUTTONS_URL + 'api/presets/' +
-            this.props.params.preset + '/buttons/' +
-            button.id
-          )
-          .send({
-            size: button.size, position: button.position, styles
-          })
-          .end((err, res) => {
-            if (err || res.body.error)
-              this.props.App._alert('Could not save changes');
-            else
-              save(index + 1);
-          });
-      }
-      else {
-        const next = () => this.props.App._alert('Changes saved');
-        downloadPresets([{ id: this.props.params.preset }])
-          .then(next).catch(next);
-      }
-    };
-
-    save(0);
+    this.state.isCreator ? this._saveChanges() : this._saveLocalChanges();
   }
 
   /**
@@ -193,13 +174,88 @@ export default class PlacePresetButtons extends React.Component {
     window.removeEventListener('mousemove', this._move, true);
   }
 
+  /**
+   * Sends the changes to the xyButtons API and then re-downloads the preset.
+   */
+  _saveChanges() {
+    const buttons = this.state.buttons.slice();
+
+    const save = index => {
+      if (buttons[index]) {
+        const button = buttons[index];
+
+        let styles = button.unparsedStyles;
+
+        // Leave styles untouched if able
+        if (buttons[index].styles.fontSize) {
+          const originalStyles = JSON.parse(styles);
+
+          if (originalStyles.fontSize != buttons[index].styles.fontSize) {
+            originalStyles.fontSize = buttons[index].styles.fontSize;
+            styles = JSON.stringify(originalStyles);
+          }
+        }
+
+        request
+          .put(
+            XYBUTTONS_URL + 'api/presets/' +
+            this.props.params.preset + '/buttons/' +
+            button.id
+          )
+          .send({
+            size: button.size, position: button.position, styles
+          })
+          .end((err, res) => {
+            if (err || res.body.error)
+              this.props.App._alert('Could not save changes');
+            else
+              save(index + 1);
+          });
+      }
+      else {
+        const next = () => this.props.App._alert('Changes saved');
+        downloadPresets([{ id: this.props.params.preset }])
+          .then(next).catch(next);
+      }
+    };
+
+    save(0);
+  }
+
+  /**
+   * Saves the changes to the `localpreset_${id}` local storage key.
+   */
+  _saveLocalChanges() {
+    const buttons = this.state.buttons.slice();
+    const preset = { buttons: [] };
+
+    preset.buttons = buttons.map(button => {
+      let styles = {};
+
+      // The only local style accepted is fontSize
+      if (button.styles.fontSize)
+        styles.fontSize = button.styles.fontSize;
+      
+      return {
+        id: button.id, size: button.size, position: button.position,
+        styles: JSON.stringify(styles)
+      };
+    });
+
+    chrome.storage.local.set({
+      ['localpreset_' + this.props.params.preset]: preset
+    }, () => {
+      this.props.App._alert('Changes saved');
+    });
+  }
+
   render() {
     return (
       <Tabs
         type={2}
         base={'#/presets/' + this.props.params.preset}
-        isCreator={true}
-        activeTabIndex={4}
+        isCreator={this.state.isCreator}
+        activeTabIndex={this.state.isCreator ? 4 : 2}
       >
         <Paper zDepth={1} className='place-buttons-in-preset'>
           <p>
