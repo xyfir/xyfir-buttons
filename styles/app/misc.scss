@@ -64,7 +64,8 @@
 .documentation-list, .view-documentation,
 .buttons-in-preset > .controls, .buttons-in-preset > .buttons-list,
 .add-button-to-preset > .buttons-list,
-.edit-button-in-preset {
+.edit-button-in-preset,
+.place-buttons-in-preset {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -277,7 +278,7 @@ dl.info-list {
   }
 }
 
-.buttons-in-preset {
+.buttons-in-preset, .place-buttons-in-preset {
   >div.controls {
     flex-direction: row;
     justify-content: center;
@@ -285,6 +286,39 @@ dl.info-list {
     >button {
       margin: auto 0.5em;
       width: 15em;
+    }
+  }
+}
+
+.xyfir-buttons-container.overlay {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  right: 0%;
+  bottom: 0%;
+  z-index: 999999999;
+  user-select: none;
+  background-color: rgba(0,0,0, 0.3);
+
+  >div.controls {
+    display: table;
+    padding: 0.5em;
+    position: fixed;
+    background-color: white;
+
+    @include md-box-shadow(5);
+
+    >div {
+      display: table-row;
+
+      >* {
+        display: table-cell;
+      }
+
+      >label {
+        font-weight: bold;
+        vertical-align: middle;
+      }
     }
   }
 }
