@@ -1,5 +1,6 @@
 import chromePromise from 'chrome-promise';
 import React from 'react';
+import { GatewayProvider, GatewayDest } from 'react-gateway';
 
 // react-md
 import ListItem from 'react-md/lib/Lists/ListItem';
@@ -155,10 +156,16 @@ export default class App extends React.Component {
           type={Drawer.DrawerTypes.TEMPORARY}
         />
 
-        {React.cloneElement(this.props.children, {
-          App: this, storage: this.state.storage, params: this.props.params,
-          location: this.props.location
-        })}
+        <GatewayProvider>
+          <div>
+            {React.cloneElement(this.props.children, {
+              App: this, storage: this.state.storage, params: this.props.params,
+              location: this.props.location
+            })}
+
+            <GatewayDest name="gateway" />
+          </div>
+        </GatewayProvider>
 
         <Snackbar
           toasts={this.state.toasts}
