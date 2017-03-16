@@ -124,7 +124,7 @@ export default class PlacePresetButtons extends React.Component {
   }
 
   /**
-   * Hides .xyfir-buttons-container.overlay.
+   * Hides .xybuttons.overlay.
    * @param {MouseEvent} e
    */
   onHideOverlay(e) {
@@ -283,7 +283,7 @@ export default class PlacePresetButtons extends React.Component {
           <Gateway into='gateway'>
             <div
               onContextMenu={e => this.onHideOverlay(e)}
-              className='xyfir-buttons-container overlay'
+              className='xybuttons overlay'
               onMouseUp={e => this.onMouseUp(e)}
               style={{ display: this.state.showOverlay ? 'initial' : 'none' }}
             >
