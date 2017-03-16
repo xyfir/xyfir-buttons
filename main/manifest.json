@@ -38,7 +38,11 @@
   },
   "permissions": [
     "tabs",
-    "storage"
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "http://*/*",
+    "https://*/*"
   ],
   "content_security_policy": "script-src 'self' https://js.stripe.com; object-src 'self'",
   "web_accessible_resources": [
