@@ -1,4 +1,5 @@
 import onUrlChange from 'lib/inject/events/on-url-change';
+import onKeyDown from 'lib/inject/events/on-key-down';
 import onMessage from 'lib/inject/events/on-message';
 import getPreset from 'lib/inject/get-preset';
 
@@ -8,11 +9,12 @@ window._xyb_ = {
     current: {}, matches: []
   },
   system: {
-    buttons: {}
+    buttons: {}, awaitingKeyCommand: false
   }
 };
 
 window.addEventListener('message', onMessage);
 window.addEventListener('popstate', onUrlChange);
+document.addEventListener('keydown', onKeyDown);
 
 getPreset();
