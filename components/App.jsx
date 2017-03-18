@@ -139,6 +139,12 @@ export default class App extends React.Component {
 
             <a href='#/docs'>
               <ListItem primaryText='Documentation' />
+            </a>,
+
+            <Divider />,
+
+            <a href='https://github.com/Xyfir/Xyfir-Buttons-client'>
+              <ListItem primaryText='Contribute' />
             </a>
           ]}
           visible={this.state.drawer}
