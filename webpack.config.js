@@ -12,7 +12,7 @@ module.exports = {
   
   output: {
     filename: '[name].js',
-    path: './build'
+    path: path.resolve(__dirname, 'build')
   },
 
   resolve: {
