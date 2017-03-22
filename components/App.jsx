@@ -78,6 +78,14 @@ export default class App extends React.Component {
   }
 
   /**
+   * Remove first element from toasts array.
+   */
+  onDismissAlert() {
+    const [, ...toasts] = this.state.toasts;
+    this.setState({ toasts });
+  }
+
+  /**
    * Creates a 'toast' for react-md Snackbar component.
    * @param {string} message - The text content of the toast.
    */
@@ -175,7 +183,7 @@ export default class App extends React.Component {
 
         <Snackbar
           toasts={this.state.toasts}
-          onDismiss={() => this.setState({ toasts: [] })}
+          onDismiss={() => this.onDismissAlert()}
         />
       </main>
     )
