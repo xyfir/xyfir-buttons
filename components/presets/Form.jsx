@@ -33,14 +33,14 @@ class PresetForm extends React.Component {
     try {
       if (!preset.name)
         throw 'Preset must have a name';
-      if (preset.name.length > 50)
-        throw 'Preset name limited to 50 characters';
+      if (preset.name.length > 100)
+        throw 'Preset name limited to 100 characters';
       if (!preset.urlMatch)
         throw 'URL match does not exist';
-      if (preset.urlMatch.length > 500)
-        throw 'URL match value limited to 500 characters';
-      if (preset.domains && preset.length > 100)
-        throw 'Domains list limited to 100 characters';
+      if (preset.urlMatch.length > 1000)
+        throw 'URL match value limited to 1000 characters';
+      if (preset.domains && preset.domains.length > 250)
+        throw 'Domains list limited to 250 characters';
     }
     catch (e) {
       this.props.App._alert(e);

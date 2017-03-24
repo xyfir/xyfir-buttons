@@ -55,16 +55,16 @@ class ButtonForm extends React.Component {
     try {
       if (!button.name)
         throw 'Button must have a name';
-      if (button.name.length > 50)
-        throw 'Button name limited to 50 characters';
+      if (button.name.length > 100)
+        throw 'Button name limited to 100 characters';
       if (!button.urlMatch)
         throw 'URL match does not exist';
-      if (button.urlMatch.length > 500)
-        throw 'URL match value limited to 500 characters';
+      if (button.urlMatch.length > 1000)
+        throw 'URL match value limited to 1000 characters';
       if (!button.script && !button.repository)
         throw 'No script file or repository link provided';
-      if (button.domains && button.length > 100)
-        throw 'Domains list limited to 100 characters';
+      if (button.domains && button.domains.length > 250)
+        throw 'Domains list limited to 250 characters';
       
       if (button.script) {
         try {
