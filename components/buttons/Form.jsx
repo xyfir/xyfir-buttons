@@ -202,7 +202,8 @@ class ButtonForm extends React.Component {
           type='text'
           label='Button Content'
           helpText={
-            'The text content of the button; all characters / emojis accepted'
+            'The text content of the button; all characters / emojis accepted.'
+            + 'An image in base64 format is also accepted as an icon.'
           }
           className='md-cell'
           defaultValue={decodeURIComponent(b.content)}

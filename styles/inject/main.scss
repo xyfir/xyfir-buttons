@@ -25,5 +25,10 @@ div.xybuttons {
     &:hover {
       filter: brightness(110%);
     }
+
+    >img {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
