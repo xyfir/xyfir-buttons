@@ -65,7 +65,8 @@
 .buttons-in-preset > .controls, .buttons-in-preset > .buttons-list,
 .add-button-to-preset > .buttons-list,
 .edit-button-in-preset,
-.place-buttons-in-preset {
+.place-buttons-in-preset,
+.create-button-from-userscript {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -114,9 +115,11 @@
 
   div.url-match {
     margin-bottom: 1em;
+    text-align: center;
     font-size: 125%;
     
     label {
+      display: block;
       font-weight: bold;
       margin-right: 0.2em;
     }
