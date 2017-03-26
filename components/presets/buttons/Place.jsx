@@ -3,6 +3,7 @@ import request from 'superagent';
 import React from 'react';
 
 // react-md
+import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons/Button';
 import Paper from 'react-md/lib/Papers';
 
@@ -64,7 +65,7 @@ export default class PlacePresetButtons extends React.Component {
 
     this.state = {
       buttons, selectedButton: -1, controls: { top: '25%', left: '25%' },
-      showOverlay: false, isCreator: (
+      url: '', showOverlay: false, isCreator: (
         preset.creator == this.props.storage.account.uid &&
         preset.creator != 0
       )
@@ -266,6 +267,16 @@ export default class PlacePresetButtons extends React.Component {
             Right-clicking anywhere closes the overlay.
           </p>
 
+          <TextField
+            id='textarea--url'
+            type='text'
+            label='URL'
+            value={this.state.url}
+            onChange={url => this.setState({ url })}
+            helpText='Only buttons that match the URL will be rendered'
+            className='md-cell'
+          />
+
           <div className='controls'>
             <Button
               raised primary
@@ -323,7 +334,12 @@ export default class PlacePresetButtons extends React.Component {
                   onMouseUp={e => this.onMouseUp(e, i)}
                   onClick={() => this.setState({ selectedButton: i })}
                   title={button.tooltip}
-                  style={button.styles}
+                  style={
+                    Object.assign({}, button.styles, {
+                      display: new RegExp(button.urlMatch).test(this.state.url)
+                        ? 'initial' : 'none'
+                    })
+                  }
                   key={button.id}
                 >{decodeURIComponent(button.content)}</button>
               )}
