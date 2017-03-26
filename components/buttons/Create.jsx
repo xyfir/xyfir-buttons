@@ -42,6 +42,10 @@ class CreateButton extends React.Component {
   render() {
     return (
       <Paper zDepth={1} className='create-button'>
+        <a href='#/buttons/create/from-userscript'>
+          Convert From Userscript
+        </a>
+
         <Form {...this.props} onSuccess={b => this.onCreate(b)} />
       </Paper>
     );

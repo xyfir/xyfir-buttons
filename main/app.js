@@ -26,6 +26,7 @@ import ViewDocumentation from 'components/documentation/View';
 import ViewPresetButtons from 'components/presets/buttons/View';
 import PlacePresetButtons from 'components/presets/buttons/Place';
 import PurchaseSubscription from 'components/users/Purchase';
+import CreateButtonFromUserscript from 'components/buttons/CreateFromUserscript';
 
 render((
   <Router history={hashHistory}>
@@ -35,7 +36,14 @@ render((
       <Route path='buttons'>
         <IndexRoute component={FindButtons} />
 
-        <Route path='create' component={CreateButton} />
+        <Route path='create'>
+          <IndexRoute component={CreateButton} />
+
+          <Route
+            path='from-userscript'
+            component={CreateButtonFromUserscript}
+          />
+        </Route>
         
         <Route path=':button'>
           <IndexRoute component={ViewButton} />
