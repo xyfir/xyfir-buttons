@@ -157,7 +157,7 @@ export default class ViewPreset extends React.Component {
           <Comments
             {...this.props}
             id={p.id}
-            type={1}
+            type={2}
             alert={this.props.App._alert}
             comments={p.comments}
           />
