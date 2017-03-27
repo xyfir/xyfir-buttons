@@ -135,7 +135,7 @@ export default class FindPresets extends React.Component {
                     ? 'Global' : preset.domains == '**'
                     ? 'Multiple' : preset.domains
                 )
-                + '\n' + preset.description
+                + '\n' + preset.description.split('\n')[0]
               }
             />
           </a>

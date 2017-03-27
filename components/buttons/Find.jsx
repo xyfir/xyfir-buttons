@@ -137,7 +137,7 @@ export default class FindButtons extends React.Component {
                     ? 'Global' : button.domains == '**'
                     ? 'Multiple' : button.domains
                 )
-                + '\n' + button.description
+                + '\n' + button.description.split('\n')[0]
               }
             />
           </a>
