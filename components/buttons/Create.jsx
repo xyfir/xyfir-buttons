@@ -40,13 +40,20 @@ class CreateButton extends React.Component {
   }
 
   render() {
+    const props = Object.assign({}, this.props);
+
+    if (props.location.query.loadFrom) {
+      const loadFrom = props.location.query.loadFrom.split('.');
+      props.button = props.storage[loadFrom[0]][loadFrom[1]];
+    }
+
     return (
       <Paper zDepth={1} className='create-button'>
         <a href='#/buttons/create/from-userscript'>
           Convert From Userscript
         </a>
 
-        <Form {...this.props} onSuccess={b => this.onCreate(b)} />
+        <Form {...props} onSuccess={b => this.onCreate(b)} />
       </Paper>
     );
   }
