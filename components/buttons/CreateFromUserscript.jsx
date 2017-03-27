@@ -125,7 +125,7 @@ export default class CreateButtonFromUserscript extends React.Component {
       `,
 
       'start.js': `
-        function(Button) {
+        exports = function(Button) {
           const script = Button.load('userscript.js');
 
           Button.storage.get()
@@ -150,7 +150,7 @@ export default class CreateButtonFromUserscript extends React.Component {
       `,
       
       'userscript.js': `
-        function(_Button, _storage) {
+        exports = function(_Button, _storage) {
           window.unsafeWindow = window;
 
           function GM_getValue(name, def) {
