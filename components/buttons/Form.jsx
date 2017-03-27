@@ -160,7 +160,11 @@ class ButtonForm extends React.Component {
           rows={10}
           type='text'
           label='Description'
-          helpText='Let others know what your button does if its public'
+          maxRows={20}
+          helpText={
+            'Let others know what your button does if its public. '
+            + 'The first line is used for a short description.'
+          }
           className='md-cell'
           defaultValue={b.description}
           lineDirection='right'
