@@ -1,5 +1,6 @@
 import request from 'superagent';
 import moment from 'moment';
+import marked from 'marked';
 import React from 'react';
 
 // react-md
@@ -130,7 +131,12 @@ export default class ViewButton extends React.Component {
               {b.name}
             </h2>
             <span className='domains'>{this.domainsText}</span>
-            <p className='description'>{b.description}</p>
+            <div
+              className='description markdown-body'
+              dangerouslySetInnerHTML={{
+                __html: marked(b.description, { santize: true })
+              }}
+            />
           </Paper>
 
           <Paper zDepth={1}>

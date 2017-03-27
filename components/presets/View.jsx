@@ -1,4 +1,5 @@
 import request from 'superagent';
+import marked from 'marked';
 import moment from 'moment';
 import React from 'react';
 
@@ -101,7 +102,12 @@ export default class ViewPreset extends React.Component {
               {p.name}
             </h2>
             <span className='domains'>{this.domainsText}</span>
-            <p className='description'>{p.description}</p>
+            <div
+              className='description markdown-body'
+              dangerouslySetInnerHTML={{
+                __html: marked(b.description, { santize: true })
+              }}
+            />
           </Paper>
 
           <Paper zDepth={1}>
