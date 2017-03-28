@@ -195,11 +195,7 @@ export default class CreateButtonFromUserscript extends React.Component {
     };
 
     Object.keys(script).forEach(file => {
-      script[file] = script[file]
-        .trim()
-        .split('\n')
-        .map(l => l.replace(/^\s{8}/, ''))
-        .join('\n');
+      script[file] = script[file].trim();
     });
 
     return script;
@@ -220,7 +216,10 @@ export default class CreateButtonFromUserscript extends React.Component {
 
     // Convert metadata code block to an array of objects
     meta = meta
-      .slice(1, meta.indexOf('// ==/UserScript=='))
+      .slice(
+        meta.indexOf('// ==UserScript==') + 1,
+        meta.indexOf('// ==/UserScript==')
+      )
       .map(md => md.match(/\/\/ @([\w:-]{1,})\s+(.+)/))
       .map(md => Object({ key: md[1], value: md[2] }));
     
