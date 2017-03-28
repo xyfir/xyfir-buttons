@@ -105,7 +105,7 @@ export default class ViewPreset extends React.Component {
             <div
               className='description markdown-body'
               dangerouslySetInnerHTML={{
-                __html: marked(b.description, { santize: true })
+                __html: marked(p.description, { santize: true })
               }}
             />
           </Paper>
