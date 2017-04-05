@@ -21,7 +21,7 @@ export default class FindButtons extends React.Component {
   constructor(props) {
     super(props);
 
-    let searchType = 'url', searchQuery = '';
+    let searchType = 'name', searchQuery = '';
 
     if (this.props.location.query.preset)
       searchType = 'preset', searchQuery = this.props.location.query.preset;
