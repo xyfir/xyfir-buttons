@@ -324,3 +324,11 @@ dl.info-list {
     }
   }
 }
+
+span.add-button-to-preset {
+  >div {
+    max-height: 70vh;
+    min-width: 40vw;
+    overflow: auto
+  }
+}
