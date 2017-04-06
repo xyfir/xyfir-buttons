@@ -131,7 +131,7 @@ class ButtonForm extends React.Component {
             ref='repository'
             type='text'
             label='Repository'
-            helpText='A GitHub gist repo to pull the button script from'
+            helpText='A GitHub repo or Gist to pull the button script from'
             className='md-cell'
             defaultValue={b.repository}
           />
