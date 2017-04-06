@@ -4,9 +4,12 @@ import marked from 'marked';
 import React from 'react';
 
 // react-md
+import ListItem from 'react-md/lib/Lists/ListItem';
 import FontIcon from 'react-md/lib/FontIcons';
 import Button from 'react-md/lib/Buttons/Button';
+import Dialog from 'react-md/lib/Dialogs';
 import Paper from 'react-md/lib/Papers/Paper';
+import List from 'react-md/lib/Lists/List';
 
 // Components
 import ScriptEditor from 'components/editors/Script';
@@ -17,6 +20,7 @@ import Tabs from 'components/misc/Tabs';
 
 // Modules
 import downloadButtons from 'lib/shared/buttons/download';
+import downloadPresets from 'lib/shared/presets/download';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -26,7 +30,17 @@ export default class ViewButton extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { loading: true };
+    const s = this.props.storage;
+    let presets = [];
+
+    if (s.account.uid != 0) {
+      presets = Object.keys(s)
+        .filter(k => /^preset_/.test(k))
+        .filter(k => s[k].creator == s.account.uid)
+        .map(k => s[k]);
+    }
+
+    this.state = { loading: true, presets, addToPreset: false };
   }
 
   /**
@@ -98,6 +112,33 @@ export default class ViewButton extends React.Component {
         else
           this.setState({ script: res.body.script });
       });
+  }
+
+  /**
+   * Opens the 'add button to preset' modal OR adds the button to a preset
+   * within that list.
+   * @param {number} [id]
+   */
+  onAddToPreset(id) {
+    if (!id) {
+      this.setState({ addToPreset: true });
+    }
+    else {
+      request
+        .post(`${XYBUTTONS_URL}api/presets/${id}/buttons/${this.state.id}`)
+        .send({
+          size: '4em', position: '50%,50%', styles: '{}'
+        })
+        .end((err, res) => {
+          if (err || res.body.error) {
+            this.props.App._alert(res.body.message);
+          }
+          else {
+            const next = () => location.hash = `#/presets/${id}/buttons`;
+            downloadPresets([{ id }]).then(next).catch(next);
+          }
+        });
+    }
   }
 
   /**
@@ -212,6 +253,18 @@ export default class ViewButton extends React.Component {
             comments={b.comments}
           />
 
+          {this.state.presets.length ? (
+            <Button
+              floating primary fixed
+              onClick={() => this.onAddToPreset()}
+              tooltipLabel='Add button to a preset you own'
+              fixedPosition='bl'
+              tooltipPosition='right'
+            >library_add</Button>
+          ) : (
+            <span />
+          )}
+
           {this.state.isInstalled ? (
             <Button
               floating secondary fixed
@@ -227,6 +280,31 @@ export default class ViewButton extends React.Component {
               tooltipPosition='left'
             >file_download</Button>
           )}
+
+          <Dialog
+            id='add-button-to-preset'
+            onHide={() => this.setState({ addToPreset: false })}
+            visible={this.state.addToPreset}
+            className='add-button-to-preset'
+          >
+            <List className='presets-list'>{
+              this.state.presets.map(preset =>
+                <ListItem
+                  threeLines
+                  onClick={() => this.onAddToPreset(preset.id)}
+                  primaryText={preset.name}
+                  secondaryText={
+                    (
+                      preset.domains == '*'
+                        ? 'Global' : preset.domains == '**'
+                        ? 'Multiple' : preset.domains
+                    )
+                    + '\n' + preset.description.split('\n')[0]
+                  }
+                />
+              )
+            }</List>
+          </Dialog>
         </div>
       </Tabs>
     );
