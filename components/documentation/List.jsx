@@ -43,6 +43,10 @@ export default class DocumentationList extends React.Component {
 
     return (
       <Paper zDepth={1} className='documentation-list'>
+        <a href='https://github.com/Xyfir/Documentation' target='_blank'>
+          View on Github
+        </a>
+        
         <List>{
           files.map(file =>
             <ListItem
