@@ -53,33 +53,35 @@ class ButtonForm extends React.Component {
 
     // Validate data
     try {
-      if (!button.name)
-        throw 'Button must have a name';
-      if (button.name.length > 100)
-        throw 'Button name limited to 100 characters';
-      if (!button.urlMatch)
-        throw 'URL match does not exist';
-      if (button.urlMatch.length > 1000)
-        throw 'URL match value limited to 1000 characters';
-      if (!button.script && !button.repository)
-        throw 'No script file or repository link provided';
-      if (button.domains && button.domains.length > 250)
-        throw 'Domains list limited to 250 characters';
-      
-      if (button.script) {
-        try {
-          button.script = JSON.parse(button.script);
-        }
-        catch (e) {
-          throw 'Invalid button script';
+      if (!button.repository) {
+        if (!button.name)
+          throw 'Button must have a name';
+        if (button.name.length > 100)
+          throw 'Button name limited to 100 characters';
+        if (!button.urlMatch)
+          throw 'URL match does not exist';
+        if (button.urlMatch.length > 1000)
+          throw 'URL match value limited to 1000 characters';
+        if (!button.script)
+          throw 'No script file or repository link provided';
+        if (button.domains && button.domains.length > 250)
+          throw 'Domains list limited to 250 characters';
+        
+        if (button.script) {
+          try {
+            button.script = JSON.parse(button.script);
+          }
+          catch (e) {
+            throw 'Invalid button script';
+          }
+
+          if (!button.script['main.js'])
+            throw 'Button script must have a non-empty main.js file';
         }
 
-        if (!button.script['main.js'])
-          throw 'Button script must have a non-empty main.js file';
+        if (button.tooltip && button.tooltip.length > 255)
+          throw 'Tooltip cannot be longer than 255 characters';
       }
-
-      if (button.tooltip && button.tooltip.length > 255)
-        throw 'Tooltip cannot be longer than 255 characters';
     }
     catch (e) {
       this.props.App._alert(e);
