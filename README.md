@@ -4,7 +4,7 @@ Most documentation can be found in [Xyfir's documentation repo](https://github.c
 
 # Xyfir Buttons
 
-Xyfir Buttons (xyButtons) is a new type of userscript system like Greasemonkey or Tampermonkey that while similar to other extensions has a few notable differences. One of the main differences is whereas extensions like Greasemonkey keep installed scripts hidden away in a special browser menu where you can enable or disable the scripts, xyButtons puts the scripts where you can see them: on the page itself, in the form of floating buttons. Each script has its own button that is rendered onto the page where it can listen to events on the button as well as have full access to the page it is injected into. Buttons are grouped into 'presets' that control the placement of the buttons on the page among other things. Both buttons and presets have 'url match expressions' that determine whether a preset or its buttons will be rendered to a page.
+Xyfir Buttons (xyButtons) is a new type of userscript system, like Greasemonkey or Tampermonkey, that while similar to other extensions has a few notable differences. One of the main differences is whereas extensions like Greasemonkey keep installed scripts hidden away in a special browser menu where you can enable or disable the scripts, xyButtons puts the scripts where you can see them: on the page itself, in the form of floating buttons. Each script has its own button that is rendered onto the page where it can listen to events on the button and also has full access to the page it is injected into. Buttons are grouped into 'presets' that control the placement of the buttons on the page among other things. Both buttons and presets have 'url match expressions' that determine whether a preset or its buttons will be rendered to a page.
 
 xyButtons also has its own button and presets repository that allows users to easily find and share buttons and presets with other users.
 
@@ -14,9 +14,9 @@ xyButtons also has its own button and presets repository that allows users to ea
 
 ## Building the Client
 
-As of now, the build scripts in `package.json` are written for Windows. Either use Windows to build the xyButtons client or take a few minutes to rewrite them. Feel free to make a pull request with the updated versions (alongside the Windows commands).
+As of now, the build scripts in `package.json` are written for Windows. Either use Windows to build the xyButtons client or take a few minutes to rewrite the build scripts. Feel free to make a pull request with the updated versions (alongside the Windows commands).
 
-Before running any of the build scripts, you must first be sure you have the installed (`npm install`), and also that you setup the config file. Create a copy of the file `./constants/config.default.js` within the folder, rename that copy to `config.js`, and then fill in the appropriate values.
+Before running any of the build scripts, you must first be sure you have the dependencies installed (`npm install`), and also that you setup the config file. Create a copy of the file `./constants/config.default.js` within the folder, rename that copy to `config.js`, and then fill in the appropriate values.
 
 All build scripts are run with `npm run <script_name>`. Available scripts are:
 
@@ -41,3 +41,4 @@ Any code contributions must follow these guidelines to be considered for accepta
 - Attempt to follow the code style already present in the file(s) you work on.
 - Capitalize the beginning of commit messages.
 - Attempt to keep the first line of commit messages under 50 characters. Use other lines for more detailed messages if needed.
+- Avoid relative paths when importing. For example, instead of `'../../constants/config'`, write `'constants/config'`.
