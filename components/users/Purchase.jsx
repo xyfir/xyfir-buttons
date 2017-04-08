@@ -111,6 +111,14 @@ export default class Purchase extends React.Component {
           </p>
         ) : <span />}
 
+        <p>
+          Purchasing a xyButtons subscription helps support development and keep our servers up.
+          <br />
+          Subscribed users receive a golden username and do not receive advertisements.
+          <br />
+          In the future more special features may be added. Have an idea for a new feature? Send us an <a href='https://xyfir.com/#/contact' target='_blank'>email</a>.
+        </p>
+
         <SelectField
           id='select--subscription'
           ref='subscription'
