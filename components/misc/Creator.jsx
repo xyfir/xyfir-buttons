@@ -12,7 +12,13 @@ export default class Creator extends React.Component {
     return (
       <span className='creator'>
         <a
-          className='name'
+          className={
+            `name ${
+              creator.isAdmin ? 'admin' :
+              creator.isModerator ? 'moderator' :
+              creator.isPremium ? 'premium' : ''
+            }`
+          }
           href={`#/users/${creator.id}`}
         >{creator.name}</a>
         <span className='reputation'>({creator.reputation})</span>
@@ -25,5 +31,8 @@ export default class Creator extends React.Component {
 Creator.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  reputation: PropTypes.number.isRequired
+  isAdmin: PropTypes.number.isRequired,
+  isPremium: PropTypes.number.isRequired,
+  reputation: PropTypes.number.isRequired,
+  isModerator: PropTypes.number.isRequired
 };
