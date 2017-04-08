@@ -12,6 +12,7 @@ import Paper from 'react-md/lib/Papers/Paper';
 import List from 'react-md/lib/Lists/List';
 
 // Components
+import Advertisement from 'components/misc/Advertisement';
 import ScriptEditor from 'components/editors/Script';
 import Comments from 'components/misc/Comments';
 import Creator from 'components/misc/Creator';
@@ -179,6 +180,8 @@ export default class ViewButton extends React.Component {
               }}
             />
           </Paper>
+
+          <Advertisement sub={this.props.storage.account.subscription} />
 
           <Paper zDepth={1}>
             <dl className='info-list'>

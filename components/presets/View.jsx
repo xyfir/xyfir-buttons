@@ -9,6 +9,7 @@ import Button from 'react-md/lib/Buttons/Button';
 import Paper from 'react-md/lib/Papers/Paper';
 
 // Components
+import Advertisement from 'components/misc/Advertisement';
 import Comments from 'components/misc/Comments';
 import Creator from 'components/misc/Creator';
 import Votes from 'components/misc/Votes';
@@ -109,6 +110,8 @@ export default class ViewPreset extends React.Component {
               }}
             />
           </Paper>
+
+          <Advertisement sub={this.props.storage.account.subscription} />
 
           <Paper zDepth={1}>
             <dl className='info-list'>
