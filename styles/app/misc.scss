@@ -142,6 +142,25 @@ span.creator {
   span.reputation {
     margin-left: 0.2em;
   }
+
+  a.name {
+    &:hover {
+      text-decoration: underline;
+      filter: brightness(110%);
+    }
+
+    &.admin {
+      color: red;
+    }
+
+    &.moderator {
+      color: purple;
+    }
+
+    &.premium {
+      color: gold;
+    }
+  }
 }
 
 div.votes {
