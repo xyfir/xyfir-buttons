@@ -148,10 +148,10 @@ export default class App extends React.Component {
             <a href='#/docs'>
               <ListItem primaryText='Documentation' />
             </a>,
-
-            <Divider />,
-
-            <a href='https://github.com/Xyfir/Xyfir-Buttons-client'>
+            <a href='https://xyfir.com/#/contact' target='_blank'>
+              <ListItem primaryText='Contact' />
+            </a>,
+            <a href='https://github.com/Xyfir/Xyfir-Buttons-client' target='_blank'>
               <ListItem primaryText='Contribute' />
             </a>
           ]}
