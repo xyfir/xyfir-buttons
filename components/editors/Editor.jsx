@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
-import brace from 'brace';
 import Ace from 'react-ace';
+import React from 'react';
+import brace from 'brace';
+import PropTypes from 'prop-types';
 
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';

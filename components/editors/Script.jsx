@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import Editor from 'components/editors/Editor';
@@ -277,11 +278,11 @@ ButtonScriptEditor.propTypes = {
   /**
    * Stringified script object
    */
-  value: React.PropTypes.string,
+  value: PropTypes.string,
   /**
    * Sends an error message string on error.
    */
-  onError: React.PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
   /**
    * If true, the user cannot add, remove, or change files.
    */

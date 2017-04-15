@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // react-md
 import SelectField from 'react-md/lib/SelectFields';
@@ -133,12 +134,12 @@ PresetForm.propTypes = {
   /**
    * Called when provided data is valid. Passes preset data object.
    */
-  onSuccess: React.PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
   /**
    * Preset object containing the properties of variables that xyButtons'
    * preset creation or modification API controller will expect.
    */
-  preset: React.PropTypes.object
+  preset: PropTypes.object
 };
 
 PresetForm.defaultProps = {

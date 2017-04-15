@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import Editor from 'components/editors/Editor';
@@ -102,7 +103,7 @@ StylesEditor.propTypes = {
   /**
    * A JSON string representing an HTMLElement.style object.
    */
-  value: React.PropTypes.string,
+  value: PropTypes.string,
 };
 
 StylesEditor.defaultProps = {

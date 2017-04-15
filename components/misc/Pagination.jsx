@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // react-md
 import 'react-md/lib/Buttons/Button';
@@ -52,11 +53,11 @@ Pagination.propTypes = {
   /**
    * The id of the 25th item in the list. If truthy, show the next button.
    */
-  lastId: React.PropTypes.number,
+  lastId: PropTypes.number,
   /**
    * The current last id for the list. If truthy, the back button is shown.
    */
-  currentLastId: React.PropTypes.number
+  currentLastId: PropTypes.number
 }
 
 export default Pagination;

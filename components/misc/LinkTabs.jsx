@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // react-md
 import TabsContainer from 'react-md/lib/Tabs/TabsContainer';

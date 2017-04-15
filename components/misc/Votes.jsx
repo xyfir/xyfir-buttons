@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import request from 'superagent';
+import PropTypes from 'prop-types';
 
 // react-md
 import FontIcon from 'react-md/lib/FontIcons';

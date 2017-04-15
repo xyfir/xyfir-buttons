@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
-import request from 'superagent';
+import React from 'react';
 import moment from 'moment';
+import request from 'superagent';
+import PropTypes from 'prop-types';
 
 // react-md
 import Paper from 'react-md/lib/Papers';

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // react-md
 import SelectField from 'react-md/lib/SelectFields';
@@ -234,12 +235,12 @@ ButtonForm.propTypes = {
   /**
    * Called when provided data is valid. Passes button data object.
    */
-  onSuccess: React.PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
   /**
    * Button object containing the properties of variables that xyButtons'
    * button creation or modification API controller will expect.
    */
-  button: React.PropTypes.object
+  button: PropTypes.object
 };
 
 ButtonForm.defaultProps = {
