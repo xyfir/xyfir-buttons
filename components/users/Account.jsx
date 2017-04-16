@@ -10,6 +10,9 @@ import Paper from 'react-md/lib/Papers';
 // Constants
 import { XYACCOUNTS_URL, XYBUTTONS_URL } from 'constants/config';
 
+// Modules
+import canSync from 'lib/shared/can-browser-sync';
+
 export default class Account extends React.Component {
 
   constructor(props) {
@@ -34,7 +37,12 @@ export default class Account extends React.Component {
             {}, this.props.storage.account, { name }
           );
 
-          chrome.p.storage.sync.set({ account })
+          canSync()
+            .then(sync => {
+              return sync
+                ? chrome.p.storage.sync.set({ account })
+                : Promise.resolve();
+            })
             .then(() => chrome.p.storage.local.set({ account }))
             .then(() => location.reload());
         }

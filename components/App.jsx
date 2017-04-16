@@ -1,6 +1,6 @@
+import { GatewayProvider, GatewayDest } from 'react-gateway';
 import chromePromise from 'chrome-promise';
 import React from 'react';
-import { GatewayProvider, GatewayDest } from 'react-gateway';
 
 // react-md
 import ListItem from 'react-md/lib/Lists/ListItem';
@@ -12,6 +12,9 @@ import Button from 'react-md/lib/Buttons/Button';
 
 // Constants
 import { ENVIRONMENT } from 'constants/config';
+
+// Modules
+import canSync from 'lib/shared/can-browser-sync';
 
 chrome.p = new chromePromise();
 
@@ -35,8 +38,10 @@ export default class App extends React.Component {
   componentWillMount() {
     const data = {};
 
-    chrome.p.storage.sync
-      .get('account')
+    canSync()
+      .then(sync => {
+        return chrome.p.storage[sync ? 'sync' : 'local'].get('account');
+      })
       .then(res => {
         data.account = res.uid != undefined ? res : { uid: 0 };
 
