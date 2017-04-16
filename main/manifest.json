@@ -1,8 +1,8 @@
 {
   "name": "Xyfir Buttons",
   "short_name": "xyButtons",
-  "description": "Control the web with floating buttons added to web pages.",
-  "version": "1.3.0",
+  "description": "A new type of userscript system: control the web with floating buttons.",
+  "version": "1.4.0",
   "manifest_version": 2,
   "commands": {
     "_execute_browser_action": {
@@ -19,9 +19,11 @@
       "1024": "res/icons/1024.png"
     },
     "default_title": "Xyfir Buttons",
-    "default_popup": "popup.html"
+    "default_popup": "open.html"
   },
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "open.html"
+  },
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "run_at": "document_start",
@@ -48,5 +50,11 @@
   "web_accessible_resources": [
     "inject.js",
     "inject.css"
-  ]
+  ],
+  "applications": {
+    "gecko": {
+      "id": "buttons@xyfir.com",
+      "strict_min_version": "50.0"
+    }
+  }
 }
