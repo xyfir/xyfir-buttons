@@ -25,8 +25,12 @@ class PresetForm extends React.Component {
       urlMatch: this.refs.urlMatch._field.getValue(),
       domains: this.refs.domains._field.getValue(),
       isListed: document.getElementById('cb--is-listed').checked,
-      description: this.refs.description._field.getValue(),
+      description: this.refs.description._field.getValue()
     };
+
+    // Generate mod key for new preset created by anonymous user
+    if (!this.props.preset.name && !this.props.storage.account.uid)
+      data.key = true;
 
     const preset = Object.assign({}, data);
 

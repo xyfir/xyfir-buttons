@@ -12,6 +12,7 @@ import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
 import downloadPresets from 'lib/shared/presets/download';
+import setModKey from 'lib/app/items/set-mod-key';
 
 class CreatePreset extends React.Component {
 
@@ -33,6 +34,8 @@ class CreatePreset extends React.Component {
           this.props.App._alert(res.body.message);
         }
         else {
+          setModKey(this.props.storage, res.body, 'preset');
+
           const next = () => location.hash = '#/presets/' + res.body.id;
           downloadPresets([{ id: res.body.id }]).then(next).catch(next);
         }

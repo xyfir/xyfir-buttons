@@ -50,6 +50,10 @@ class ButtonForm extends React.Component {
       description: this.refs.description._field.getValue()
     };
 
+    // Generate mod key for new button created by anonymous user
+    if (!this.props.button.name && !this.props.storage.account.uid)
+      data.key = true;
+
     const button = Object.assign({}, data);
 
     // Validate data

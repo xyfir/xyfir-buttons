@@ -12,6 +12,7 @@ import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
 import downloadButtons from 'lib/shared/buttons/download';
+import setModKey from 'lib/app/items/set-mod-key';
 
 class CreateButton extends React.Component {
 
@@ -33,6 +34,8 @@ class CreateButton extends React.Component {
           this.props.App._alert(res.body.message);
         }
         else {
+          setModKey(this.props.storage, res.body, 'button');
+          
           const next = () => location.hash = '#/buttons/' + res.body.id;
           downloadButtons([{ id: res.body.id }]).then(next).catch(next);
         }
