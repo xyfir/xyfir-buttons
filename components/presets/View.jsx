@@ -18,6 +18,7 @@ import Tabs from 'components/misc/Tabs';
 // Modules
 import downloadPresets from 'lib/shared/presets/download';
 import deletePreset from 'lib/shared/presets/delete';
+import isCreator from 'lib/app/items/is-creator';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -46,9 +47,9 @@ export default class ViewPreset extends React.Component {
         res.body.isInstalled =
           !!Object.keys(this.props.storage)
             .find(k => k == 'preset_' + res.body.id),
-        res.body.isCreator =
-          res.body.creator.id == this.props.storage.account.uid
-          && res.body.creator.id != 0,
+        res.body.isCreator = isCreator(
+          res.body.creator, this.props.storage, 'preset', res.body.id
+        ),
         res.body.loading = false;
         
         this.setState(res.body);

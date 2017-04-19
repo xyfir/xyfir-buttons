@@ -22,6 +22,7 @@ import Tabs from 'components/misc/Tabs';
 // Modules
 import downloadButtons from 'lib/shared/buttons/download';
 import downloadPresets from 'lib/shared/presets/download';
+import isCreator from 'lib/app/items/is-creator';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -34,12 +35,12 @@ export default class ViewButton extends React.Component {
     const s = this.props.storage;
     let presets = [];
 
-    if (s.account.uid != 0) {
-      presets = Object.keys(s)
-        .filter(k => /^preset_/.test(k))
-        .filter(k => s[k].creator == s.account.uid)
-        .map(k => s[k]);
-    }
+    presets = Object.keys(s)
+      .filter(k => /^preset_/.test(k))
+      .filter(k =>
+        isCreator(s[k].creator, this.props.storage, 'preset', s[k].id)
+      )
+      .map(k => s[k]);
 
     this.state = { loading: true, presets, addToPreset: false };
   }
@@ -60,9 +61,9 @@ export default class ViewButton extends React.Component {
         res.body.isInstalled =
           !!Object.keys(this.props.storage)
             .find(k => k == 'button_' + res.body.id),
-        res.body.isCreator =
-          res.body.creator.id == this.props.storage.account.uid
-          && res.body.creator.id != 0,
+        res.body.isCreator = isCreator(
+          res.body.creator, this.props.storage, 'button', res.body.id
+        ),
         res.body.loading = false;
         
         this.setState(res.body);

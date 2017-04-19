@@ -12,6 +12,7 @@ import Tabs from 'components/misc/Tabs';
 
 // Modules
 import downloadPresets from 'lib/shared/presets/download';
+import isCreator from 'lib/app/items/is-creator';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -65,9 +66,8 @@ export default class PlacePresetButtons extends React.Component {
 
     this.state = {
       buttons, selectedButton: -1, controls: { top: '25%', left: '25%' },
-      url: '', showOverlay: false, isCreator: (
-        preset.creator == this.props.storage.account.uid &&
-        preset.creator != 0
+      url: '', showOverlay: false, isCreator: isCreator(
+        preset.creator, this.props.storage, 'preset', preset.id
       )
     };
   }

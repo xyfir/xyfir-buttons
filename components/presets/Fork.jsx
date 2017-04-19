@@ -13,6 +13,7 @@ import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
 import downloadPresets from 'lib/shared/presets/download';
+import isCreator from 'lib/app/items/is-creator';
 
 export default class ForkPreset extends React.Component {
 
@@ -23,7 +24,7 @@ export default class ForkPreset extends React.Component {
   }
 
   /**
-   * Check if button exists and set state.isCreator.
+   * Check if preset exists and set state.isCreator.
    */
   componentWillMount() {
     request
@@ -35,9 +36,8 @@ export default class ForkPreset extends React.Component {
         else {
           this.setState({
             loading: false,
-            isCreator: (
-              res.body.creator.id == this.props.storage.account.uid
-              && res.body.creator.id != 0
+            isCreator: isCreator(
+              res.body.creator, this.props.storage, 'preset', res.body.id
             )
           });
         }

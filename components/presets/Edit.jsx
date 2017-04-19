@@ -11,6 +11,9 @@ import Tabs from 'components/misc/Tabs';
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
 
+// Modules
+import isCreator from 'lib/app/items/is-creator';
+
 class EditPreset extends React.Component {
 
   constructor(props) {
@@ -20,7 +23,10 @@ class EditPreset extends React.Component {
       'preset_' + this.props.params.preset
     ];
     
-    if (!preset || preset.creator != this.props.storage.account.uid)
+    if (
+      !preset ||
+      !isCreator(preset.creator, this.props.storage, 'preset', preset.id)
+    )
       location.hash = '#/presets', this.state = {};
     else
       this.state = { preset };

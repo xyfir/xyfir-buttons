@@ -13,6 +13,7 @@ import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
 import downloadButtons from 'lib/shared/buttons/download';
+import isCreator from 'lib/app/items/is-creator';
 
 export default class ForkButton extends React.Component {
 
@@ -35,9 +36,8 @@ export default class ForkButton extends React.Component {
         else {
           this.setState({
             loading: false,
-            isCreator: (
-              res.body.creator.id == this.props.storage.account.uid
-              && res.body.creator.id != 0
+            isCreator: isCreator(
+              res.body.creator, this.props.storage, 'button', res.body.id
             )
           });
         }

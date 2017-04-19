@@ -10,6 +10,7 @@ import Tabs from 'components/misc/Tabs';
 
 // Modules
 import downloadButtons from 'lib/shared/buttons/download';
+import isCreator from 'lib/app/items/is-creator';
 
 // Constants
 import { XYBUTTONS_URL } from 'constants/config';
@@ -23,7 +24,10 @@ class EditButton extends React.Component {
       'button_' + this.props.params.button
     ];
     
-    if (!button || button.creator != this.props.storage.account.uid)
+    if (
+      !button ||
+      !isCreator(button.creator, this.props.storage, 'button', button.id)
+    )
       location.hash = '#/buttons', this.state = {};
     else
       this.state = { button };
