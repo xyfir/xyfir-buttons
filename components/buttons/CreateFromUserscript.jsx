@@ -1,5 +1,5 @@
-import React from 'react';
 import request from 'superagent';
+import React from 'react';
 
 // react-md
 import TextField from 'react-md/lib/TextFields';
@@ -12,6 +12,7 @@ import { XYBUTTONS_URL } from 'constants/config';
 // Modules
 import downloadButtons from 'lib/shared/buttons/download';
 import parseUserscript from 'lib/shared/convert-userscript/parse-code';
+import setModKey from 'lib/app/items/set-mod-key';
 
 export default class CreateButtonFromUserscript extends React.Component {
 
@@ -42,6 +43,8 @@ export default class CreateButtonFromUserscript extends React.Component {
           this.props.App._alert(res.body.message);
         }
         else {
+          setModKey(this.props.storage, res.body, 'button');
+          
           const next = () => location.hash = '#/buttons/' + res.body.id;
           downloadButtons([{ id: res.body.id }]).then(next).catch(next);
         }
