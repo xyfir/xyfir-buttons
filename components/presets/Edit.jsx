@@ -12,6 +12,7 @@ import Tabs from 'components/misc/Tabs';
 import { XYBUTTONS_URL } from 'constants/config';
 
 // Modules
+import downloadPresets from 'lib/shared/presets/download';
 import isCreator from 'lib/app/items/is-creator';
 
 class EditPreset extends React.Component {
@@ -44,10 +45,13 @@ class EditPreset extends React.Component {
       .put(XYBUTTONS_URL + 'api/presets/' + id)
       .send(preset)
       .end((err, res) => {
-        if (err || res.body.error)
+        if (err || res.body.error) {
           this.props.App._alert(res.body.message);
-        else
-          chrome.storage.local.set({ ['preset_' + id]: preset });
+        }
+        else {
+          const next = () => location.reload();
+          downloadPresets([{ id }]).then(next).catch(next);
+        }
       });
   }
 
