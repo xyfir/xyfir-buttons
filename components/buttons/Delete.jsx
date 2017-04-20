@@ -26,6 +26,9 @@ export default class DeleteButton extends React.Component {
 
     request
       .delete(XYBUTTONS_URL + 'api/buttons/' + id)
+      .send({
+        modKey: this.props.storage.modkeys.buttons[id] || ''
+      })
       .end((err, res) => {
         if (err || res.body.error) {
           this.props.App._alert('Could not delete button');

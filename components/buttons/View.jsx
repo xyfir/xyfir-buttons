@@ -129,7 +129,9 @@ export default class ViewButton extends React.Component {
       request
         .post(`${XYBUTTONS_URL}api/presets/${id}/buttons/${this.state.id}`)
         .send({
-          size: '4em', position: '50%,50%', styles: '{}'
+          size: '4em', position: '50%,50%', styles: '{}', modKey: (
+            this.props.storage.modkeys.presets[id] || ''
+          )
         })
         .end((err, res) => {
           if (err || res.body.error) {

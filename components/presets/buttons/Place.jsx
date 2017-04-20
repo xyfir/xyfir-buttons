@@ -204,7 +204,10 @@ export default class PlacePresetButtons extends React.Component {
             button.id
           )
           .send({
-            size: button.size, position: button.position, styles
+            size: button.size, position: button.position, styles, modKey: (
+              this.props.storage.modkeys.presets[this.props.params.preset] ||
+              ''
+            )
           })
           .end((err, res) => {
             if (err || res.body.error)

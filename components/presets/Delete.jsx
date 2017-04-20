@@ -29,6 +29,9 @@ export default class DeletePreset extends React.Component {
 
     request
       .delete(`${XYBUTTONS_URL}api/presets/${id}`)
+      .send({
+        modKey: this.props.storage.modkeys.presets[id] || ''
+      })
       .end((err, res) => {
         if (err || res.body.error)
           this.props.App._alert('Could not delete preset');

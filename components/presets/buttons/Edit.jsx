@@ -39,7 +39,11 @@ export default class EditPresetButton extends React.Component {
     request
       .put(`${XYBUTTONS_URL}api/presets/${presetId}/buttons/${button.id}`)
       .send(
-        Object.assign({}, button, { styles: this.refs.styles.value })
+        Object.assign({}, button, {
+          styles: this.refs.styles.value, modKey: (
+            this.props.storage.modkeys.presets[presetId] || ''
+          )
+        })
       )
       .end((err, res) => {
         if (err || res.body.error) {

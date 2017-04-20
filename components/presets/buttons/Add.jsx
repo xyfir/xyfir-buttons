@@ -29,7 +29,9 @@ export default class AddPresetButton extends React.Component {
     request
       .post(`${XYBUTTONS_URL}api/presets/${this.state.preset}/buttons/${id}`)
       .send({
-        size: '4em', position: '50%,50%', styles: '{}'
+        size: '4em', position: '50%,50%', styles: '{}', modKey: (
+          this.props.storage.modkeys.presets[this.state.preset] || ''
+        )
       })
       .end((err, res) => {
         if (err || res.body.error) {

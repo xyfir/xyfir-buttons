@@ -41,6 +41,8 @@ class EditButton extends React.Component {
   onEdit(button) {
     const id = this.state.button.id;
 
+    button.modKey = this.props.storage.modkeys.buttons[id] || '';
+
     request
       .put(XYBUTTONS_URL + 'api/buttons/' + id)
       .send(button)

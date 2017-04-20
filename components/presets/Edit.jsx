@@ -41,6 +41,8 @@ class EditPreset extends React.Component {
   onEdit(preset) {
     const id = this.state.preset.id;
 
+    button.modKey = this.props.storage.modkeys.presets[id] || '';
+
     request
       .put(XYBUTTONS_URL + 'api/presets/' + id)
       .send(preset)
