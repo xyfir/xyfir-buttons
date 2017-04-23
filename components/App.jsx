@@ -14,7 +14,7 @@ import Button from 'react-md/lib/Buttons/Button';
 import { ENVIRONMENT } from 'constants/config';
 
 // Modules
-import canSync from 'lib/shared/can-browser-sync';
+import canSync from 'lib/shared/util/can-browser-sync';
 
 chrome.p = new chromePromise();
 

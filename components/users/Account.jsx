@@ -11,7 +11,7 @@ import Paper from 'react-md/lib/Papers';
 import { XYACCOUNTS_URL, XYBUTTONS_URL } from 'constants/config';
 
 // Modules
-import canSync from 'lib/shared/can-browser-sync';
+import canSync from 'lib/shared/util/can-browser-sync';
 
 export default class Account extends React.Component {
 
