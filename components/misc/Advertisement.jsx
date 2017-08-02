@@ -21,7 +21,9 @@ export default class Advertisement extends React.Component {
 
     request
       .get(XYBUTTONS_URL + 'api/ads')
-      .end((err, res) => !err && this.setState(res.body));
+      .end((err, res) =>
+        !err && res.body.link && this.setState(res.body)
+      );
   }
 
   render() {
@@ -30,10 +32,10 @@ export default class Advertisement extends React.Component {
     return (
       <Paper zDepth={1}>
         <a onClick={() => window.open(this.state.link)}>{
-          this.state.title
+          this.state.normalText.title
         }</a>
         
-        <span>{this.state.description}</span>
+        <span>{this.state.normalText.description}</span>
 
         <small>
           Remove advertisements by purchasing a <a href='#/users/account/purchase'>subscription</a>.

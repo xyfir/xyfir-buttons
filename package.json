@@ -1,6 +1,6 @@
 {
   "name": "xyfir-buttons-client",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Xyfir Buttons client application and browser extension",
   "scripts": {
     "build:js": "webpack --colors",
@@ -21,7 +21,7 @@
     "moment": "^2.18.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "react-ace": "^4.2.1",
+    "react-ace": "^5.1.1",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-transition-group": "^15.5.2",
     "react-dom": "^15.5.4",
@@ -38,6 +38,6 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "node-sass": "^4.5.2",
-    "webpack": "^2.4.1"
+    "webpack": "^3.4.1"
   }
 }
