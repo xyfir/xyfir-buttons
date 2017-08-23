@@ -2,7 +2,7 @@
   "name": "Xyfir Buttons",
   "short_name": "xyButtons",
   "description": "A new type of userscript system. Control the web with floating buttons.",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "manifest_version": 2,
   "commands": {
     "_execute_browser_action": {
