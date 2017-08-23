@@ -4,8 +4,6 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 // Components
 import App from 'components/App';
-import ViewUser from 'components/users/View';
-import FindUsers from 'components/users/Find';
 import ViewButton from 'components/buttons/View';
 import EditButton from 'components/buttons/Edit';
 import EditPreset from 'components/presets/Edit';
@@ -14,7 +12,6 @@ import ViewPreset from 'components/presets/View';
 import ForkPreset from 'components/presets/Fork';
 import FindButtons from 'components/buttons/Find';
 import FindPresets from 'components/presets/Find';
-import UserAccount from 'components/users/Account';
 import CreateButton from 'components/buttons/Create';
 import CreatePreset from 'components/presets/Create';
 import DeleteButton from 'components/buttons/Delete';
@@ -25,7 +22,6 @@ import DocumentationList from 'components/documentation/List';
 import ViewDocumentation from 'components/documentation/View';
 import ViewPresetButtons from 'components/presets/buttons/View';
 import PlacePresetButtons from 'components/presets/buttons/Place';
-import PurchaseSubscription from 'components/users/Purchase';
 import CreateButtonFromUserscript from 'components/buttons/CreateFromUserscript';
 
 render((
@@ -74,18 +70,6 @@ render((
             <Route path=':button' component={EditPresetButton} />
           </Route>
         </Route>
-      </Route>
-
-      <Route path='users'>
-        <IndexRoute component={FindUsers} />
-
-        <Route path='account'>
-          <IndexRoute component={UserAccount} />
-          
-          <Route path='purchase' component={PurchaseSubscription} />
-        </Route>
-
-        <Route path=':user' component={ViewUser} />
       </Route>
 
       <Route path='docs'>
