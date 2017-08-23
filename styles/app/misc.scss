@@ -1,7 +1,7 @@
-.find-buttons, .find-presets, .find-users, .buttons-in-preset, .add-button-to-preset {
+.find-buttons, .find-presets, .buttons-in-preset, .add-button-to-preset {
   flex: 1;
 
-  .controls, .buttons-list, .presets-list, .users-list {
+  .controls, .buttons-list, .presets-list {
     @include md-box-shadow(1);
   }
 
@@ -60,7 +60,6 @@
 
 .delete-button, .fork-button, .view-button,
 .delete-preset, .fork-preset, .view-preset,
-.user-account > .login, .user-account > .account > .md-paper, .purchase,
 .documentation-list, .view-documentation,
 .buttons-in-preset > .controls, .buttons-in-preset > .buttons-list,
 .add-button-to-preset > .buttons-list,
@@ -138,75 +137,6 @@
   }
 }
 
-span.creator {
-  span.reputation {
-    margin-left: 0.2em;
-  }
-
-  a.name {
-    &:hover {
-      text-decoration: underline;
-      filter: brightness(110%);
-    }
-
-    &.admin {
-      color: red;
-    }
-
-    &.moderator {
-      color: purple;
-    }
-
-    &.premium {
-      color: gold;
-    }
-  }
-}
-
-div.votes {
-  display: flex;
-  align-items: center;
-
-  div.controls {
-    button {
-      min-width: initial;
-      padding: 0.2em;
-    }
-  }
-}
-
-div.comments {
-  >div {
-    width: 100%;
-    display: flex;
-    align-items: center;
-     justify-content: center;
-  }
-
-  div.add, div.comments-list {
-    flex-direction: column;
-  }
-
-  div.comment {
-    div.content {
-      font-size: 125%;
-    }
-
-    div.info {
-      display: flex;
-      align-items: center;
-
-      span.creator {
-        margin: 0em 1em;
-      }
-    }
-  }
-}
-
-.find-users {
-  padding: 0.5em;
-}
-
 dl.info-list {
   display: table;
 
@@ -222,47 +152,6 @@ dl.info-list {
     dd, dt {
       display: table-cell;
       font-size: 125%;
-    }
-  }
-}
-
-.view-user {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.5em;
-
-  >.md-paper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 1em;
-    width: 100%;
-  }
-}
-
-.user-account {
-  .login {
-    >div button {
-      width: 10em;
-      margin: 0em 0.5em;
-    }
-  }
-
-  .account {
-    >div.controls {
-      flex-direction: row;
-      justify-content: center;
-    }
-  }
-}
-
-.purchase {
-  >div.expiration {
-    display: flex;
-
-    >.md-text-field-container {
-      flex: 1;
     }
   }
 }
