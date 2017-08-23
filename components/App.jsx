@@ -10,12 +10,6 @@ import Divider from 'react-md/lib/Dividers';
 import Drawer from 'react-md/lib/Drawers';
 import Button from 'react-md/lib/Buttons/Button';
 
-// Constants
-import { ENVIRONMENT } from 'constants/config';
-
-// Modules
-import canSync from 'lib/shared/util/can-browser-sync';
-
 chrome.p = new chromePromise();
 
 export default class App extends React.Component {
@@ -28,9 +22,7 @@ export default class App extends React.Component {
       storage: {}
     };
 
-    if (ENVIRONMENT == 'dev') {
-      window.__app = this;
-    }
+    window.__app = this;
 
     this._alert = this._alert.bind(this);
   }
@@ -38,15 +30,7 @@ export default class App extends React.Component {
   componentWillMount() {
     const data = {};
 
-    canSync()
-      .then(sync => {
-        return chrome.p.storage[sync ? 'sync' : 'local'].get('account');
-      })
-      .then(res => {
-        data.account = res.uid != undefined ? res : { uid: 0 };
-
-        return chrome.p.storage.local.get(null);
-      })
+    chrome.p.storage.local.get(null)
       .then(res => {
         Object.assign(data, res);
 
@@ -141,22 +125,13 @@ export default class App extends React.Component {
 
             <Divider />,
 
-            <a href='#/users'>
-              <ListItem primaryText='Find Users' />
-            </a>,
-            <a href='#/users/account'>
-              <ListItem primaryText='My Account' />
-            </a>,
-
-            <Divider />,
-
             <a href='#/docs'>
               <ListItem primaryText='Documentation' />
             </a>,
             <a href='https://xyfir.com/#/contact' target='_blank'>
               <ListItem primaryText='Contact' />
             </a>,
-            <a href='https://github.com/Xyfir/Xyfir-Buttons-client' target='_blank'>
+            <a href='https://github.com/Xyfir/Xyfir-Buttons' target='_blank'>
               <ListItem primaryText='Contribute' />
             </a>
           ]}
