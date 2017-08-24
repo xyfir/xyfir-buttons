@@ -22,10 +22,12 @@ export default class PlacePresetButtons extends React.Component {
     ],
     buttons = [];
     
-    preset.buttons.forEach(b1 => {
+    preset.buttons.forEach(_b1 => {
+      // !! Must use Object.assign() to prevent app state form being changed
       // b1 from preset_${id}.buttons[]
+      const b1 = Object.assign({}, _b1);
       // b2 from button_${id}
-      const b2 = this.props.storage['button_' + b1.id];
+      const b2 = Object.assign({}, this.props.storage['button_' + b1.id]);
 
       b2.unparsedStyles = b2.styles;
 
