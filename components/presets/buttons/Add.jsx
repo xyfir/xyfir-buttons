@@ -1,4 +1,3 @@
-import request from 'superagent';
 import React from 'react';
 
 // Components
@@ -6,10 +5,7 @@ import ButtonList from 'components/buttons/List';
 import Tabs from 'components/misc/Tabs';
 
 // Modules
-import downloadPresets from 'lib/shared/presets/download';
-
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
+import savePreset from 'lib/shared/presets/save';
 
 export default class AddPresetButton extends React.Component {
 
@@ -22,30 +18,20 @@ export default class AddPresetButton extends React.Component {
   }
 
   /**
-   * Attempts to a add a button to the preset.
+   * Add button to the preset.
    * @param {number} id
    */
   onAddButton(id) {
-    request
-      .post(`${XYBUTTONS_URL}api/presets/${this.state.preset}/buttons/${id}`)
-      .send({
-        size: '4em', position: '50%,50%', styles: '{}', modKey: (
-          this.props.storage.modkeys.presets[this.state.preset] || ''
-        )
-      })
-      .end((err, res) => {
-        if (err || res.body.error) {
-          this.props.App._alert(res.body.message);
-        }
-        else {
-          const next = () => {
-            this._loadButtons();
-            this.props.App._alert('Button added to preset');
-          };
-          
-          downloadPresets([{ id: this.state.preset }]).then(next).catch(next);
-        }
-      });
+    const preset = this.props.storage['preset_' + this.state.preset];
+
+    preset.buttons.push({
+      id, size: '4em', position: '50%,50%', styles: '{}'
+    });
+
+    savePreset(preset).then(() => {
+      this._loadButtons();
+      this.props.App._alert('Button added to preset');
+    });
   }
 
   /**
@@ -78,16 +64,13 @@ export default class AddPresetButton extends React.Component {
       <Tabs
         type={2}
         base={'#/presets/' + this.props.params.preset}
-        isCreator={true}
         activeTabIndex={4}
       >
         <div className='add-button-to-preset'>
           <p>
-            Only buttons that are both downloaded locally and are not in the preset will be shown.
+            Only buttons that are not in the preset will be shown.
             <br />
             Clicking one of the items in the list will add its corresponding button to the preset.
-            <br />
-            If you're looking for a button that you don't already have downloaded, use the <a href="#/buttons">Find Buttons</a> section to download it first.
           </p>
 
           <ButtonList
