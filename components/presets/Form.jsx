@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 // react-md
 import SelectField from 'react-md/lib/SelectFields';
@@ -22,29 +22,23 @@ class PresetForm extends React.Component {
     
     const data = {
       name: this.refs.name._field.getValue(),
-      urlMatch: this.refs.urlMatch._field.getValue(),
+      buttons: [],
       domains: this.refs.domains._field.getValue(),
-      isListed: document.getElementById('cb--is-listed').checked,
+      urlMatch: this.refs.urlMatch._field.getValue(),
       description: this.refs.description._field.getValue()
     };
 
-    // Generate mod key for new preset created by anonymous user
-    if (!this.props.preset.name && !this.props.storage.account.uid)
-      data.key = true;
-
-    const preset = Object.assign({}, data);
-
     // Validate data
     try {
-      if (!preset.name)
+      if (!data.name)
         throw 'Preset must have a name';
-      if (preset.name.length > 100)
+      if (data.name.length > 100)
         throw 'Preset name limited to 100 characters';
-      if (!preset.urlMatch)
+      if (!data.urlMatch)
         throw 'URL match does not exist';
-      if (preset.urlMatch.length > 1000)
+      if (data.urlMatch.length > 1000)
         throw 'URL match value limited to 1000 characters';
-      if (preset.domains && preset.domains.length > 250)
+      if (data.domains && data.domains.length > 250)
         throw 'Domains list limited to 250 characters';
     }
     catch (e) {
@@ -58,7 +52,7 @@ class PresetForm extends React.Component {
     const p = this.props.preset;
 
     return (
-      <form onSubmit={(e) => this.onValidate(e)}>
+      <form onSubmit={e => this.onValidate(e)}>
         <h2>Required Data</h2>
         
         <TextField
@@ -82,15 +76,6 @@ class PresetForm extends React.Component {
       
         <hr className='divider' />
 
-        <h2>Optional Public Data</h2>
-
-        <Checkbox
-          id='cb--is-listed'
-          name='cb--is-listed'
-          label='List Publicly'
-          defaultChecked={!!p.isListed}
-        />
-
         <TextField
           id='textarea--description'
           ref='description'
@@ -98,10 +83,6 @@ class PresetForm extends React.Component {
           type='text'
           label='Description'
           maxRows={20}
-          helpText={
-            'Let others know what your preset does if its public. '
-            + 'The first line is used for a short description.'
-          }
           className='md-cell'
           defaultValue={p.description}
           lineDirection='right'
@@ -140,15 +121,14 @@ PresetForm.propTypes = {
    */
   onSuccess: PropTypes.func.isRequired,
   /**
-   * Preset object containing the properties of variables that xyButtons'
-   * preset creation or modification API controller will expect.
+   * Preset object.
    */
   preset: PropTypes.object
 };
 
 PresetForm.defaultProps = {
   preset: {
-    name: '', urlMatch: '.*', description: '', domains: '*', isListed: false
+    name: '', urlMatch: '.*', description: '', domains: '*'
   }
 };
 

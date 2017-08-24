@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 // react-md
 import SelectField from 'react-md/lib/SelectFields';
@@ -32,8 +32,9 @@ class ButtonForm extends React.Component {
     e && e.preventDefault();
     
     const data = {
+      icon: '',
       name: this.refs.name._field.getValue(),
-      styles: this.refs.stylesEditor.value,
+      styles: this.refs.stylesEditor.value || '{}',
       script: (
         this.state.scriptSource == 'Local'
           ? this.refs.scriptEditor.value : ''
@@ -42,17 +43,12 @@ class ButtonForm extends React.Component {
       domains: this.refs.domains._field.getValue(),
       content: encodeURIComponent(this.refs.content._field.getValue()),
       urlMatch: this.refs.urlMatch._field.getValue(),
-      isListed: document.getElementById('cb--is-listed').checked,
       repository: (
         this.state.scriptSource == 'Remote'
           ? this.refs.repository._field.getValue() : ''
       ),
       description: this.refs.description._field.getValue()
     };
-
-    // Generate mod key for new button created by anonymous user
-    if (!this.props.button.name && !this.props.storage.account.uid)
-      data.key = true;
 
     const button = Object.assign({}, data);
 
@@ -152,14 +148,7 @@ class ButtonForm extends React.Component {
       
         <hr className='divider' />
 
-        <h2>Optional Public Data</h2>
-
-        <Checkbox
-          id='cb--is-listed'
-          name='cb--is-listed'
-          label='List Publicly'
-          defaultChecked={!!b.isListed}
-        />
+        <h2>Optional Data</h2>
 
         <TextField
           id='textarea--description'
@@ -168,10 +157,6 @@ class ButtonForm extends React.Component {
           type='text'
           label='Description'
           maxRows={20}
-          helpText={
-            'Let others know what your button does if its public. '
-            + 'The first line is used for a short description.'
-          }
           className='md-cell'
           defaultValue={b.description}
           lineDirection='right'
@@ -192,8 +177,6 @@ class ButtonForm extends React.Component {
         />
         
         <hr className='divider' />
-
-        <h2>Optional Button Data</h2>
 
         <TextField
           id='text--tooltip'
@@ -241,8 +224,7 @@ ButtonForm.propTypes = {
    */
   onSuccess: PropTypes.func.isRequired,
   /**
-   * Button object containing the properties of variables that xyButtons'
-   * button creation or modification API controller will expect.
+   * Button object.
    */
   button: PropTypes.object
 };
@@ -250,7 +232,7 @@ ButtonForm.propTypes = {
 ButtonForm.defaultProps = {
   button: {
     name: '', urlMatch: '.*', script: '', repository: '', description: '',
-    domains: '*', isListed: false, tooltip: '', content: '', styles: ''
+    domains: '*', tooltip: '', content: '', styles: ''
   }
 };
 
