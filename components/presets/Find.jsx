@@ -9,20 +9,16 @@ import List from 'react-md/lib/Lists/List';
 import Tabs from 'react-md/lib/Tabs/Tabs';
 import Tab from 'react-md/lib/Tabs/Tab';
 
-// Components
-import Pagination from 'components/misc/Pagination';
+// Modules
+import search from 'lib/shared/util/search';
 
 export default class FindPresets extends React.Component {
 
   constructor(props) {
     super(props);
 
-    let searchType = 'name', searchQuery = '';
-
     this.state = {
-      presets: [], tab: 0, order: 'downloads', direction: 'desc',
-      lastId: (this.props.location.query.lastId || 0),
-      searchType, searchQuery
+      presets: [], tab: 0, searchQuery: ''
     };
 
     this._renderInstalled = this._renderInstalled.bind(this);
@@ -32,18 +28,7 @@ export default class FindPresets extends React.Component {
   }
 
   componentDidMount() {
-    this._loadPresets(false);
-  }
-
-  /**
-   * Make sure the query string's lastId variable matches this.state.lastId.
-   */
-  componentWillReceiveProps(props) {
-    if (this.state.lastId != props.location.query.lastId) {
-      this.setState({
-        lastId: (props.location.query.lastId || 0)
-      }, () => this._loadPresets(false));
-    }
+    this._loadPresets();
   }
 
   /**
@@ -51,7 +36,7 @@ export default class FindPresets extends React.Component {
    * @param {number} tab - Index of the active tab. 0 == installed, 1 == remote
    */
   onChangeTab(tab) {
-    this.setState({ tab }, () => this._loadPresets(false));
+    this.setState({ tab }, () => this._loadPresets());
   }
 
   /**
@@ -65,22 +50,14 @@ export default class FindPresets extends React.Component {
 
   /**
    * Loads matching presets.
-   * @param {boolean} [timeout=true] - If true, everything is wrapped in a 200
-   * millisecond timeout that is cleared if _loadPresets() is called again
-   * before the timeout is finished.
    */
-  _loadPresets(timeout = true) {
-    clearTimeout(this.searchTimeout);
-    
-    this.searchTimeout = setTimeout(() => {
-      const presets = [];
-      
-      Object.entries(this.props.storage).map(s => {
-        if (s[0].indexOf('preset_') == 0) presets.push(s[1]);
-      });
+  _loadPresets() {
+    const presets = Object
+      .entries(this.props.storage)
+      .filter(p => p[0].indexOf('preset_') == 0)
+      .map(p => p[1]);
 
-      this.setState({ presets });
-    }, timeout ? 200 : 0);
+    this.setState({ presets: search(presets, this.state.searchQuery) });
   }
 
   /**
