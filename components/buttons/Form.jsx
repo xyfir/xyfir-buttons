@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import request from 'superagent';
 import React from 'react';
 
 // react-md
@@ -11,7 +12,11 @@ import Button from 'react-md/lib/Buttons/Button';
 import ScriptEditor from 'components/editors/Script';
 import StylesEditor from 'components/editors/Styles';
 
-class ButtonForm extends React.Component {
+// Modules
+import buildFromRepo from 'lib/shared/buttons/build-from-repo';
+import buildFromGist from 'lib/shared/buttons/build-from-gist';
+
+export default class ButtonForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -28,7 +33,7 @@ class ButtonForm extends React.Component {
    * Validate the provided data. If data is valid call this.props.onSuccess().
    * @param {Event} [e]
    */
-  onValidate(e) {
+  async onValidate(e) {
     e && e.preventDefault();
     
     const data = {
@@ -83,12 +88,42 @@ class ButtonForm extends React.Component {
         if (button.tooltip && button.tooltip.length > 255)
           throw 'Tooltip cannot be longer than 255 characters';
       }
+      // Validate repo and code within it
+      else {
+        // $1 = not undefined if gist
+        // $2 = user/repoId|gistId
+        // $3 = user
+        // $4 = repoId|gistId
+        const regex = /^https:\/\/(gist\.)?github\.com\/((.+)\/(.+))/;
+        const match = button.repository.match(regex);
+        
+        let url = 'https://api.github.com/', isGist = false;
+
+        if (!match)
+          throw 'Invalid repository link. Must be Github repo or Gist';
+        else if (match[1] && match[4])
+          url += 'gists/' + match[4], isGist = true;
+        else if (match[4])
+          url += 'repos/' + match[2] + '/contents';
+        else
+          throw 'Invalid Github repository or Gist link';
+
+        const res = await request.get(url);
+
+        if (isGist)
+          data.script = buildFromGist(res.body);
+        else
+          Object.assign(data, await buildFromRepo(url, res.body));
+
+        data.script = JSON.stringify(data.script);
+      }
+
+      this.props.onSuccess(data);
     }
     catch (e) {
-      this.props.App._alert(e);
+      console.error('components/buttons/Form.jsx', e);
+      this.props.App._alert(e.toString());
     }
-
-    this.props.onSuccess(data);
   }
 
   render() {
@@ -235,5 +270,3 @@ ButtonForm.defaultProps = {
     domains: '*', tooltip: '', content: '', styles: ''
   }
 };
-
-export default ButtonForm;
