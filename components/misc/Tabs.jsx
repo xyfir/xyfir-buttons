@@ -15,15 +15,10 @@ export default class Tabs extends React.Component {
 
     const tabs = [
       { label: 'View', hash: base },
-      { label: 'Fork', hash: base + '/fork' }
+      { label: 'Fork', hash: base + '/fork' },
+      { label: 'Edit', hash: base + '/edit' },
+      { label: 'Delete', hash: base + '/delete' }
     ];
-
-    if (this.props.isCreator) {
-      tabs.push(
-        { label: 'Edit', hash: base + '/edit' },
-        { label: 'Delete', hash: base + '/delete' }
-      );
-    }
 
     if (this.props.type == 2)
       tabs.push({ label: 'Buttons', hash: base + '/buttons' });
@@ -51,11 +46,6 @@ Tabs.propTypes = {
    * The content to render.
    */
   children: PropTypes.element.isRequired,
-  /**
-   * If user is creator, 'Edit' and 'Delete' tabs are shown.
-   * 'Buttons' tab is displayed if type == 2.
-   */
-  isCreator: PropTypes.bool.isRequired,
   /**
    * The index of the active tab.
    */
