@@ -1,5 +1,4 @@
 import React from 'react';
-import request from 'superagent';
 
 // react-md
 import Paper from 'react-md/lib/Papers';
@@ -7,39 +6,22 @@ import Paper from 'react-md/lib/Papers';
 // Components
 import Form from 'components/presets/Form';
 
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
-
 // Modules
-import downloadPresets from 'lib/shared/presets/download';
-import setModKey from 'lib/app/items/set-mod-key';
+import savePreset from 'lib/shared/presets/save';
 
-class CreatePreset extends React.Component {
+export default class CreatePreset extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   /**
-   * Call xyButtons API to create preset.
-   * @param {object} preset - The preset object passed from
-   * CreateOrEditPresetForm's onValidate().
+   * Create preset.
+   * @param {object} preset
    */
   onCreate(preset) {
-    request
-      .post(XYBUTTONS_URL + 'api/presets')
-      .send(preset)
-      .end((err, res) => {
-        if (err || res.body.error) {
-          this.props.App._alert(res.body.message);
-        }
-        else {
-          setModKey(this.props.storage, res.body, 'preset');
-
-          const next = () => location.hash = '#/presets/' + res.body.id;
-          downloadPresets([{ id: res.body.id }]).then(next).catch(next);
-        }
-      });
+    preset.id = Date.now();
+    savePreset(preset).then(() => location.hash = '#/presets/' + preset.id);
   }
 
   render() {
@@ -51,5 +33,3 @@ class CreatePreset extends React.Component {
   }
 
 }
-
-export default CreatePreset;

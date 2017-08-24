@@ -1,5 +1,4 @@
 import React from 'react';
-import request from 'superagent';
 
 // react-md
 import Paper from 'react-md/lib/Papers';
@@ -7,39 +6,22 @@ import Paper from 'react-md/lib/Papers';
 // Components
 import Form from 'components/buttons/Form';
 
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
-
 // Modules
-import downloadButtons from 'lib/shared/buttons/download';
-import setModKey from 'lib/app/items/set-mod-key';
+import saveButton from 'lib/shared/buttons/save';
 
-class CreateButton extends React.Component {
+export default class CreateButton extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   /**
-   * Call xyButtons API to create button.
-   * @param {object} button - The button object passed from
-   * CreateOrEditButtonForm's onValidate().
+   * Create button.
+   * @param {object} button
    */
   onCreate(button) {
-    request
-      .post(XYBUTTONS_URL + 'api/buttons')
-      .send(button)
-      .end((err, res) => {
-        if (err || res.body.error) {
-          this.props.App._alert(res.body.message);
-        }
-        else {
-          setModKey(this.props.storage, res.body, 'button');
-          
-          const next = () => location.hash = '#/buttons/' + res.body.id;
-          downloadButtons([{ id: res.body.id }]).then(next).catch(next);
-        }
-      });
+    button.id = Date.now();
+    saveButton(button).then(() => location.hash = '#/buttons/' + button.id);
   }
 
   render() {
@@ -62,5 +44,3 @@ class CreateButton extends React.Component {
   }
 
 }
-
-export default CreateButton;
