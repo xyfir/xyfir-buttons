@@ -1,27 +1,12 @@
-import request from 'superagent';
 import marked from 'marked';
-import moment from 'moment';
 import React from 'react';
 
 // react-md
-import FontIcon from 'react-md/lib/FontIcons';
-import Button from 'react-md/lib/Buttons/Button';
 import Paper from 'react-md/lib/Papers/Paper';
 
 // Components
 import Advertisement from 'components/misc/Advertisement';
-import Comments from 'components/misc/Comments';
-import Creator from 'components/misc/Creator';
-import Votes from 'components/misc/Votes';
 import Tabs from 'components/misc/Tabs';
-
-// Modules
-import downloadPresets from 'lib/shared/presets/download';
-import deletePreset from 'lib/shared/presets/delete';
-import isCreator from 'lib/app/items/is-creator';
-
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
 
 export default class ViewPreset extends React.Component {
 
@@ -32,44 +17,17 @@ export default class ViewPreset extends React.Component {
   }
 
   /**
-   * Retrieve only the data returned from `GET api/presets/:preset`. Set
-   * isInstalled and isCreator.
+   * Load preset.
    */
   componentDidMount() {
-    request
-      .get(`${XYBUTTONS_URL}api/presets/${this.props.params.preset}`)
-      .end((err, res) => {
-        if (err || res.body.id == -1) {
-          this.props.App._alert('Could not load preset');
-          location.hash = '#/presets';
-        }
+    const id = this.props.params.preset;
 
-        res.body.isInstalled =
-          !!Object.keys(this.props.storage)
-            .find(k => k == 'preset_' + res.body.id),
-        res.body.isCreator = isCreator(
-          res.body.creator, this.props.storage, 'preset', res.body.id
-        ),
-        res.body.loading = false;
-        
-        this.setState(res.body);
+    chrome.p.storage.local
+      .get('preset_' + id)
+      .then(res => {
+        this.setState(res['preset_' + id]);
+        this.setState({ loading: false });
       });
-  }
-
-  /**
-   * Downloads the preset and its buttons to local storage.
-   */
-  onDownload() {
-    downloadPresets([{ id: this.state.id }])
-      .then(() => location.reload())
-      .catch(() => this.props.App._alert('Could not download preset'));
-  }
-
-  /**
-   * Deletes the preset from local storage.
-   */
-  onRemove() {
-    deletePreset(this.state.id).then(() => location.reload());
   }
 
   /**
@@ -94,13 +52,11 @@ export default class ViewPreset extends React.Component {
       <Tabs
         type={2}
         base={'#/presets/' + this.state.id}
-        isCreator={this.state.isCreator}
         activeTabIndex={0}
       >
         <div className='view-preset'>
           <Paper zDepth={1}>
             <h2 className='name'>
-              {p.isListed ? <FontIcon>public</FontIcon> : <span />}
               {p.name}
             </h2>
             <span className='domains'>{this.domainsText}</span>
@@ -112,42 +68,10 @@ export default class ViewPreset extends React.Component {
             />
           </Paper>
 
-          <Advertisement sub={this.props.storage.account.subscription} />
+          <Advertisement />
 
           <Paper zDepth={1}>
             <dl className='info-list'>
-              <div>
-                <dt>Creator</dt>
-                <dd><Creator {...p.creator} /></dd>
-              </div>
-
-              <div>
-                <dt>Created</dt>
-                <dd title={p.created}>{moment(p.created).fromNow()}</dd>
-              </div>
-
-              {p.updated.indexOf('0') != 0 ? (
-                <div>
-                  <dt>Updated</dt>
-                  <dd title={p.updated}>{moment(p.updated).fromNow()}</dd>
-                </div>
-              ) : <span />}
-
-              <div>
-                <dt>Votes</dt>
-                <dd>
-                  <Votes
-                    id={p.id} type={1} votes={p.votes}
-                    alert={this.props.App._alert}
-                  />
-                </dd>
-              </div>
-
-              <div>
-                <dt title='from the past month'>Downloads</dt>
-                <dd>{p.downloads}</dd>
-              </div>
-
               <div>
                 <dt>URL Match</dt>
                 <dd>{p.urlMatch}</dd>
@@ -157,36 +81,12 @@ export default class ViewPreset extends React.Component {
                 <dt>Buttons</dt>
                 <dd>
                   <a href={'#/buttons?preset=' + p.id}>
-                    View {p.buttons} Buttons
+                    View {p.buttons.length} Buttons
                   </a>
                 </dd>
               </div>
             </dl>
           </Paper>
-
-          <Comments
-            {...this.props}
-            id={p.id}
-            type={2}
-            alert={this.props.App._alert}
-            comments={p.comments}
-          />
-
-          {this.state.isInstalled ? (
-            <Button
-              floating secondary fixed
-              onClick={() => this.onRemove()}
-              tooltipLabel='Remove from local storage'
-              tooltipPosition='left'
-            >delete</Button>
-          ) : (
-            <Button
-              floating primary fixed
-              onClick={() => this.onDownload()}
-              tooltipLabel='Download preset'
-              tooltipPosition='left'
-            >file_download</Button>
-          )}
         </div>
       </Tabs>
     );
