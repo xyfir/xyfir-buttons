@@ -1,5 +1,4 @@
 import React from 'react';
-import request from 'superagent';
 
 // react-md
 import Paper from 'react-md/lib/Papers';
@@ -9,13 +8,9 @@ import Form from 'components/buttons/Form';
 import Tabs from 'components/misc/Tabs';
 
 // Modules
-import downloadButtons from 'lib/shared/buttons/download';
-import isCreator from 'lib/app/items/is-creator';
+import saveButton from 'lib/shared/buttons/save';
 
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
-
-class EditButton extends React.Component {
+export default class EditButton extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,37 +19,19 @@ class EditButton extends React.Component {
       'button_' + this.props.params.button
     ];
     
-    if (
-      !button ||
-      !isCreator(button.creator, this.props.storage, 'button', button.id)
-    )
+    if (!button)
       location.hash = '#/buttons', this.state = {};
     else
       this.state = { button };
   }
 
   /**
-   * Call xyButtons API to edit the button.
-   * @param {object} button - The button object passed from
-   * CreateOrEditButtonForm's onValidate().
+   * Update button.
+   * @param {object} button
    */
   onEdit(button) {
-    const id = this.state.button.id;
-
-    button.modKey = this.props.storage.modkeys.buttons[id] || '';
-
-    request
-      .put(XYBUTTONS_URL + 'api/buttons/' + id)
-      .send(button)
-      .end((err, res) => {
-        if (err || res.body.error) {
-          this.props.App._alert(res.body.message);
-        }
-        else {
-          const next = () => location.reload();
-          downloadButtons([{ id }]).then(next).catch(next);
-        }
-      });
+    button.id = this.state.button.id;
+    saveButton(button);
   }
 
   render() {
@@ -63,7 +40,6 @@ class EditButton extends React.Component {
     return (
       <Tabs
         base={'#/buttons/' + this.state.button.id}
-        isCreator={true}
         activeTabIndex={2}
       >
         <Paper zDepth={1} className='create-button'>
@@ -78,5 +54,3 @@ class EditButton extends React.Component {
   }
 
 }
-
-export default EditButton;

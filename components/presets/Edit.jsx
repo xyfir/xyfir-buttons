@@ -1,5 +1,4 @@
 import React from 'react';
-import request from 'superagent';
 
 // react-md
 import Paper from 'react-md/lib/Papers';
@@ -8,14 +7,10 @@ import Paper from 'react-md/lib/Papers';
 import Form from 'components/presets/Form';
 import Tabs from 'components/misc/Tabs';
 
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
-
 // Modules
-import downloadPresets from 'lib/shared/presets/download';
-import isCreator from 'lib/app/items/is-creator';
+import savePreset from 'lib/shared/presets/save';
 
-class EditPreset extends React.Component {
+export default class EditPreset extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,37 +19,19 @@ class EditPreset extends React.Component {
       'preset_' + this.props.params.preset
     ];
     
-    if (
-      !preset ||
-      !isCreator(preset.creator, this.props.storage, 'preset', preset.id)
-    )
+    if (!preset)
       location.hash = '#/presets', this.state = {};
     else
       this.state = { preset };
   }
 
   /**
-   * Call xyButtons API to edit the preset.
-   * @param {object} preset - The preset object passed from
-   * CreateOrEditPresetForm's onValidate().
+   * Update the preset.
+   * @param {object} preset
    */
   onEdit(preset) {
-    const id = this.state.preset.id;
-
-    button.modKey = this.props.storage.modkeys.presets[id] || '';
-
-    request
-      .put(XYBUTTONS_URL + 'api/presets/' + id)
-      .send(preset)
-      .end((err, res) => {
-        if (err || res.body.error) {
-          this.props.App._alert(res.body.message);
-        }
-        else {
-          const next = () => location.reload();
-          downloadPresets([{ id }]).then(next).catch(next);
-        }
-      });
+    preset.id = this.state.preset.id;
+    savePreset(preset);
   }
 
   render() {
@@ -64,7 +41,6 @@ class EditPreset extends React.Component {
       <Tabs
         type={2}
         base={'#/presets/' + this.state.preset.id}
-        isCreator={true}
         activeTabIndex={2}
       >
         <Paper zDepth={1} className='create-preset'>
@@ -79,5 +55,3 @@ class EditPreset extends React.Component {
   }
 
 }
-
-export default EditPreset;
