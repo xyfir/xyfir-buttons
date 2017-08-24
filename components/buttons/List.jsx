@@ -5,9 +5,6 @@ import PropTypes from 'prop-types';
 import ListItem from 'react-md/lib/Lists/ListItem';
 import List from 'react-md/lib/Lists/List';
 
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
-
 export default class ButtonList extends React.Component {
 
   constructor(props) {
