@@ -1,4 +1,3 @@
-import request from 'superagent';
 import React from 'react';
 
 // react-md
@@ -6,13 +5,9 @@ import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons/Button';
 import Paper from 'react-md/lib/Papers';
 
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
-
 // Modules
-import downloadButtons from 'lib/shared/buttons/download';
 import parseUserscript from 'lib/shared/convert-userscript/parse-code';
-import setModKey from 'lib/app/items/set-mod-key';
+import saveButton from 'lib/shared/buttons/save';
 
 export default class CreateButtonFromUserscript extends React.Component {
 
@@ -21,7 +16,7 @@ export default class CreateButtonFromUserscript extends React.Component {
   }
 
   /**
-   * Call xyButtons API to create button.
+   * Create button.
    * @param {object} button - The button object passed from
    * CreateOrEditButtonForm's onValidate().
    */
@@ -33,22 +28,10 @@ export default class CreateButtonFromUserscript extends React.Component {
       return;
     }
 
-    button.isListed = false, button.styles = '{}';
+    button.styles = '{}',
+    button.id = Date.now();
 
-    request
-      .post(XYBUTTONS_URL + 'api/buttons')
-      .send(button)
-      .end((err, res) => {
-        if (err || res.body.error) {
-          this.props.App._alert(res.body.message);
-        }
-        else {
-          setModKey(this.props.storage, res.body, 'button');
-          
-          const next = () => location.hash = '#/buttons/' + res.body.id;
-          downloadButtons([{ id: res.body.id }]).then(next).catch(next);
-        }
-      });
+    saveButton(button);
   }
 
   render() {
