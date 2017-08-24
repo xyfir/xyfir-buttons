@@ -1,4 +1,3 @@
-import request from 'superagent';
 import React from 'react';
 
 // react-md
@@ -10,10 +9,7 @@ import StylesEditor from 'components/editors/Styles';
 import Tabs from 'components/misc/Tabs';
 
 // Modules
-import downloadPresets from 'lib/shared/presets/download';
-
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
+import savePreset from 'lib/shared/presets/save';
 
 export default class EditPresetButton extends React.Component {
 
@@ -21,8 +17,8 @@ export default class EditPresetButton extends React.Component {
     super(props);
 
     const button =
-      this.props.storage['preset_' + this.props.params.preset]
-        .buttons.find(b => b.id == this.props.params.button);
+      this.props.storage['preset_' + this.props.params.preset].buttons
+        .find(b => b.id == this.props.params.button);
     
     this.state = {
       presetId: this.props.params.preset, button
@@ -30,50 +26,31 @@ export default class EditPresetButton extends React.Component {
   }
 
   /**
-   * Attempts to update a button's preset-specific data. For now this is only
-   * the button's styling.
+   * Update a button's preset-specific data. For now this is only the 
+   * button's styling.
    */
   onUpdate() {
     const { presetId, button } = this.state;
+    const preset = this.props.storage['preset_' + presetId];
 
-    request
-      .put(`${XYBUTTONS_URL}api/presets/${presetId}/buttons/${button.id}`)
-      .send(
-        Object.assign({}, button, {
-          styles: this.refs.styles.value, modKey: (
-            this.props.storage.modkeys.presets[presetId] || ''
-          )
-        })
-      )
-      .end((err, res) => {
-        if (err || res.body.error) {
-          this.props.App._alert('Could not update button');
-        }
-        else {
-          downloadPresets([{ id: presetId }])
-            .then(() => 1).catch(() => 1);
-          this.props.App._alert('Button updated');
-        }
-      });
+    preset.buttons = preset.buttons.filter(b => b.id != button.id);
+    preset.buttons.push(
+      Object.assign({}, button, { styles: this.refs.styles.value })
+    );
+
+    savePreset(preset).then(() => this.props.App._alert('Button updated'));
   }
 
   /**
-   * Attempts to remove the button from the preset.
+   * Remove button from the preset.
    */
   onRemove() {
     const { presetId, button } = this.state;
+    const preset = this.props.storage['preset_' + presetId];
 
-    request
-      .delete(`${XYBUTTONS_URL}api/presets/${presetId}/buttons/${button.id}`)
-      .end((err, res) => {
-        if (err || res.body.error) {
-          this.props.App._alert('Could not remove button');
-        }
-        else {
-          const next = () => location.hash = `#/presets/${presetId}/buttons`;
-          downloadPresets([{ id: presetId }]).then(next).catch(next);
-        }
-      });
+    preset.buttons = preset.buttons.filter(b => b.id != button.id);
+
+    savePreset(preset).then(() => history.back());
   }
 
   render() {
@@ -83,7 +60,6 @@ export default class EditPresetButton extends React.Component {
       <Tabs
         type={2}
         base={'#/presets/' + presetId}
-        isCreator={true}
         activeTabIndex={4}
       >
         <Paper zDepth={1} className='edit-button-in-preset'>
