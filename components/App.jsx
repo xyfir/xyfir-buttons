@@ -131,7 +131,7 @@ export default class App extends React.Component {
             <a href='https://xyfir.com/#/contact' target='_blank'>
               <ListItem primaryText='Contact' />
             </a>,
-            <a href='https://github.com/Xyfir/Xyfir-Buttons' target='_blank'>
+            <a href='https://github.com/Xyfir/Buttons' target='_blank'>
               <ListItem primaryText='Contribute' />
             </a>
           ]}
