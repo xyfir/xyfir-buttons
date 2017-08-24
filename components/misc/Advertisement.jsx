@@ -1,13 +1,12 @@
-import React from 'react';
-import moment from 'moment';
-import request from 'superagent';
 import PropTypes from 'prop-types';
+import request from 'superagent';
+import React from 'react';
 
 // react-md
 import Paper from 'react-md/lib/Papers';
 
 // Constants
-import { XYBUTTONS_URL } from 'constants/config';
+import { XYFIR_URL } from 'constants/config';
 
 export default class Advertisement extends React.Component {
 
@@ -16,40 +15,28 @@ export default class Advertisement extends React.Component {
     this.state = {};
   }
 
-  componentWillMount() {
-    if (this.props.sub > moment().unix()) return;
+  async componentWillMount() {
+    const res = await request
+      .get(XYFIR_URL + 'api/ads')
+      .query({
+        count: 1, blacklist: 'xyButtons'
+      });
 
-    request
-      .get(XYBUTTONS_URL + 'api/ads')
-      .end((err, res) =>
-        !err && res.body.link && this.setState(res.body)
-      );
+    this.setState(res.body[0]);
   }
 
   render() {
-    if (!this.state.type) return <span />;
+    if (!this.state.name) return null;
     
     return (
       <Paper zDepth={1}>
-        <a onClick={() => window.open(this.state.link)}>{
-          this.state.normalText.title
+        <a onClick={() => window.open(this.state.ad.link)}>{
+          this.state.ad.normalText.title
         }</a>
         
-        <span>{this.state.normalText.description}</span>
-
-        <small>
-          Remove advertisements by purchasing a <a href='#/users/account/purchase'>subscription</a>.
-        </small>
+        <span>{this.state.ad.normalText.description}</span>
       </Paper>
     );
   }
 
 }
-
-Advertisement.propTypes = {
-  sub: PropTypes.number
-};
-
-Advertisement.defaultProps = {
-  sub: 0
-};
