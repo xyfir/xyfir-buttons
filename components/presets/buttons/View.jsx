@@ -1,5 +1,4 @@
 import React from 'react';
-import request from 'superagent';
 
 // react-md
 import Button from 'react-md/lib/Buttons/Button';
@@ -7,9 +6,6 @@ import Button from 'react-md/lib/Buttons/Button';
 // Components
 import ButtonList from 'components/buttons/List';
 import Tabs from 'components/misc/Tabs';
-
-// Constants
-import { XYBUTTONS_URL } from 'constants/config';
 
 export default class ViewPresetButtons extends React.Component {
 
@@ -20,18 +16,19 @@ export default class ViewPresetButtons extends React.Component {
   }
 
   componentWillMount() {
-    const query = {
-      order: 'updated', direction: 'desc', searchType: 'preset',
-      searchQuery: this.props.params.preset, noLimit: true
-    };
+    const id = this.props.params.preset;
 
-    request
-      .get(XYBUTTONS_URL + 'api/buttons')
-      .query(query)
-      .end((err, res) => {
-        if (!err && res.body.buttons)
-          this.setState({ buttons: res.body.buttons });
-      });
+    chrome.p.storage.local
+      .get('preset_' + id)
+      // Get ids of all buttons in preset
+      .then(res => {
+        const { buttons } = res['preset_' + id];
+        return chrome.p.storage.local.get(buttons.map(b => 'button_' + b.id));
+      })
+      // Load full object for each button
+      .then(res =>
+        this.setState({ buttons: Object.keys(res).map(k => res[k]) })
+      );
   }
 
   render() {
@@ -41,7 +38,6 @@ export default class ViewPresetButtons extends React.Component {
       <Tabs
         type={2}
         base={'#/presets/' + this.props.params.preset}
-        isCreator={true}
         activeTabIndex={4}
       >
         <div className='buttons-in-preset'>
