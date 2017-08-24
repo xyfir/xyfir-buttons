@@ -13,6 +13,9 @@ import Advertisement from 'components/misc/Advertisement';
 import ScriptEditor from 'components/editors/Script';
 import Tabs from 'components/misc/Tabs';
 
+// Modules
+import savePreset from 'lib/shared/presets/save';
+
 export default class ViewButton extends React.Component {
 
   constructor(props) {
@@ -61,7 +64,7 @@ export default class ViewButton extends React.Component {
         id, size: '4em', position: '50%,50%', styles: '{}'
       });
 
-      savePreset(preset);
+      savePreset(preset).then(() => this.setState({ addToPreset: false }));
     }
   }
 
