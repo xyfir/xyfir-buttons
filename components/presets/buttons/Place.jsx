@@ -66,8 +66,8 @@ export default class PlacePresetButtons extends React.Component {
     if (index == -1) return;
 
     const size = (
-      Number(buttons[index].size.replace('em', ''))
-      + (op == '+' ? 0.1 : -0.1) 
+      Number(buttons[index].size.replace('em', '')) +
+      (op == '+' ? 0.1 : -0.1) 
     ).toFixed(1) + 'em';
     
     buttons[index].size = size,
@@ -188,6 +188,10 @@ export default class PlacePresetButtons extends React.Component {
             Clicking a button selects it and allows you to change its sizes.
             <br />
             Right-clicking anywhere closes the overlay.
+            <br />
+            The resize-box will not be shown when this preset is injected into an actual web page.
+            <br />
+            The button to open xyButtons' system preset that is always in the bottom left corner of all presets is not shown here.
           </p>
 
           <TextField
@@ -215,58 +219,58 @@ export default class PlacePresetButtons extends React.Component {
           </div>
 
           <Gateway into='gateway'>
+          <div
+            onContextMenu={e => this.onHideOverlay(e)}
+            className='xybuttons overlay'
+            onMouseUp={e => this.onMouseUp(e)}
+            style={{ display: this.state.showOverlay ? 'initial' : 'none' }}
+          >
             <div
-              onContextMenu={e => this.onHideOverlay(e)}
-              className='xybuttons overlay'
-              onMouseUp={e => this.onMouseUp(e)}
-              style={{ display: this.state.showOverlay ? 'initial' : 'none' }}
+              onMouseDown={e => this.onMouseDown(e)}
+              className='controls'
+              style={this.state.controls}
             >
-              <div
-                onMouseDown={e => this.onMouseDown(e)}
-                className='controls'
-                style={this.state.controls}
-              >
-                <div>
-                  <label>Size</label>
-                  <Button
-                    flat
-                    onClick={() => this.onChangeSize('+')}
-                  >add_circle</Button>
-                  <Button
-                    flat
-                    onClick={() => this.onChangeSize('-')}
-                  >remove_circle</Button>
-                </div>
-
-                <div>
-                  <label>Font Size</label>
-                  <Button
-                    flat
-                    onClick={() => this.onChangeFontSize('+')}
-                  >add_circle</Button>
-                  <Button
-                    flat
-                    onClick={() => this.onChangeFontSize('-')}
-                  >remove_circle</Button>
-                </div>
+              <div>
+                <label>Size</label>
+                <Button
+                  icon primary
+                  onClick={() => this.onChangeSize('+')}
+                >add_circle</Button>
+                <Button
+                  icon secondary
+                  onClick={() => this.onChangeSize('-')}
+                >remove_circle</Button>
               </div>
 
-              {this.state.buttons.map((button, i) =>
-                <button
-                  onMouseDown={e => this.onMouseDown(e, i)}
-                  onMouseUp={e => this.onMouseUp(e, i)}
-                  onClick={() => this.setState({ selectedButton: i })}
-                  title={button.tooltip}
-                  style={
-                    Object.assign({}, button.styles, {
-                      display: new RegExp(button.urlMatch).test(this.state.url)
-                        ? 'initial' : 'none'
-                    })
-                  }
-                  key={button.id}
-                >{decodeURIComponent(button.content)}</button>
-              )}
+              <div>
+                <label>Font Size</label>
+                <Button
+                  icon primary
+                  onClick={() => this.onChangeFontSize('+')}
+                >add_circle</Button>
+                <Button
+                  icon secondary
+                  onClick={() => this.onChangeFontSize('-')}
+                >remove_circle</Button>
+              </div>
             </div>
+
+            {this.state.buttons.map((button, i) =>
+              <button
+                onMouseDown={e => this.onMouseDown(e, i)}
+                onMouseUp={e => this.onMouseUp(e, i)}
+                onClick={() => this.setState({ selectedButton: i })}
+                title={button.tooltip}
+                style={
+                  Object.assign({}, button.styles, {
+                    display: new RegExp(button.urlMatch).test(this.state.url)
+                      ? 'initial' : 'none'
+                  })
+                }
+                key={button.id}
+              >{decodeURIComponent(button.content)}</button>
+            )}
+          </div>
           </Gateway>
         </Paper>
       </Tabs>
