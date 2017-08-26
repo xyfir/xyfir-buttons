@@ -10,9 +10,9 @@ Xyfir Buttons (xyButtons) is a new type of userscript system, like Greasemonkey 
 
 # Contributing
 
-## Building the Client
+## Building
 
-As of now, the build scripts in `package.json` are written for Windows. Either use Windows to build the xyButtons client or take a few minutes to rewrite the build scripts. Feel free to make a pull request with the updated versions (alongside the Windows commands).
+As of now, the build scripts in `package.json` are written for Windows. Either use Windows to build the xyButtons client or take a few minutes to rewrite the build scripts. Feel free to make a pull request with the updated versions (alongside the original Windows commands).
 
 Before running any of the build scripts, you must first be sure you have the dependencies installed (`npm install`), and also that you setup the config file. Create a copy of the file `./constants/config.default.js` within the folder, rename that copy to `config.js`, and then fill in the appropriate values.
 
