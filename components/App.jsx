@@ -18,7 +18,7 @@ export default class App extends React.Component {
     super(props);
     
     this.state = {
-      drawer: true, toasts: [], loading: true,
+      drawer: false, toasts: [], loading: true,
       storage: {}
     };
 
@@ -108,19 +108,10 @@ export default class App extends React.Component {
           autoclose={true}
           navItems={[
             <a href='#/buttons'>
-              <ListItem primaryText='Find Buttons' />
+              <ListItem primaryText='Buttons' />
             </a>,
-            <a href='#/buttons/create'>
-              <ListItem primaryText='Create Button' />
-            </a>,
-            
-            <Divider />,
-
             <a href='#/presets'>
-              <ListItem primaryText='Find Presets' />
-            </a>,
-            <a href='#/presets/create'>
-              <ListItem primaryText='Create Preset' />
+              <ListItem primaryText='Presets' />
             </a>,
 
             <Divider />,
@@ -128,11 +119,11 @@ export default class App extends React.Component {
             <a href='#/docs'>
               <ListItem primaryText='Documentation' />
             </a>,
-            <a href='https://xyfir.com/#/contact' target='_blank'>
-              <ListItem primaryText='Contact' />
-            </a>,
             <a href='https://github.com/Xyfir/Buttons' target='_blank'>
               <ListItem primaryText='Contribute' />
+            </a>,
+            <a href='https://xyfir.com/#/contact' target='_blank'>
+              <ListItem primaryText='Contact' />
             </a>
           ]}
           visible={this.state.drawer}
