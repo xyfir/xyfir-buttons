@@ -1,3 +1,6 @@
+import 'babel-polyfill';
+
+import createFirstPreset from 'lib/background/create-first-preset';
 import chromePromise from 'chrome-promise';
 import wipeTempData from 'lib/background/wipe-temp-data';
 import onMessage from 'lib/background/on-message';
@@ -15,4 +18,5 @@ chrome.webRequest.onHeadersReceived.addListener(
   ['blocking', 'responseHeaders']
 );
 
+createFirstPreset();
 wipeTempData();
