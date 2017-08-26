@@ -5,6 +5,7 @@ import TabsContainer from 'react-md/lib/Tabs/TabsContainer';
 import SelectField from 'react-md/lib/SelectFields';
 import TextField from 'react-md/lib/TextFields';
 import ListItem from 'react-md/lib/Lists/ListItem';
+import Button from 'react-md/lib/Buttons/Button';
 import List from 'react-md/lib/Lists/List';
 import Tabs from 'react-md/lib/Tabs/Tabs';
 import Tab from 'react-md/lib/Tabs/Tab';
@@ -170,6 +171,14 @@ export default class FindPresets extends React.Component {
         <Tabs tabId='tab' className='tabs'>
           <Tab label='Installed'>{this._renderInstalled()}</Tab>
           <Tab label='Remote'>{this._renderRemote()}</Tab>
+
+          <Button
+            floating fixed primary
+            tooltipPosition='left'
+            fixedPosition='br'
+            tooltipLabel='Create or import preset'
+            onClick={() => location.hash = '#/presets/create'}
+          >add</Button>
         </Tabs>
       </TabsContainer>
     );
