@@ -7,10 +7,14 @@
     "build:app-css": "node-sass --output-style compressed main/app.scss build/app.css",
     "build:inject-css": "node-sass --output-style compressed main/inject.scss build/inject.css",
     "build:css": "npm run build:app-css & npm run build:inject-css",
-    "prebuild:extension": "del /S /Q build\\* & copy main\\*.* build & xcopy /E /I res build\\res",
+    "prebuild:extension": "(man -V && npm run prebuild:extension--unix) || npm run prebuild:extension--windows",
+    "prebuild:extension--unix": "rm -rf build/*; cp -R main/* build; cp -R res build",
+    "prebuild:extension--windows": "del /S /Q build\\* & copy main\\*.* build & xcopy /E /I res build\\res",
     "build:extension": "npm run build:js & npm run build:css",
-    "zip": "@powershell Add-Type -A System.IO.Compression.FileSystem; [IO.Compression.ZipFile]::CreateFromDirectory('build', 'ext.zip')",
-    "postzip": "move ext.zip build"
+    "zip": "(man -V && npm run zip--unix) || npm run zip--windows",
+    "zip--unix": "cd build; zip -r ext.zip *",
+    "zip--windows": "@powershell Add-Type -A System.IO.Compression.FileSystem; [IO.Compression.ZipFile]::CreateFromDirectory('build', 'ext.zip')",
+    "postzip--windows": "move ext.zip build"
   },
   "author": "Xyfir, LLC <contact@xyfir.com> (https://xyfir.com/)",
   "license": "MIT",

@@ -12,8 +12,6 @@ Xyfir Buttons (xyButtons) is a new type of userscript system, like Greasemonkey 
 
 ## Building
 
-As of now, the build scripts in `package.json` are written for Windows. Either use Windows to build the xyButtons client or take a few minutes to rewrite the build scripts. Feel free to make a pull request with the updated versions (alongside the original Windows commands).
-
 Before running any of the build scripts, you must first be sure you have the dependencies installed (`npm install`), and also that you setup the config file. Create a copy of the file `./constants/config.default.js` within the folder, rename that copy to `config.js`, and then fill in the appropriate values.
 
 All build scripts are run with `npm run <script_name>`. Available scripts are:
@@ -23,7 +21,7 @@ All build scripts are run with `npm run <script_name>`. Available scripts are:
 - `build:inject-css`: Converts the SCSS for the styling injected into each page (inject.scss) to a single css file (inject.css).
 - `build:css`: Runs both the css scripts at once.
 - `build:extension`: Wipes the `./build` folder, copies `./res` and `./main` to the build folder, and runs `build:js` and `build:css`.
-- `zip`: Zips up everything in the build folder into a single zip file and puts that zip file in the build folder.
+- `zip`: Zips up everything in the build folder into a single zip file and puts that zip file in the build folder. **Note:** If you're running a *nix system, make sure you have `zip` installed.
 
 ## Guidelines
 
