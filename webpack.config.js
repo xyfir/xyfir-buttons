@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
+
   entry: {
     app: './main/app.js',
     inject: './main/inject.js',
@@ -32,16 +34,19 @@ module.exports = {
         ],
         exclude: /node_modules/,
         options: {
-          presets: ['es2017', 'es2016', 'es2015', 'react']
+          presets: [
+            [
+              'env',
+              {
+                targets: {
+                  browsers: ['last 1 Chrome versions']
+                }
+              }
+            ],
+            'react'
+          ]
         }
       }
     ]
-  },
-
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: false,
-      compress: { unused: false }
-    })
-  ]
+  }
 };
