@@ -1,5 +1,3 @@
-import 'babel-polyfill';
-
 import createFirstPreset from 'lib/background/create-first-preset';
 import chromePromise from 'chrome-promise';
 import wipeTempData from 'lib/background/wipe-temp-data';
