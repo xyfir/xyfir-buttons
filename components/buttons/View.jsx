@@ -90,81 +90,77 @@ export default class ViewButton extends React.Component {
     const b = this.state;
 
     return (
-      <Tabs base={'#/buttons/' + this.state.id} activeTabIndex={0}>
-        <div className="view-button">
-          <Paper zDepth={1}>
-            <h2 className="name">{b.name}</h2>
-            <span className="domains">{this.domainsText}</span>
-            <div
-              className="description markdown-body"
-              dangerouslySetInnerHTML={{
-                __html: marked(b.description, { santize: true })
-              }}
-            />
-          </Paper>
+      <React.Fragment>
+        <Tabs base={'#/buttons/' + this.state.id} activeTabIndex={0}>
+          <div className="view-button">
+            <Paper zDepth={1}>
+              <h2 className="name">{b.name}</h2>
+              <span className="domains">{this.domainsText}</span>
+              <div
+                className="description markdown-body"
+                dangerouslySetInnerHTML={{
+                  __html: marked(b.description, { santize: true })
+                }}
+              />
+            </Paper>
 
-          <Advertisement />
+            <Advertisement />
 
-          <Paper zDepth={1}>
-            <div className="url-match">
-              <label>URL Match Expression:</label>
-              <span>{b.urlMatch}</span>
-            </div>
+            <Paper zDepth={1}>
+              <div className="url-match">
+                <label>URL Match Expression:</label>
+                <span>{b.urlMatch}</span>
+              </div>
 
-            {b.repository ? (
-              <a href={b.repository} target="_blank" className="repository">
-                View Repository
-              </a>
-            ) : null}
+              <div>
+                {this.state.presets.length ? (
+                  <Button flat onClick={() => this.onAddToPreset()}>
+                    Add to Preset
+                  </Button>
+                ) : null}
 
-            <ScriptEditor
-              readOnly
-              value={b.script}
-              onError={this.props.App._alert}
-            />
-          </Paper>
+                {b.repository ? (
+                  <a href={b.repository} target="_blank">
+                    <Button flat>View Repository</Button>
+                  </a>
+                ) : null}
+              </div>
 
-          {this.state.presets.length ? (
-            <Button
-              floating
-              primary
-              fixed
-              onClick={() => this.onAddToPreset()}
-              tooltipLabel="Add button to a preset you own"
-              fixedPosition="bl"
-              tooltipPosition="right"
-            >
-              library_add
-            </Button>
-          ) : null}
+              <ScriptEditor
+                readOnly
+                value={b.script}
+                onError={this.props.App._alert}
+              />
+            </Paper>
+          </div>
+        </Tabs>
 
-          <Dialog
-            id="add-button-to-preset"
-            onHide={() => this.setState({ addToPreset: false })}
-            visible={this.state.addToPreset}
-            className="add-button-to-preset"
-          >
-            <List className="presets-list">
-              {this.state.presets.map(preset => (
-                <ListItem
-                  threeLines
-                  onClick={() => this.onAddToPreset(preset.id)}
-                  primaryText={preset.name}
-                  secondaryText={
-                    (preset.domains == '*'
-                      ? 'Global'
-                      : preset.domains == '**'
-                        ? 'Multiple'
-                        : preset.domains) +
-                    '\n' +
-                    preset.description.split('\n')[0]
-                  }
-                />
-              ))}
-            </List>
-          </Dialog>
-        </div>
-      </Tabs>
+        <Dialog
+          id="add-button-to-preset"
+          onHide={() => this.setState({ addToPreset: false })}
+          visible={this.state.addToPreset}
+          className="add-button-to-preset"
+        >
+          <List className="presets-list">
+            {this.state.presets.map(preset => (
+              <ListItem
+                threeLines
+                onClick={() => this.onAddToPreset(preset.id)}
+                primaryText={preset.name}
+                secondaryText={
+                  (preset.domains == '*'
+                    ? 'Global'
+                    : preset.domains == '**'
+                      ? 'Multiple'
+                      : preset.domains) +
+                  '\n' +
+                  preset.description.split('\n')[0]
+                }
+              />
+            ))}
+          </List>
+        </Dialog>
+      </React.Fragment>
     );
   }
 }
