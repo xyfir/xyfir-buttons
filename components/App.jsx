@@ -1,5 +1,5 @@
 import { GatewayProvider, GatewayDest } from 'react-gateway';
-import chromePromise from 'chrome-promise';
+import chromep from 'chrome-promise';
 import React from 'react';
 
 // react-md
@@ -10,7 +10,7 @@ import Divider from 'react-md/lib/Dividers';
 import Drawer from 'react-md/lib/Drawers';
 import Button from 'react-md/lib/Buttons/Button';
 
-chrome.p = new chromePromise();
+chrome.p = chromep;
 
 export default class App extends React.Component {
   constructor(props) {
