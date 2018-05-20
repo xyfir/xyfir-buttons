@@ -1,20 +1,26 @@
-.find-buttons, .find-presets, .buttons-in-preset, .add-button-to-preset {
+.find-buttons,
+.find-presets,
+.buttons-in-preset,
+.add-button-to-preset {
   flex: 1;
 
-  .controls, .buttons-list, .presets-list {
+  .controls,
+  .buttons-list,
+  .presets-list {
     @include md-box-shadow(1);
   }
 
   .controls {
     margin-bottom: 1em;
 
-    >.md-grid {
+    > .md-grid {
       justify-content: center;
     }
   }
 }
 
-.create-button, .create-preset {
+.create-button,
+.create-preset {
   width: 98%;
   margin: 1em auto;
   padding: 0.5em;
@@ -58,10 +64,16 @@
   }
 }
 
-.delete-button, .fork-button, .view-button,
-.delete-preset, .fork-preset, .view-preset,
-.documentation-list, .view-documentation,
-.buttons-in-preset > .controls, .buttons-in-preset > .buttons-list,
+.delete-button,
+.fork-button,
+.view-button,
+.delete-preset,
+.fork-preset,
+.view-preset,
+.documentation-list,
+.view-documentation,
+.buttons-in-preset > .controls,
+.buttons-in-preset > .buttons-list,
 .add-button-to-preset > .buttons-list,
 .edit-button-in-preset,
 .place-buttons-in-preset,
@@ -79,7 +91,8 @@
   }
 }
 
-.view-button, .view-preset {
+.view-button,
+.view-preset {
   .md-paper {
     width: 98%;
     margin: 1em auto;
@@ -115,7 +128,7 @@
     margin-bottom: 1em;
     text-align: center;
     font-size: 125%;
-    
+
     label {
       display: block;
       font-weight: bold;
@@ -131,7 +144,7 @@
     max-width: 40em;
     width: 90%;
 
-    >ul.md-list {
+    > ul.md-list {
       width: 100%;
     }
   }
@@ -140,7 +153,7 @@
 dl.info-list {
   display: table;
 
-  >div {
+  > div {
     display: table-row;
 
     dt {
@@ -149,7 +162,8 @@ dl.info-list {
       vertical-align: middle;
     }
 
-    dd, dt {
+    dd,
+    dt {
       display: table-cell;
       font-size: 125%;
     }
@@ -159,26 +173,27 @@ dl.info-list {
 .documentation-list {
   padding: 0em;
 
-  >.md-list {
+  > .md-list {
     width: 100%;
   }
 }
 
-.buttons-in-preset, .add-button-to-preset {
+.buttons-in-preset,
+.add-button-to-preset {
   .buttons-list {
     align-items: stretch;
   }
 }
 
 .add-button-to-preset {
-  >p {
+  > p {
     text-align: center;
   }
 }
 
 .edit-button-in-preset {
-  >div.controls {
-    >button {
+  > div.controls {
+    > button {
       margin: auto 0.5em;
 
       .md-icon {
@@ -188,12 +203,13 @@ dl.info-list {
   }
 }
 
-.buttons-in-preset, .place-buttons-in-preset {
-  >div.controls {
+.buttons-in-preset,
+.place-buttons-in-preset {
+  > div.controls {
     flex-direction: row;
     justify-content: center;
 
-    >button {
+    > button {
       margin: auto 0.5em;
       width: 15em;
     }
@@ -208,9 +224,9 @@ dl.info-list {
   bottom: 0%;
   z-index: 999999999;
   user-select: none;
-  background-color: rgba(0,0,0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 
-  >div.controls {
+  > div.controls {
     display: table;
     padding: 0.5em;
     position: fixed;
@@ -218,14 +234,14 @@ dl.info-list {
 
     @include md-box-shadow(5);
 
-    >div {
+    > div {
       display: table-row;
 
-      >* {
+      > * {
         display: table-cell;
       }
 
-      >label {
+      > label {
         font-weight: bold;
         vertical-align: middle;
       }
@@ -234,9 +250,9 @@ dl.info-list {
 }
 
 span.add-button-to-preset {
-  >div {
+  > div {
     max-height: 70vh;
     min-width: 40vw;
-    overflow: auto
+    overflow: auto;
   }
 }

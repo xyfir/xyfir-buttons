@@ -13,15 +13,12 @@ import Tabs from 'components/misc/Tabs';
 import savePreset from 'lib/shared/presets/save';
 
 export default class PlacePresetButtons extends React.Component {
-
   constructor(props) {
     super(props);
 
-    const preset = this.props.storage[
-      'preset_' + this.props.params.preset
-    ],
-    buttons = [];
-    
+    const preset = this.props.storage['preset_' + this.props.params.preset],
+      buttons = [];
+
     preset.buttons.forEach(_b1 => {
       // !! Must use Object.assign() to prevent app state form being changed
       // b1 from preset_${id}.buttons[]
@@ -31,27 +28,31 @@ export default class PlacePresetButtons extends React.Component {
 
       b2.unparsedStyles = b2.styles;
 
-      b2.styles = JSON.parse(b2.styles),
-      b1.styles = JSON.parse(b1.styles);
+      (b2.styles = JSON.parse(b2.styles)), (b1.styles = JSON.parse(b1.styles));
 
       const positions = b1.position.split(',');
       const size = b1.size;
-      
+
       const style = {
-        top: positions[0], left: positions[1],
-        height: size, width: size
+        top: positions[0],
+        left: positions[1],
+        height: size,
+        width: size
       };
 
       // Position / size -> preset styles -> button styles
       Object.assign(b2.styles, b1.styles, style);
 
-      b2.size = b1.size, b2.position = b1.position;
+      (b2.size = b1.size), (b2.position = b1.position);
       buttons.push(b2);
     });
 
     this.state = {
-      buttons, selectedButton: -1, controls: { top: '25%', left: '25%' },
-      url: '', showOverlay: false
+      buttons,
+      selectedButton: -1,
+      controls: { top: '25%', left: '25%' },
+      url: '',
+      showOverlay: false
     };
   }
 
@@ -65,14 +66,14 @@ export default class PlacePresetButtons extends React.Component {
 
     if (index == -1) return;
 
-    const size = (
-      Number(buttons[index].size.replace('em', '')) +
-      (op == '+' ? 0.1 : -0.1) 
-    ).toFixed(1) + 'em';
-    
-    buttons[index].size = size,
-    buttons[index].styles.width = size,
-    buttons[index].styles.height = size;
+    const size =
+      (
+        Number(buttons[index].size.replace('em', '')) + (op == '+' ? 0.1 : -0.1)
+      ).toFixed(1) + 'em';
+
+    (buttons[index].size = size),
+      (buttons[index].styles.width = size),
+      (buttons[index].styles.height = size);
 
     this.setState({ buttons });
   }
@@ -87,13 +88,12 @@ export default class PlacePresetButtons extends React.Component {
 
     if (index == -1) return;
 
-    const size = ((
-      buttons[index].styles.fontSize
+    const size =
+      (buttons[index].styles.fontSize
         ? Number(buttons[index].styles.fontSize.replace('px', ''))
-        : 14
-    ) + (
-      op == '+' ? 1 : -1
-    )) + 'px';
+        : 14) +
+      (op == '+' ? 1 : -1) +
+      'px';
 
     buttons[index].styles.fontSize = size;
 
@@ -105,17 +105,17 @@ export default class PlacePresetButtons extends React.Component {
    */
   onSaveChanges() {
     const buttons = this.state.buttons.slice();
-    const preset = this.props.storage[
-      'preset_' + this.props.params.preset
-    ];
+    const preset = this.props.storage['preset_' + this.props.params.preset];
 
     preset.buttons = buttons.map(button => {
       let styles = {};
 
       if (button.styles.fontSize) styles.fontSize = button.styles.fontSize;
-      
+
       return {
-        id: button.id, size: button.size, position: button.position,
+        id: button.id,
+        size: button.size,
+        position: button.position,
         styles: JSON.stringify(styles)
       };
     });
@@ -139,20 +139,19 @@ export default class PlacePresetButtons extends React.Component {
    * If not present, div.controls is being interacted with.
    */
   onMouseMove(e, index) {
-    const top = ((e.clientY / window.innerHeight) * 100).toFixed(2) + '%';
-    const left = ((e.clientX / window.innerWidth) * 100).toFixed(2) + '%';
+    const top = (e.clientY / window.innerHeight * 100).toFixed(2) + '%';
+    const left = (e.clientX / window.innerWidth * 100).toFixed(2) + '%';
 
     if (index != undefined) {
       const buttons = this.state.buttons.slice();
-      
-      buttons[index].position = top + ',' + left,
-      buttons[index].styles.top = top,
-      buttons[index].styles.left = left;
-      
+
+      (buttons[index].position = top + ',' + left),
+        (buttons[index].styles.top = top),
+        (buttons[index].styles.left = left);
+
       this.setState({ buttons });
-    }
-    else {
-      this.setState({ controls: { top, left }});
+    } else {
+      this.setState({ controls: { top, left } });
     }
   }
 
@@ -181,7 +180,7 @@ export default class PlacePresetButtons extends React.Component {
         base={'#/presets/' + this.props.params.preset}
         activeTabIndex={4}
       >
-        <Paper zDepth={1} className='place-buttons-in-preset'>
+        <Paper zDepth={1} className="place-buttons-in-preset">
           <p>
             Click and drag elements to move them around.
             <br />
@@ -189,92 +188,104 @@ export default class PlacePresetButtons extends React.Component {
             <br />
             Right-clicking anywhere closes the overlay.
             <br />
-            The resize-box will not be shown when this preset is injected into an actual web page.
+            The resize-box will not be shown when this preset is injected into
+            an actual web page.
             <br />
-            The button to open xyButtons' system preset that is always in the bottom left corner of all presets is not shown here.
+            The button to open xyButtons' system preset that is always in the
+            bottom left corner of all presets is not shown here.
           </p>
 
           <TextField
-            id='textarea--url'
-            type='text'
-            label='URL'
+            id="textarea--url"
+            type="text"
+            label="URL"
             value={this.state.url}
             onChange={url => this.setState({ url })}
-            helpText='Only buttons that match the URL will be rendered'
-            className='md-cell'
+            helpText="Only buttons that match the URL will be rendered"
+            className="md-cell"
           />
 
-          <div className='controls'>
+          <div className="controls">
             <Button
-              raised primary
-              label='Show Buttons'
+              raised
+              primary
+              label="Show Buttons"
               onClick={() => this.setState({ showOverlay: true })}
-            >pageview</Button>
+            >
+              pageview
+            </Button>
 
             <Button
-              raised secondary
-              label='Save Changes'
+              raised
+              secondary
+              label="Save Changes"
               onClick={() => this.onSaveChanges()}
-            >save</Button>
-          </div>
-
-          <Gateway into='gateway'>
-          <div
-            onContextMenu={e => this.onHideOverlay(e)}
-            className='xybuttons overlay'
-            onMouseUp={e => this.onMouseUp(e)}
-            style={{ display: this.state.showOverlay ? 'initial' : 'none' }}
-          >
-            <div
-              onMouseDown={e => this.onMouseDown(e)}
-              className='controls'
-              style={this.state.controls}
             >
-              <div>
-                <label>Size</label>
-                <Button
-                  icon primary
-                  onClick={() => this.onChangeSize('+')}
-                >add_circle</Button>
-                <Button
-                  icon secondary
-                  onClick={() => this.onChangeSize('-')}
-                >remove_circle</Button>
-              </div>
-
-              <div>
-                <label>Font Size</label>
-                <Button
-                  icon primary
-                  onClick={() => this.onChangeFontSize('+')}
-                >add_circle</Button>
-                <Button
-                  icon secondary
-                  onClick={() => this.onChangeFontSize('-')}
-                >remove_circle</Button>
-              </div>
-            </div>
-
-            {this.state.buttons.map((button, i) =>
-              <button
-                onMouseDown={e => this.onMouseDown(e, i)}
-                onMouseUp={e => this.onMouseUp(e, i)}
-                onClick={() => this.setState({ selectedButton: i })}
-                title={button.tooltip}
-                style={
-                  Object.assign({}, button.styles, {
-                    display: new RegExp(button.urlMatch).test(this.state.url)
-                      ? 'initial' : 'none'
-                  })
-                }
-                key={button.id}
-              >{decodeURIComponent(button.content)}</button>
-            )}
+              save
+            </Button>
           </div>
+
+          <Gateway into="gateway">
+            <div
+              onContextMenu={e => this.onHideOverlay(e)}
+              className="xybuttons overlay"
+              onMouseUp={e => this.onMouseUp(e)}
+              style={{ display: this.state.showOverlay ? 'initial' : 'none' }}
+            >
+              <div
+                onMouseDown={e => this.onMouseDown(e)}
+                className="controls"
+                style={this.state.controls}
+              >
+                <div>
+                  <label>Size</label>
+                  <Button icon primary onClick={() => this.onChangeSize('+')}>
+                    add_circle
+                  </Button>
+                  <Button icon secondary onClick={() => this.onChangeSize('-')}>
+                    remove_circle
+                  </Button>
+                </div>
+
+                <div>
+                  <label>Font Size</label>
+                  <Button
+                    icon
+                    primary
+                    onClick={() => this.onChangeFontSize('+')}
+                  >
+                    add_circle
+                  </Button>
+                  <Button
+                    icon
+                    secondary
+                    onClick={() => this.onChangeFontSize('-')}
+                  >
+                    remove_circle
+                  </Button>
+                </div>
+              </div>
+
+              {this.state.buttons.map((button, i) => (
+                <button
+                  onMouseDown={e => this.onMouseDown(e, i)}
+                  onMouseUp={e => this.onMouseUp(e, i)}
+                  onClick={() => this.setState({ selectedButton: i })}
+                  title={button.tooltip}
+                  style={Object.assign({}, button.styles, {
+                    display: new RegExp(button.urlMatch).test(this.state.url)
+                      ? 'initial'
+                      : 'none'
+                  })}
+                  key={button.id}
+                >
+                  {decodeURIComponent(button.content)}
+                </button>
+              ))}
+            </div>
           </Gateway>
         </Paper>
       </Tabs>
     );
   }
-
 }

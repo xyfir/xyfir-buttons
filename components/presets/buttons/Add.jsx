@@ -8,12 +8,11 @@ import Tabs from 'components/misc/Tabs';
 import savePreset from 'lib/shared/presets/save';
 
 export default class AddPresetButton extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = { buttons: [], preset: this.props.params.preset };
-    
+
     this._loadButtons();
   }
 
@@ -25,7 +24,10 @@ export default class AddPresetButton extends React.Component {
     const preset = this.props.storage['preset_' + this.state.preset];
 
     preset.buttons.push({
-      id, size: '4em', position: '50%,50%', styles: '{}'
+      id,
+      size: '4em',
+      position: '50%,50%',
+      styles: '{}'
     });
 
     savePreset(preset).then(() => {
@@ -42,19 +44,18 @@ export default class AddPresetButton extends React.Component {
   _loadButtons() {
     chrome.p.storage.local.get(null).then(result => {
       // Get all buttons
-      let buttons =
-        Object.entries(result)
-          .filter(e => e[0].indexOf('button_') == 0)
-          .map(b => b[1]);
-      
+      let buttons = Object.entries(result)
+        .filter(e => e[0].indexOf('button_') == 0)
+        .map(b => b[1]);
+
       // Get all buttons in preset
       const presetButtons = result['preset_' + this.state.preset].buttons;
 
       // Remove from buttons[] where in presetButtons[]
-      presetButtons.forEach(b1 =>
-        buttons = buttons.filter(b2 => b1.id != b2.id)
+      presetButtons.forEach(
+        b1 => (buttons = buttons.filter(b2 => b1.id != b2.id))
       );
-      
+
       this.setState({ buttons });
     });
   }
@@ -66,11 +67,12 @@ export default class AddPresetButton extends React.Component {
         base={'#/presets/' + this.props.params.preset}
         activeTabIndex={4}
       >
-        <div className='add-button-to-preset'>
+        <div className="add-button-to-preset">
           <p>
             Only buttons that are not in the preset will be shown.
             <br />
-            Clicking one of the items in the list will add its corresponding button to the preset.
+            Clicking one of the items in the list will add its corresponding
+            button to the preset.
           </p>
 
           <ButtonList
@@ -81,5 +83,4 @@ export default class AddPresetButton extends React.Component {
       </Tabs>
     );
   }
-
 }

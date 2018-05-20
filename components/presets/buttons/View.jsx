@@ -8,7 +8,6 @@ import ButtonList from 'components/buttons/List';
 import Tabs from 'components/misc/Tabs';
 
 export default class ViewPresetButtons extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -40,19 +39,25 @@ export default class ViewPresetButtons extends React.Component {
         base={'#/presets/' + this.props.params.preset}
         activeTabIndex={4}
       >
-        <div className='buttons-in-preset'>
-          <div className='controls'>
+        <div className="buttons-in-preset">
+          <div className="controls">
             <Button
-              raised primary
-              label='Add Button'
-              onClick={() => location.hash += '/add'}
-            >add</Button>
+              raised
+              primary
+              label="Add Button"
+              onClick={() => (location.hash += '/add')}
+            >
+              add
+            </Button>
 
             <Button
-              raised secondary
-              label='Place Buttons'
-              onClick={() => location.hash += '/place'}
-            >open_with</Button>
+              raised
+              secondary
+              label="Place Buttons"
+              onClick={() => (location.hash += '/place')}
+            >
+              open_with
+            </Button>
           </div>
 
           <ButtonList
@@ -63,5 +68,4 @@ export default class ViewPresetButtons extends React.Component {
       </Tabs>
     );
   }
-
 }

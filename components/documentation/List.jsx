@@ -10,7 +10,6 @@ import List from 'react-md/lib/Lists/List';
 import { XYDOCS_URL } from 'constants/config';
 
 export default class DocumentationList extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -18,47 +17,45 @@ export default class DocumentationList extends React.Component {
   }
 
   componentDidMount() {
-    request
-      .get(XYDOCS_URL + 'projects.json')
-      .end((err, res) => {
-        if (err) return;
+    request.get(XYDOCS_URL + 'projects.json').end((err, res) => {
+      if (err) return;
 
-        const files = [], docs = JSON.parse(window.atob(res.body.content))
-          ['xyfir-buttons'].documentation;
+      const files = [],
+        docs = JSON.parse(window.atob(res.body.content))['xyfir-buttons']
+          .documentation;
 
-        Object.keys(docs).forEach(file => {
-          if (file == 'legal') return;
+      Object.keys(docs).forEach(file => {
+        if (file == 'legal') return;
 
-          files.push(docs[file]);
-        });
-
-        this.setState({ files });
+        files.push(docs[file]);
       });
+
+      this.setState({ files });
+    });
   }
 
   render() {
     const files = this.state.files;
-    
+
     if (!files.length) return <div />;
 
     return (
-      <Paper zDepth={1} className='documentation-list'>
-        <a href='https://github.com/Xyfir/Documentation' target='_blank'>
+      <Paper zDepth={1} className="documentation-list">
+        <a href="https://github.com/Xyfir/Documentation" target="_blank">
           View on Github
         </a>
-        
-        <List>{
-          files.map(file =>
+
+        <List>
+          {files.map(file => (
             <ListItem
               key={file.location}
-              onClick={() => location.hash += '/view?file=' + file.location}
+              onClick={() => (location.hash += '/view?file=' + file.location)}
               primaryText={file.name}
               secondaryText={file.description}
             />
-          )
-        }</List>
+          ))}
+        </List>
       </Paper>
     );
   }
-
 }

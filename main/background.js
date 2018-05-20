@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener(onMessage);
 // Modifies content security policy to prevent the blocking of eval()
 chrome.webRequest.onHeadersReceived.addListener(
   modifyCSP,
-  {urls: ['*://*/*'], types: ['main_frame']},
+  { urls: ['*://*/*'], types: ['main_frame'] },
   ['blocking', 'responseHeaders']
 );
 

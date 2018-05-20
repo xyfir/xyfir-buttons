@@ -10,7 +10,6 @@ import Form from 'components/buttons/Form';
 import saveButton from 'lib/shared/buttons/save';
 
 export default class CreateButton extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -21,7 +20,7 @@ export default class CreateButton extends React.Component {
    */
   onCreate(button) {
     button.id = Date.now();
-    saveButton(button).then(() => location.hash = '#/buttons/' + button.id);
+    saveButton(button).then(() => (location.hash = '#/buttons/' + button.id));
   }
 
   render() {
@@ -33,14 +32,11 @@ export default class CreateButton extends React.Component {
     }
 
     return (
-      <Paper zDepth={1} className='create-button'>
-        <a href='#/buttons/create/from-userscript'>
-          Convert From Userscript
-        </a>
+      <Paper zDepth={1} className="create-button">
+        <a href="#/buttons/create/from-userscript">Convert From Userscript</a>
 
         <Form {...props} onSuccess={b => this.onCreate(b)} />
       </Paper>
     );
   }
-
 }

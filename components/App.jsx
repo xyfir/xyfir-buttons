@@ -13,12 +13,13 @@ import Button from 'react-md/lib/Buttons/Button';
 chrome.p = new chromePromise();
 
 export default class App extends React.Component {
-
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      drawer: false, toasts: [], loading: true,
+      drawer: false,
+      toasts: [],
+      loading: true,
       storage: {}
     };
 
@@ -30,16 +31,13 @@ export default class App extends React.Component {
   componentWillMount() {
     const data = {};
 
-    chrome.p.storage.local.get(null)
-      .then(res => {
-        Object.assign(data, res);
+    chrome.p.storage.local.get(null).then(res => {
+      Object.assign(data, res);
 
-        this.setState({ storage: data, loading: false });
-      });
-    
-    chrome.storage.onChanged.addListener(
-      (c, a) => this.onStorageChange(c, a)
-    );
+      this.setState({ storage: data, loading: false });
+    });
+
+    chrome.storage.onChanged.addListener((c, a) => this.onStorageChange(c, a));
   }
 
   /**
@@ -57,10 +55,8 @@ export default class App extends React.Component {
     const storage = Object.assign({}, this.state.storage);
 
     Object.keys(changes).forEach(change => {
-      if (changes[change].newValue)
-        storage[change] = changes[change].newValue;
-      else
-        delete storage[change];
+      if (changes[change].newValue) storage[change] = changes[change].newValue;
+      else delete storage[change];
     });
 
     this.setState({ storage });
@@ -84,46 +80,42 @@ export default class App extends React.Component {
     });
   }
 
-
   render() {
     if (this.state.loading) return <div />;
 
     return (
-      <main className='xyfir-buttons'>
+      <main className="xyfir-buttons">
         <Toolbar
           colored
-          title='Xyfir Buttons'
+          title="Xyfir Buttons"
           nav={
-            <Button
-              icon
-              onClick={() => this.setState({ drawer: true })}
-            >menu</Button>
+            <Button icon onClick={() => this.setState({ drawer: true })}>
+              menu
+            </Button>
           }
         />
 
         <Drawer
-          onVisibilityToggle={
-            v => this.setState({ drawer: v })
-          }
+          onVisibilityToggle={v => this.setState({ drawer: v })}
           autoclose={true}
           navItems={[
-            <a href='#/buttons'>
-              <ListItem primaryText='Buttons' />
+            <a href="#/buttons">
+              <ListItem primaryText="Buttons" />
             </a>,
-            <a href='#/presets'>
-              <ListItem primaryText='Presets' />
+            <a href="#/presets">
+              <ListItem primaryText="Presets" />
             </a>,
 
             <Divider />,
 
-            <a href='#/docs'>
-              <ListItem primaryText='Documentation' />
+            <a href="#/docs">
+              <ListItem primaryText="Documentation" />
             </a>,
-            <a href='https://github.com/Xyfir/Buttons' target='_blank'>
-              <ListItem primaryText='Contribute' />
+            <a href="https://github.com/Xyfir/Buttons" target="_blank">
+              <ListItem primaryText="Contribute" />
             </a>,
-            <a href='https://xyfir.com/#/contact' target='_blank'>
-              <ListItem primaryText='Contact' />
+            <a href="https://xyfir.com/#/contact" target="_blank">
+              <ListItem primaryText="Contact" />
             </a>
           ]}
           visible={this.state.drawer}
@@ -131,10 +123,9 @@ export default class App extends React.Component {
             <Toolbar
               colored
               nav={
-                <Button
-                  icon
-                  onClick={() => this.setState({ drawer: false })}
-                >arrow_back</Button>
+                <Button icon onClick={() => this.setState({ drawer: false })}>
+                  arrow_back
+                </Button>
               }
             />
           }
@@ -144,7 +135,9 @@ export default class App extends React.Component {
         <GatewayProvider>
           <div>
             {React.cloneElement(this.props.children, {
-              App: this, storage: this.state.storage, params: this.props.params,
+              App: this,
+              storage: this.state.storage,
+              params: this.props.params,
               location: this.props.location
             })}
 
@@ -157,7 +150,6 @@ export default class App extends React.Component {
           onDismiss={() => this.onDismissAlert()}
         />
       </main>
-    )
+    );
   }
-
 }

@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import LinkTabs from 'components/misc/LinkTabs';
 
 export default class Tabs extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -22,15 +21,13 @@ export default class Tabs extends React.Component {
 
     if (this.props.type == 2)
       tabs.push({ label: 'Buttons', hash: base + '/buttons' });
-    
+
     return (
-      <LinkTabs
-        activeTabIndex={this.props.activeTabIndex}
-        tabs={tabs}
-      >{this.props.children}</LinkTabs>
+      <LinkTabs activeTabIndex={this.props.activeTabIndex} tabs={tabs}>
+        {this.props.children}
+      </LinkTabs>
     );
   }
-
 }
 
 Tabs.propTypes = {

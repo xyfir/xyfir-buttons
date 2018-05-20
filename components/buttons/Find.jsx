@@ -14,12 +14,13 @@ import Tab from 'react-md/lib/Tabs/Tab';
 import search from 'lib/shared/util/search';
 
 export default class FindButtons extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      buttons: [], tab: 0, searchQuery: '',
+      buttons: [],
+      tab: 0,
+      searchQuery: '',
       preset: this.props.location.query.preset
     };
 
@@ -54,8 +55,7 @@ export default class FindButtons extends React.Component {
    * Loads matching buttons.
    */
   _loadButtons() {
-    const buttons = Object
-      .entries(this.props.storage)
+    const buttons = Object.entries(this.props.storage)
       .filter(b => b[0].indexOf('button_') == 0)
       .map(b => b[1]);
 
@@ -69,31 +69,32 @@ export default class FindButtons extends React.Component {
   _renderList() {
     if (!this.state.buttons.length) {
       return (
-        <List className='buttons-list'>
-          <ListItem primaryText='No buttons found'  />
+        <List className="buttons-list">
+          <ListItem primaryText="No buttons found" />
         </List>
       );
     }
 
     return (
-      <List className='buttons-list'>{
-        this.state.buttons.map(button =>
+      <List className="buttons-list">
+        {this.state.buttons.map(button => (
           <a href={'#/buttons/' + button.id} key={button.id}>
             <ListItem
               threeLines
               primaryText={button.name}
               secondaryText={
-                (
-                  button.domains == '*'
-                    ? 'Global' : button.domains == '**'
-                    ? 'Multiple' : button.domains
-                )
-                + '\n' + button.description.split('\n')[0]
+                (button.domains == '*'
+                  ? 'Global'
+                  : button.domains == '**'
+                    ? 'Multiple'
+                    : button.domains) +
+                '\n' +
+                button.description.split('\n')[0]
               }
             />
           </a>
-        )
-      }</List>
+        ))}
+      </List>
     );
   }
 
@@ -105,29 +106,31 @@ export default class FindButtons extends React.Component {
     if (this.state.tab != 1) return <div />;
 
     return (
-      <List className='find-buttons remote md-paper md-paper--1'>
+      <List className="find-buttons remote md-paper md-paper--1">
         <ListItem
-          primaryText='GitHub'
-          onClick={() => location.href =
-            'https://github.com/search?q=xybuttons&type=Repositories'
+          primaryText="GitHub"
+          onClick={() =>
+            (location.href =
+              'https://github.com/search?q=xybuttons&type=Repositories')
           }
         />
         <ListItem
-          primaryText='GitHub Gist'
-          onClick={() => location.href =
-            'https://gist.github.com/search?q=xybuttons&ref=simplesearch'
+          primaryText="GitHub Gist"
+          onClick={() =>
+            (location.href =
+              'https://gist.github.com/search?q=xybuttons&ref=simplesearch')
           }
         />
         <ListItem
-          primaryText='GreasyFork'
-          onClick={() => location.href =
-            'https://greasyfork.org/en/scripts?q=xybuttons'
+          primaryText="GreasyFork"
+          onClick={() =>
+            (location.href = 'https://greasyfork.org/en/scripts?q=xybuttons')
           }
         />
         <ListItem
-          primaryText='OpenUserJS'
-          onClick={() => location.href =
-            'https://openuserjs.org/?q=xybuttons'
+          primaryText="OpenUserJS"
+          onClick={() =>
+            (location.href = 'https://openuserjs.org/?q=xybuttons')
           }
         />
       </List>
@@ -142,15 +145,15 @@ export default class FindButtons extends React.Component {
     if (this.state.tab != 0 || !this.state.buttons) return <div />;
 
     return (
-      <div className='find-buttons installed'>
-        <div className='controls'>
-          <div className='md-grid'>
+      <div className="find-buttons installed">
+        <div className="controls">
+          <div className="md-grid">
             <TextField
               fullWidth
-              id='search--installed'
-              type='search'
-              label='Search'
-              className='md-cell'
+              id="search--installed"
+              type="search"
+              label="Search"
+              className="md-cell"
               onChange={v => this.onFilter('searchQuery', v)}
             />
           </div>
@@ -166,24 +169,27 @@ export default class FindButtons extends React.Component {
       <TabsContainer
         colored
         onTabChange={tab => this.onChangeTab(tab)}
-        panelClassName='md-grid'
+        panelClassName="md-grid"
         activeTabIndex={this.state.tab}
       >
-        <Tabs tabId='tab' className='tabs'>
-          <Tab label='Installed'>{this._renderInstalled()}</Tab>
-          <Tab label='Remote'>{this._renderRemote()}</Tab>
+        <Tabs tabId="tab" className="tabs">
+          <Tab label="Installed">{this._renderInstalled()}</Tab>
+          <Tab label="Remote">{this._renderRemote()}</Tab>
 
           {/* react-md doesn't like this here but it works */}
           <Button
-            floating fixed primary
-            tooltipPosition='left'
-            fixedPosition='br'
-            tooltipLabel='Create or import button'
-            onClick={() => location.hash = '#/buttons/create'}
-          >add</Button>
+            floating
+            fixed
+            primary
+            tooltipPosition="left"
+            fixedPosition="br"
+            tooltipLabel="Create or import button"
+            onClick={() => (location.hash = '#/buttons/create')}
+          >
+            add
+          </Button>
         </Tabs>
       </TabsContainer>
     );
   }
-
 }

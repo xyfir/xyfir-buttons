@@ -1,21 +1,22 @@
 body {
-	font-family: 'Roboto', sans-serif;
-	margin: 0;
-	padding-bottom: 1em;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding-bottom: 1em;
 }
 
 p {
-	width: 80%;
-	margin: auto;
+  width: 80%;
+  margin: auto;
 }
 
 a {
-	color: $md-blue-500;
+  color: $md-blue-500;
   cursor: pointer;
-	text-decoration: none;
+  text-decoration: none;
 }
-a:hover, a:focus {
-	color: $md-light-blue-a-400;
+a:hover,
+a:focus {
+  color: $md-light-blue-a-400;
 }
 
 hr.divider {

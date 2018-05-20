@@ -11,7 +11,6 @@ import Tabs from 'components/misc/Tabs';
 import savePreset from 'lib/shared/presets/save';
 
 export default class ForkPreset extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -30,7 +29,7 @@ export default class ForkPreset extends React.Component {
         preset.id = Date.now();
         return savePreset(preset);
       })
-      .then(() => location.hash = '#/presets/' + preset.id);
+      .then(() => (location.hash = '#/presets/' + preset.id));
   }
 
   render() {
@@ -40,18 +39,18 @@ export default class ForkPreset extends React.Component {
         base={'#/presets/' + this.props.params.preset}
         activeTabIndex={1}
       >
-        <Paper zDepth={1} className='fork-preset'>
-          <p>
-            Are you sure you want to fork this preset?
-          </p>
+        <Paper zDepth={1} className="fork-preset">
+          <p>Are you sure you want to fork this preset?</p>
           <Button
-            raised primary
-            label='Fork Preset'
+            raised
+            primary
+            label="Fork Preset"
             onClick={() => this.onFork()}
-          >call_split</Button>
+          >
+            call_split
+          </Button>
         </Paper>
       </Tabs>
     );
   }
-
 }

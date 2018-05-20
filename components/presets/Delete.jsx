@@ -11,7 +11,6 @@ import Tabs from 'components/misc/Tabs';
 import deletePreset from 'lib/shared/presets/delete';
 
 export default class DeletePreset extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -21,7 +20,7 @@ export default class DeletePreset extends React.Component {
    */
   onDelete() {
     const id = this.props.params.preset;
-    deletePreset(id).then(() => location.hash = '#/presets');
+    deletePreset(id).then(() => (location.hash = '#/presets'));
   }
 
   render() {
@@ -31,18 +30,18 @@ export default class DeletePreset extends React.Component {
         base={'#/presets/' + this.props.params.preset}
         activeTabIndex={3}
       >
-        <Paper zDepth={1} className='delete-preset'>
-          <p>
-            Are you sure you want to delete this preset?
-          </p>
+        <Paper zDepth={1} className="delete-preset">
+          <p>Are you sure you want to delete this preset?</p>
           <Button
-            raised primary
-            label='Delete Preset'
+            raised
+            primary
+            label="Delete Preset"
             onClick={() => this.onDelete()}
-          >delete</Button>
+          >
+            delete
+          </Button>
         </Paper>
       </Tabs>
     );
   }
-
 }

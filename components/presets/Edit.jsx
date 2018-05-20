@@ -11,18 +11,13 @@ import Tabs from 'components/misc/Tabs';
 import savePreset from 'lib/shared/presets/save';
 
 export default class EditPreset extends React.Component {
-
   constructor(props) {
     super(props);
 
-    const preset = this.props.storage[
-      'preset_' + this.props.params.preset
-    ];
-    
-    if (!preset)
-      location.hash = '#/presets', this.state = {};
-    else
-      this.state = { preset };
+    const preset = this.props.storage['preset_' + this.props.params.preset];
+
+    if (!preset) (location.hash = '#/presets'), (this.state = {});
+    else this.state = { preset };
   }
 
   /**
@@ -36,14 +31,14 @@ export default class EditPreset extends React.Component {
 
   render() {
     if (!this.state.preset) return <div />;
-    
+
     return (
       <Tabs
         type={2}
         base={'#/presets/' + this.state.preset.id}
         activeTabIndex={2}
       >
-        <Paper zDepth={1} className='create-preset'>
+        <Paper zDepth={1} className="create-preset">
           <Form
             {...this.props}
             onSuccess={b => this.onEdit(b)}
@@ -53,5 +48,4 @@ export default class EditPreset extends React.Component {
       </Tabs>
     );
   }
-
 }

@@ -14,12 +14,13 @@ import Tab from 'react-md/lib/Tabs/Tab';
 import search from 'lib/shared/util/search';
 
 export default class FindPresets extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      presets: [], tab: 0, searchQuery: ''
+      presets: [],
+      tab: 0,
+      searchQuery: ''
     };
 
     this._renderInstalled = this._renderInstalled.bind(this);
@@ -53,8 +54,7 @@ export default class FindPresets extends React.Component {
    * Loads matching presets.
    */
   _loadPresets() {
-    const presets = Object
-      .entries(this.props.storage)
+    const presets = Object.entries(this.props.storage)
       .filter(p => p[0].indexOf('preset_') == 0)
       .map(p => p[1]);
 
@@ -68,31 +68,32 @@ export default class FindPresets extends React.Component {
   _renderList() {
     if (!this.state.presets.length) {
       return (
-        <List className='presets-list'>
-          <ListItem primaryText='No presets found'  />
+        <List className="presets-list">
+          <ListItem primaryText="No presets found" />
         </List>
       );
     }
 
     return (
-      <List className='presets-list'>{
-        this.state.presets.map(preset =>
+      <List className="presets-list">
+        {this.state.presets.map(preset => (
           <a href={'#/presets/' + preset.id} key={preset.id}>
             <ListItem
               threeLines
               primaryText={preset.name}
               secondaryText={
-                (
-                  preset.domains == '*'
-                    ? 'Global' : preset.domains == '**'
-                    ? 'Multiple' : preset.domains
-                )
-                + '\n' + preset.description.split('\n')[0]
+                (preset.domains == '*'
+                  ? 'Global'
+                  : preset.domains == '**'
+                    ? 'Multiple'
+                    : preset.domains) +
+                '\n' +
+                preset.description.split('\n')[0]
               }
             />
           </a>
-        )
-      }</List>
+        ))}
+      </List>
     );
   }
 
@@ -104,29 +105,31 @@ export default class FindPresets extends React.Component {
     if (this.state.tab != 1) return <div />;
 
     return (
-      <List className='find-presets remote md-paper md-paper--1'>
+      <List className="find-presets remote md-paper md-paper--1">
         <ListItem
-          primaryText='GitHub'
-          onClick={() => location.href =
-            'https://github.com/search?q=xybuttons&type=Repositories'
+          primaryText="GitHub"
+          onClick={() =>
+            (location.href =
+              'https://github.com/search?q=xybuttons&type=Repositories')
           }
         />
         <ListItem
-          primaryText='GitHub Gist'
-          onClick={() => location.href =
-            'https://gist.github.com/search?q=xybuttons&ref=simplesearch'
+          primaryText="GitHub Gist"
+          onClick={() =>
+            (location.href =
+              'https://gist.github.com/search?q=xybuttons&ref=simplesearch')
           }
         />
         <ListItem
-          primaryText='GreasyFork'
-          onClick={() => location.href =
-            'https://greasyfork.org/en/scripts?q=xybuttons'
+          primaryText="GreasyFork"
+          onClick={() =>
+            (location.href = 'https://greasyfork.org/en/scripts?q=xybuttons')
           }
         />
         <ListItem
-          primaryText='OpenUserJS'
-          onClick={() => location.href =
-            'https://openuserjs.org/?q=xybuttons'
+          primaryText="OpenUserJS"
+          onClick={() =>
+            (location.href = 'https://openuserjs.org/?q=xybuttons')
           }
         />
       </List>
@@ -141,15 +144,15 @@ export default class FindPresets extends React.Component {
     if (this.state.tab != 0 || !this.state.presets) return <div />;
 
     return (
-      <div className='find-presets installed'>
-        <div className='controls'>
-          <div className='md-grid'>
+      <div className="find-presets installed">
+        <div className="controls">
+          <div className="md-grid">
             <TextField
               fullWidth
-              id='search--installed'
-              type='search'
-              label='Search'
-              className='md-cell'
+              id="search--installed"
+              type="search"
+              label="Search"
+              className="md-cell"
               onChange={v => this.onFilter('searchQuery', v)}
             />
           </div>
@@ -165,23 +168,26 @@ export default class FindPresets extends React.Component {
       <TabsContainer
         colored
         onTabChange={tab => this.onChangeTab(tab)}
-        panelClassName='md-grid'
+        panelClassName="md-grid"
         activeTabIndex={this.state.tab}
       >
-        <Tabs tabId='tab' className='tabs'>
-          <Tab label='Installed'>{this._renderInstalled()}</Tab>
-          <Tab label='Remote'>{this._renderRemote()}</Tab>
+        <Tabs tabId="tab" className="tabs">
+          <Tab label="Installed">{this._renderInstalled()}</Tab>
+          <Tab label="Remote">{this._renderRemote()}</Tab>
 
           <Button
-            floating fixed primary
-            tooltipPosition='left'
-            fixedPosition='br'
-            tooltipLabel='Create or import preset'
-            onClick={() => location.hash = '#/presets/create'}
-          >add</Button>
+            floating
+            fixed
+            primary
+            tooltipPosition="left"
+            fixedPosition="br"
+            tooltipLabel="Create or import preset"
+            onClick={() => (location.hash = '#/presets/create')}
+          >
+            add
+          </Button>
         </Tabs>
       </TabsContainer>
     );
   }
-
 }

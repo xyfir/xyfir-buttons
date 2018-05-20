@@ -9,7 +9,6 @@ import 'brace/ext/searchbox';
 import 'brace/mode/json';
 
 class Editor extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -26,14 +25,14 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <div className='ace-editor'>
+      <div className="ace-editor">
         <Ace
           name={'ace-editor-' + this.props.mode}
           mode={this.props.mode}
-          theme='monokai'
-          width='100vw'
+          theme="monokai"
+          width="100vw"
           value={this.state.value}
-          height='100vh'
+          height="100vh"
           tabSize={2}
           fontSize={15}
           readOnly={this.props.readOnly}
@@ -44,7 +43,6 @@ class Editor extends React.Component {
       </div>
     );
   }
-
 }
 
 Editor.propTypes = {
@@ -64,7 +62,9 @@ Editor.propTypes = {
 };
 
 Editor.defaultProps = {
-  value: '', mode: 'javascript', readOnly: false
+  value: '',
+  mode: 'javascript',
+  readOnly: false
 };
 
 export default Editor;

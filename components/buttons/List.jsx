@@ -6,7 +6,6 @@ import ListItem from 'react-md/lib/Lists/ListItem';
 import List from 'react-md/lib/Lists/List';
 
 export default class ButtonList extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -29,15 +28,15 @@ export default class ButtonList extends React.Component {
 
     if (!buttons.length) {
       return (
-        <List className='buttons-list'>
-          <ListItem primaryText='No buttons found'  />
+        <List className="buttons-list">
+          <ListItem primaryText="No buttons found" />
         </List>
       );
     }
 
     return (
-      <List className='buttons-list'>{
-        buttons.map(button =>
+      <List className="buttons-list">
+        {buttons.map(button => (
           <a
             onClick={e => this.onClick(e, button.id)}
             href={href.replace(':button', button.id)}
@@ -47,20 +46,20 @@ export default class ButtonList extends React.Component {
               threeLines
               primaryText={button.name}
               secondaryText={
-                (
-                  button.domains == '*'
-                    ? 'Global' : button.domains == '**'
-                    ? 'Multiple' : button.domains
-                )
-                + '\n' + button.description
+                (button.domains == '*'
+                  ? 'Global'
+                  : button.domains == '**'
+                    ? 'Multiple'
+                    : button.domains) +
+                '\n' +
+                button.description
               }
             />
           </a>
-        )
-      }</List>
+        ))}
+      </List>
     );
   }
-
 }
 
 ButtonList.propTypes = {
@@ -85,4 +84,4 @@ ButtonList.propTypes = {
 
 ButtonList.defaultProps = {
   href: ''
-}
+};

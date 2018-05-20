@@ -13,13 +13,15 @@ import Paper from 'react-md/lib/Papers';
 import List from 'react-md/lib/Lists/List';
 
 class ButtonScriptEditor extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      script: JSON.parse(this.props.value || '{"main.js":""}'), view: 'files',
-      viewing: '', selected: '', rename: false
+      script: JSON.parse(this.props.value || '{"main.js":""}'),
+      view: 'files',
+      viewing: '',
+      selected: '',
+      rename: false
     };
   }
 
@@ -62,7 +64,7 @@ class ButtonScriptEditor extends React.Component {
    * Unselects a file, hiding the Dialog element.
    */
   onUnselectFile() {
-    this.setState({ selected: '' })
+    this.setState({ selected: '' });
   }
 
   /**
@@ -71,7 +73,9 @@ class ButtonScriptEditor extends React.Component {
    */
   onOpenFile() {
     this.setState({
-      view: 'editor', viewing: this.state.selected, selected: ''
+      view: 'editor',
+      viewing: this.state.selected,
+      selected: ''
     });
   }
 
@@ -114,15 +118,14 @@ class ButtonScriptEditor extends React.Component {
       }
 
       this.setState({ rename: true });
-    }
-    else {
+    } else {
       const script = Object.assign({}, this.state.script);
-      
+
       if (script[file] != undefined) {
         this.props.onError('That file already exists');
         return;
       }
-      
+
       // Create copy of file with new name, delete old
       script[file] = script[this.state.selected];
       delete script[this.state.selected];
@@ -140,36 +143,46 @@ class ButtonScriptEditor extends React.Component {
     return (
       <Dialog
         fullPage
-        id='button-script-editor-dialog'
+        id="button-script-editor-dialog"
         visible={true}
-        className='button-script-editor editor'
+        className="button-script-editor editor"
       >
         <Editor
-          ref='editor'
+          ref="editor"
           value={this.state.script[this.state.viewing]}
           readOnly={this.props.readOnly}
         />
 
-        <div className='floating-controls'>
+        <div className="floating-controls">
           {!this.props.readOnly ? (
             <Button
-              floating primary fixed
-              tooltipPosition='top'
-              fixedPosition='bl'
-              tooltipLabel='Save File'
+              floating
+              primary
+              fixed
+              tooltipPosition="top"
+              fixedPosition="bl"
+              tooltipLabel="Save File"
               onClick={() => this.onSaveFile()}
-            >save</Button>
-          ) : <span />}
+            >
+              save
+            </Button>
+          ) : (
+            <span />
+          )}
           <Button
-            floating secondary fixed
-            tooltipPosition='top'
-            fixedPosition='br'
-            tooltipLabel='Close Editor'
+            floating
+            secondary
+            fixed
+            tooltipPosition="top"
+            fixedPosition="br"
+            tooltipLabel="Close Editor"
             onClick={() => this.onCloseFile()}
-          >close</Button>
+          >
+            close
+          </Button>
         </div>
       </Dialog>
-    )
+    );
   }
 
   /**
@@ -181,89 +194,107 @@ class ButtonScriptEditor extends React.Component {
     const files = Object.keys(this.state.script);
 
     return (
-      <Paper zDepth={2} className='button-script-editor files'>
-         <List className='file-list'>
-           {files.map(file =>
+      <Paper zDepth={2} className="button-script-editor files">
+        <List className="file-list">
+          {files.map(file => (
             <ListItem
               key={file}
               onClick={() => this.onSelectFile(file)}
               primaryText={file}
             />
-           )}
-         </List>
+          ))}
+        </List>
 
         {!this.props.readOnly ? (
-          <div className='add-file'>
+          <div className="add-file">
             <TextField
-              id='text--add-file'
-              ref='filename'
-              type='text'
-              label='File Name'
-              helpText='File name with optional path: path/to/file.js'
-              className='md-cell'
+              id="text--add-file"
+              ref="filename"
+              type="text"
+              label="File Name"
+              helpText="File name with optional path: path/to/file.js"
+              className="md-cell"
             />
 
             <Button
-              flat primary
-              label='Add File'
+              flat
+              primary
+              label="Add File"
               onClick={() =>
                 this.onCreateFile(this.refs.filename._field.getValue())
               }
-            >add box</Button>
+            >
+              add box
+            </Button>
           </div>
-        ) : <span />}
+        ) : (
+          <span />
+        )}
 
-         <Dialog
-          id='selected-file-dialog'
+        <Dialog
+          id="selected-file-dialog"
           onHide={() => this.onUnselectFile()}
           visible={!!this.state.selected}
-         >{
-           this.state.rename ? (
-             <div className='rename-file'>
+        >
+          {this.state.rename ? (
+            <div className="rename-file">
               <TextField
-                id='text--rename-file'
-                ref='filerename'
-                type='text'
-                label='File Name'
-                helpText='File name with optional path: path/to/file.js'
-                className='md-cell'
+                id="text--rename-file"
+                ref="filerename"
+                type="text"
+                label="File Name"
+                helpText="File name with optional path: path/to/file.js"
+                className="md-cell"
               />
 
               <Button
-                flat primary
-                label='Rename File'
+                flat
+                primary
+                label="Rename File"
                 onClick={() =>
                   this.onRenameFile(this.refs.filerename._field.getValue())
                 }
-              >edit</Button>
-             </div>
-           ) : (
-             <div className='file-controls'>
+              >
+                edit
+              </Button>
+            </div>
+          ) : (
+            <div className="file-controls">
               <Button
-                flat primary
-                label='Source'
+                flat
+                primary
+                label="Source"
                 onClick={() => this.onOpenFile()}
-              >code</Button>
+              >
+                code
+              </Button>
 
               {!this.props.readOnly ? (
                 <div>
                   <Button
-                    flat secondary
-                    label='Rename'
+                    flat
+                    secondary
+                    label="Rename"
                     onClick={() => this.onRenameFile()}
-                  >edit</Button>
+                  >
+                    edit
+                  </Button>
                   <Button
                     flat
-                    label='Delete'
+                    label="Delete"
                     onClick={() => this.onDeleteFile()}
-                  >delete</Button>
+                  >
+                    delete
+                  </Button>
                 </div>
-              ) : <span />}
-             </div>
-           )
-         }</Dialog>
+              ) : (
+                <span />
+              )}
+            </div>
+          )}
+        </Dialog>
       </Paper>
-    )
+    );
   }
 
   render() {
@@ -271,7 +302,6 @@ class ButtonScriptEditor extends React.Component {
       ? this._renderFiles()
       : this._renderEditor();
   }
-
 }
 
 ButtonScriptEditor.propTypes = {
@@ -290,7 +320,8 @@ ButtonScriptEditor.propTypes = {
 };
 
 ButtonScriptEditor.defaultProps = {
-  value: '{"main.js":""}', readOnly: false
+  value: '{"main.js":""}',
+  readOnly: false
 };
 
 export default ButtonScriptEditor;

@@ -9,7 +9,6 @@ import Paper from 'react-md/lib/Papers';
 import { XYDOCS_URL } from 'constants/config';
 
 export default class ViewDocumentation extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -24,9 +23,7 @@ export default class ViewDocumentation extends React.Component {
 
         // Convert markdown to html
         this.setState({
-          content: marked(
-            window.atob(res.body.content), { santize: true }
-          )
+          content: marked(window.atob(res.body.content), { santize: true })
         });
       });
   }
@@ -35,13 +32,12 @@ export default class ViewDocumentation extends React.Component {
     if (!this.state.content) return <div />;
 
     return (
-      <Paper zDepth={1} className='view-documentation'>
+      <Paper zDepth={1} className="view-documentation">
         <div
-          className='markdown-body'
-          dangerouslySetInnerHTML={{__html: this.state.content}}
+          className="markdown-body"
+          dangerouslySetInnerHTML={{ __html: this.state.content }}
         />
       </Paper>
     );
   }
-
 }

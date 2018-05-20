@@ -7,7 +7,6 @@ import Tabs from 'react-md/lib/Tabs/Tabs';
 import Tab from 'react-md/lib/Tabs/Tab';
 
 export default class LinkTabs extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -19,24 +18,23 @@ export default class LinkTabs extends React.Component {
       <TabsContainer
         colored
         onTabChange={() => 1}
-        panelClassName='md-grid link-tabs'
+        panelClassName="md-grid link-tabs"
         activeTabIndex={activeTabIndex}
       >
-        <Tabs tabId='tab' className='tabs'>{
-          tabs.map((tab, i) =>
+        <Tabs tabId="tab" className="tabs">
+          {tabs.map((tab, i) => (
             <Tab
               key={tab.label}
               label={tab.label}
-              onClick={() => location.hash = tab.hash}
-            >{
-              activeTabIndex == i ? this.props.children : <span />
-            }</Tab>
-          )
-        }</Tabs>
+              onClick={() => (location.hash = tab.hash)}
+            >
+              {activeTabIndex == i ? this.props.children : <span />}
+            </Tab>
+          ))}
+        </Tabs>
       </TabsContainer>
     );
   }
-
 }
 
 LinkTabs.propTypes = {
@@ -53,4 +51,4 @@ LinkTabs.propTypes = {
    * The index of the active tab.
    */
   activeTabIndex: PropTypes.number.isRequired
-}
+};

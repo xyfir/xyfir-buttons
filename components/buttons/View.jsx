@@ -17,7 +17,6 @@ import Tabs from 'components/misc/Tabs';
 import savePreset from 'lib/shared/presets/save';
 
 export default class ViewButton extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -37,12 +36,10 @@ export default class ViewButton extends React.Component {
   componentDidMount() {
     const id = this.props.params.button;
 
-    chrome.p.storage.local
-      .get('button_' + id)
-      .then(r => {
-        this.setState(r['button_' + id]);
-        this.setState({ loading: false });
-      });
+    chrome.p.storage.local.get('button_' + id).then(r => {
+      this.setState(r['button_' + id]);
+      this.setState({ loading: false });
+    });
   }
 
   /**
@@ -53,15 +50,17 @@ export default class ViewButton extends React.Component {
   onAddToPreset(id) {
     if (!id) {
       this.setState({ addToPreset: true });
-    }
-    else {
+    } else {
       const preset = this.state.presets.find(p => p.id == id);
       const button = preset.buttons.findIndex(b => this.state.id == id);
 
       if (button > -1) return;
 
       preset.buttons.push({
-        id, size: '4em', position: '50%,50%', styles: '{}'
+        id,
+        size: '4em',
+        position: '50%,50%',
+        styles: '{}'
       });
 
       savePreset(preset).then(() => this.setState({ addToPreset: false }));
@@ -74,10 +73,14 @@ export default class ViewButton extends React.Component {
    */
   get domainsText() {
     switch (this.state.domains) {
-      case '': return '';
-      case '*': return 'Global';
-      case '**': return 'Multiple Sites';
-      default: return this.state.domains.replace(/,/g, ' - ');
+      case '':
+        return '';
+      case '*':
+        return 'Global';
+      case '**':
+        return 'Multiple Sites';
+      default:
+        return this.state.domains.replace(/,/g, ' - ');
     }
   }
 
@@ -87,18 +90,13 @@ export default class ViewButton extends React.Component {
     const b = this.state;
 
     return (
-      <Tabs
-        base={'#/buttons/' + this.state.id}
-        activeTabIndex={0}
-      >
-        <div className='view-button'>
+      <Tabs base={'#/buttons/' + this.state.id} activeTabIndex={0}>
+        <div className="view-button">
           <Paper zDepth={1}>
-            <h2 className='name'>
-              {b.name}
-            </h2>
-            <span className='domains'>{this.domainsText}</span>
+            <h2 className="name">{b.name}</h2>
+            <span className="domains">{this.domainsText}</span>
             <div
-              className='description markdown-body'
+              className="description markdown-body"
               dangerouslySetInnerHTML={{
                 __html: marked(b.description, { santize: true })
               }}
@@ -108,17 +106,15 @@ export default class ViewButton extends React.Component {
           <Advertisement />
 
           <Paper zDepth={1}>
-            <div className='url-match'>
+            <div className="url-match">
               <label>URL Match Expression:</label>
               <span>{b.urlMatch}</span>
             </div>
 
             {b.repository ? (
-              <a
-                href={b.repository}
-                target='_blank'
-                className='repository'
-              >View Repository</a>
+              <a href={b.repository} target="_blank" className="repository">
+                View Repository
+              </a>
             ) : null}
 
             <ScriptEditor
@@ -130,41 +126,45 @@ export default class ViewButton extends React.Component {
 
           {this.state.presets.length ? (
             <Button
-              floating primary fixed
+              floating
+              primary
+              fixed
               onClick={() => this.onAddToPreset()}
-              tooltipLabel='Add button to a preset you own'
-              fixedPosition='bl'
-              tooltipPosition='right'
-            >library_add</Button>
+              tooltipLabel="Add button to a preset you own"
+              fixedPosition="bl"
+              tooltipPosition="right"
+            >
+              library_add
+            </Button>
           ) : null}
 
           <Dialog
-            id='add-button-to-preset'
+            id="add-button-to-preset"
             onHide={() => this.setState({ addToPreset: false })}
             visible={this.state.addToPreset}
-            className='add-button-to-preset'
+            className="add-button-to-preset"
           >
-            <List className='presets-list'>{
-              this.state.presets.map(preset =>
+            <List className="presets-list">
+              {this.state.presets.map(preset => (
                 <ListItem
                   threeLines
                   onClick={() => this.onAddToPreset(preset.id)}
                   primaryText={preset.name}
                   secondaryText={
-                    (
-                      preset.domains == '*'
-                        ? 'Global' : preset.domains == '**'
-                        ? 'Multiple' : preset.domains
-                    )
-                    + '\n' + preset.description.split('\n')[0]
+                    (preset.domains == '*'
+                      ? 'Global'
+                      : preset.domains == '**'
+                        ? 'Multiple'
+                        : preset.domains) +
+                    '\n' +
+                    preset.description.split('\n')[0]
                   }
                 />
-              )
-            }</List>
+              ))}
+            </List>
           </Dialog>
         </div>
       </Tabs>
     );
   }
-
 }

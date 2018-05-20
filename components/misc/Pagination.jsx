@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import 'react-md/lib/Buttons/Button';
 
 class Pagination extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -15,38 +14,36 @@ class Pagination extends React.Component {
    * this.props.lastId.
    */
   onNext() {
-    const id = this.props.lastId, hash = location.hash;
+    const id = this.props.lastId,
+      hash = location.hash;
 
     if (hash.indexOf('lastId=') > -1)
       location.hash = hash.replace(/lastId=\d+/, 'lastId=' + id);
-    else if (hash.indexOf('?') > -1)
-      location.hash += '&lastId=' + id;
-    else
-      location.hash += '?lastId=' + id;
+    else if (hash.indexOf('?') > -1) location.hash += '&lastId=' + id;
+    else location.hash += '?lastId=' + id;
   }
 
   render() {
     return (
-      <div className='pagination'>
+      <div className="pagination">
         {this.props.currentLastId ? (
-          <Button
-            secondary raised
-            label='Back'
-            onClick={() => history.back()}
-          >navigate before</Button>
-        ) : (<span />)}
+          <Button secondary raised label="Back" onClick={() => history.back()}>
+            navigate before
+          </Button>
+        ) : (
+          <span />
+        )}
 
         {this.props.lastId ? (
-          <Button
-            primary raised
-            label='Next'
-            onClick={() => this.onNext()}
-          >navigate next</Button>
-        ) : (<span />)}
+          <Button primary raised label="Next" onClick={() => this.onNext()}>
+            navigate next
+          </Button>
+        ) : (
+          <span />
+        )}
       </div>
     );
   }
-
 }
 
 Pagination.propTypes = {
@@ -58,6 +55,6 @@ Pagination.propTypes = {
    * The current last id for the list. If truthy, the back button is shown.
    */
   currentLastId: PropTypes.number
-}
+};
 
 export default Pagination;

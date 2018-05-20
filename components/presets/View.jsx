@@ -9,7 +9,6 @@ import Advertisement from 'components/misc/Advertisement';
 import Tabs from 'components/misc/Tabs';
 
 export default class ViewPreset extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -22,12 +21,10 @@ export default class ViewPreset extends React.Component {
   componentDidMount() {
     const id = this.props.params.preset;
 
-    chrome.p.storage.local
-      .get('preset_' + id)
-      .then(res => {
-        this.setState(res['preset_' + id]);
-        this.setState({ loading: false });
-      });
+    chrome.p.storage.local.get('preset_' + id).then(res => {
+      this.setState(res['preset_' + id]);
+      this.setState({ loading: false });
+    });
   }
 
   /**
@@ -36,10 +33,14 @@ export default class ViewPreset extends React.Component {
    */
   get domainsText() {
     switch (this.state.domains) {
-      case '': return '';
-      case '*': return 'Global';
-      case '**': return 'Multiple Sites';
-      default: return this.state.domains.replace(/,/g, ' - ');
+      case '':
+        return '';
+      case '*':
+        return 'Global';
+      case '**':
+        return 'Multiple Sites';
+      default:
+        return this.state.domains.replace(/,/g, ' - ');
     }
   }
 
@@ -49,19 +50,13 @@ export default class ViewPreset extends React.Component {
     const p = this.state;
 
     return (
-      <Tabs
-        type={2}
-        base={'#/presets/' + this.state.id}
-        activeTabIndex={0}
-      >
-        <div className='view-preset'>
+      <Tabs type={2} base={'#/presets/' + this.state.id} activeTabIndex={0}>
+        <div className="view-preset">
           <Paper zDepth={1}>
-            <h2 className='name'>
-              {p.name}
-            </h2>
-            <span className='domains'>{this.domainsText}</span>
+            <h2 className="name">{p.name}</h2>
+            <span className="domains">{this.domainsText}</span>
             <div
-              className='description markdown-body'
+              className="description markdown-body"
               dangerouslySetInnerHTML={{
                 __html: marked(p.description, { santize: true })
               }}
@@ -71,7 +66,7 @@ export default class ViewPreset extends React.Component {
           <Advertisement />
 
           <Paper zDepth={1}>
-            <dl className='info-list'>
+            <dl className="info-list">
               <div>
                 <dt>URL Match</dt>
                 <dd>{p.urlMatch}</dd>
@@ -91,5 +86,4 @@ export default class ViewPreset extends React.Component {
       </Tabs>
     );
   }
-
 }

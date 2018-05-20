@@ -9,34 +9,31 @@ import Paper from 'react-md/lib/Papers';
 import { XYFIR_URL } from 'constants/config';
 
 export default class Advertisement extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   async componentWillMount() {
-    const res = await request
-      .get(XYFIR_URL + 'api/ads')
-      .query({
-        count: 1, blacklist: 'xyButtons'
-      });
+    const res = await request.get(XYFIR_URL + 'api/ads').query({
+      count: 1,
+      blacklist: 'xyButtons'
+    });
 
     this.setState(res.body[0]);
   }
 
   render() {
     if (!this.state.name) return null;
-    
+
     return (
       <Paper zDepth={1}>
-        <a onClick={() => window.open(this.state.ad.link)}>{
-          this.state.ad.normalText.title
-        }</a>
-        
+        <a onClick={() => window.open(this.state.ad.link)}>
+          {this.state.ad.normalText.title}
+        </a>
+
         <span>{this.state.ad.normalText.description}</span>
       </Paper>
     );
   }
-
 }

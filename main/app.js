@@ -26,59 +26,60 @@ import ViewPresetButtons from 'components/presets/buttons/View';
 import PlacePresetButtons from 'components/presets/buttons/Place';
 import CreateButtonFromUserscript from 'components/buttons/CreateFromUserscript';
 
-render((
+render(
   <Router history={hashHistory}>
-    <Route path='/' component={App}>
+    <Route path="/" component={App}>
       <IndexRoute component={FindButtons} />
 
-      <Route path='buttons'>
+      <Route path="buttons">
         <IndexRoute component={FindButtons} />
 
-        <Route path='create'>
+        <Route path="create">
           <IndexRoute component={CreateButton} />
 
           <Route
-            path='from-userscript'
+            path="from-userscript"
             component={CreateButtonFromUserscript}
           />
         </Route>
-        
-        <Route path=':button'>
+
+        <Route path=":button">
           <IndexRoute component={ViewButton} />
 
-          <Route path='edit' component={EditButton} />
-          <Route path='fork' component={ForkButton} />
-          <Route path='delete' component={DeleteButton} />
+          <Route path="edit" component={EditButton} />
+          <Route path="fork" component={ForkButton} />
+          <Route path="delete" component={DeleteButton} />
         </Route>
       </Route>
 
-      <Route path='presets'>
+      <Route path="presets">
         <IndexRoute component={FindPresets} />
 
-        <Route path='create' component={CreatePreset} />
-        
-        <Route path=':preset'>
+        <Route path="create" component={CreatePreset} />
+
+        <Route path=":preset">
           <IndexRoute component={ViewPreset} />
 
-          <Route path='edit' component={EditPreset} />
-          <Route path='fork' component={ForkPreset} />
-          <Route path='delete' component={DeletePreset} />
+          <Route path="edit" component={EditPreset} />
+          <Route path="fork" component={ForkPreset} />
+          <Route path="delete" component={DeletePreset} />
 
-          <Route path='buttons'>
+          <Route path="buttons">
             <IndexRoute component={ViewPresetButtons} />
 
-            <Route path='add' component={AddPresetButton} />
-            <Route path='place' component={PlacePresetButtons} />
-            <Route path=':button' component={EditPresetButton} />
+            <Route path="add" component={AddPresetButton} />
+            <Route path="place" component={PlacePresetButtons} />
+            <Route path=":button" component={EditPresetButton} />
           </Route>
         </Route>
       </Route>
 
-      <Route path='docs'>
+      <Route path="docs">
         <IndexRoute component={DocumentationList} />
 
-        <Route path='view' component={ViewDocumentation} />
+        <Route path="view" component={ViewDocumentation} />
       </Route>
     </Route>
-  </Router>
-), document.getElementById('app'));
+  </Router>,
+  document.getElementById('app')
+);

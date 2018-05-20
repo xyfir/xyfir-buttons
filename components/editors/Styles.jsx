@@ -9,7 +9,6 @@ import Button from 'react-md/lib/Buttons/Button';
 import Dialog from 'react-md/lib/Dialogs';
 
 class StylesEditor extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -47,34 +46,38 @@ class StylesEditor extends React.Component {
     return (
       <Dialog
         fullPage
-        id='styles-editor-dialog'
-        title='Styles Editor'
+        id="styles-editor-dialog"
+        title="Styles Editor"
         visible={true}
-        className='styles-editor editor'
+        className="styles-editor editor"
       >
-        <Editor
-          ref='editor'
-          mode='json'
-          value={this.state.value}
-        />
+        <Editor ref="editor" mode="json" value={this.state.value} />
 
-        <div className='floating-controls'>
+        <div className="floating-controls">
           <Button
-            floating primary fixed
-            tooltipPosition='top'
-            fixedPosition='bl'
-            tooltipLabel='Save Styles'
+            floating
+            primary
+            fixed
+            tooltipPosition="top"
+            fixedPosition="bl"
+            tooltipLabel="Save Styles"
             onClick={() => this.onSaveStyles()}
-          >save</Button>
+          >
+            save
+          </Button>
           <Button
-            floating secondary fixed
-            tooltipPosition='top'
-            tooltipLabel='Close Editor'
+            floating
+            secondary
+            fixed
+            tooltipPosition="top"
+            tooltipLabel="Close Editor"
             onClick={() => this.onToggleShowEditor()}
-          >close</Button>
+          >
+            close
+          </Button>
         </div>
       </Dialog>
-    )
+    );
   }
 
   /**
@@ -85,25 +88,24 @@ class StylesEditor extends React.Component {
     return (
       <Button
         flat
-        label='Edit Styles'
+        label="Edit Styles"
         onClick={() => this.onToggleShowEditor()}
-      >edit</Button>
-    )
+      >
+        edit
+      </Button>
+    );
   }
 
   render() {
-    return this.state.showEditor
-      ? this._renderEditor()
-      : this._renderButton();
+    return this.state.showEditor ? this._renderEditor() : this._renderButton();
   }
-
 }
 
 StylesEditor.propTypes = {
   /**
    * A JSON string representing an HTMLElement.style object.
    */
-  value: PropTypes.string,
+  value: PropTypes.string
 };
 
 StylesEditor.defaultProps = {

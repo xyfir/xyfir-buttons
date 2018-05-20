@@ -10,7 +10,6 @@ import Form from 'components/presets/Form';
 import savePreset from 'lib/shared/presets/save';
 
 export default class CreatePreset extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -21,15 +20,14 @@ export default class CreatePreset extends React.Component {
    */
   onCreate(preset) {
     preset.id = Date.now();
-    savePreset(preset).then(() => location.hash = '#/presets/' + preset.id);
+    savePreset(preset).then(() => (location.hash = '#/presets/' + preset.id));
   }
 
   render() {
     return (
-      <Paper zDepth={1} className='create-preset'>
+      <Paper zDepth={1} className="create-preset">
         <Form {...this.props} onSuccess={b => this.onCreate(b)} />
       </Paper>
     );
   }
-
 }

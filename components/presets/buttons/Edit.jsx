@@ -12,21 +12,21 @@ import Tabs from 'components/misc/Tabs';
 import savePreset from 'lib/shared/presets/save';
 
 export default class EditPresetButton extends React.Component {
-
   constructor(props) {
     super(props);
 
-    const button =
-      this.props.storage['preset_' + this.props.params.preset].buttons
-        .find(b => b.id == this.props.params.button);
-    
+    const button = this.props.storage[
+      'preset_' + this.props.params.preset
+    ].buttons.find(b => b.id == this.props.params.button);
+
     this.state = {
-      presetId: this.props.params.preset, button
+      presetId: this.props.params.preset,
+      button
     };
   }
 
   /**
-   * Update a button's preset-specific data. For now this is only the 
+   * Update a button's preset-specific data. For now this is only the
    * button's styling.
    */
   onUpdate() {
@@ -57,32 +57,33 @@ export default class EditPresetButton extends React.Component {
     const { presetId, button } = this.state;
 
     return (
-      <Tabs
-        type={2}
-        base={'#/presets/' + presetId}
-        activeTabIndex={4}
-      >
-        <Paper zDepth={1} className='edit-button-in-preset'>
-          <StylesEditor ref='styles' value={button.styles} />
+      <Tabs type={2} base={'#/presets/' + presetId} activeTabIndex={4}>
+        <Paper zDepth={1} className="edit-button-in-preset">
+          <StylesEditor ref="styles" value={button.styles} />
 
-          <hr className='divider' />
+          <hr className="divider" />
 
-          <div className='controls'>
+          <div className="controls">
             <Button
-              raised secondary
-              label='Remove Button'
+              raised
+              secondary
+              label="Remove Button"
               onClick={() => this.onRemove()}
-            >delete</Button>
+            >
+              delete
+            </Button>
 
             <Button
-              raised primary
-              label='Update Button'
+              raised
+              primary
+              label="Update Button"
               onClick={() => this.onUpdate()}
-            >edit_mode</Button>
+            >
+              edit_mode
+            </Button>
           </div>
         </Paper>
       </Tabs>
     );
   }
-
 }
