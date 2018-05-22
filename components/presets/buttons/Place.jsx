@@ -139,15 +139,15 @@ export default class PlacePresetButtons extends React.Component {
    * If not present, div.controls is being interacted with.
    */
   onMouseMove(e, index) {
-    const top = (e.clientY / window.innerHeight * 100).toFixed(2) + '%';
-    const left = (e.clientX / window.innerWidth * 100).toFixed(2) + '%';
+    const top = Math.round(e.clientY / window.innerHeight * 100) + '%';
+    const left = Math.round(e.clientX / window.innerWidth * 100) + '%';
 
     if (index != undefined) {
       const buttons = this.state.buttons.slice();
 
-      (buttons[index].position = top + ',' + left),
-        (buttons[index].styles.top = top),
-        (buttons[index].styles.left = left);
+      buttons[index].position = top + ',' + left;
+      buttons[index].styles.top = top;
+      buttons[index].styles.left = left;
 
       this.setState({ buttons });
     } else {
