@@ -1,14 +1,7 @@
+import { ListItem, Snackbar, Toolbar, Divider, Drawer, Button } from 'react-md';
 import { GatewayProvider, GatewayDest } from 'react-gateway';
 import chromep from 'chrome-promise';
 import React from 'react';
-
-// react-md
-import ListItem from 'react-md/lib/Lists/ListItem';
-import Snackbar from 'react-md/lib/Snackbars';
-import Toolbar from 'react-md/lib/Toolbars';
-import Divider from 'react-md/lib/Dividers';
-import Drawer from 'react-md/lib/Drawers';
-import Button from 'react-md/lib/Buttons/Button';
 
 chrome.p = chromep;
 
@@ -108,13 +101,16 @@ export default class App extends React.Component {
 
             <Divider />,
 
-            <a href="#/docs">
+            <a href="#/docs" target="_blank">
               <ListItem primaryText="Documentation" />
             </a>,
             <a href="https://github.com/Xyfir/Buttons" target="_blank">
               <ListItem primaryText="Contribute" />
             </a>,
-            <a href="https://xyfir.com/#/contact" target="_blank">
+            <a
+              href="https://www.xyfir.com/documentation/xyfir-buttons"
+              target="_blank"
+            >
               <ListItem primaryText="Contact" />
             </a>
           ]}

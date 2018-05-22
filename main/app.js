@@ -18,8 +18,6 @@ import DeleteButton from 'components/buttons/Delete';
 import DeletePreset from 'components/presets/Delete';
 import AddPresetButton from 'components/presets/buttons/Add';
 import EditPresetButton from 'components/presets/buttons/Edit';
-import DocumentationList from 'components/documentation/List';
-import ViewDocumentation from 'components/documentation/View';
 import ViewPresetButtons from 'components/presets/buttons/View';
 import PlacePresetButtons from 'components/presets/buttons/Place';
 import CreateButtonFromUserscript from 'components/buttons/CreateFromUserscript';
@@ -70,12 +68,6 @@ render(
             <Route path=":button" component={EditPresetButton} />
           </Route>
         </Route>
-      </Route>
-
-      <Route path="docs">
-        <IndexRoute component={DocumentationList} />
-
-        <Route path="view" component={ViewDocumentation} />
       </Route>
     </Route>
   </Router>,
