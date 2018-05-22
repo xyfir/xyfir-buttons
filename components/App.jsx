@@ -101,16 +101,16 @@ export default class App extends React.Component {
 
             <Divider />,
 
-            <a href="#/docs" target="_blank">
+            <a
+              href="https://www.xyfir.com/documentation/xyfir-buttons"
+              target="_blank"
+            >
               <ListItem primaryText="Documentation" />
             </a>,
             <a href="https://github.com/Xyfir/Buttons" target="_blank">
               <ListItem primaryText="Contribute" />
             </a>,
-            <a
-              href="https://www.xyfir.com/documentation/xyfir-buttons"
-              target="_blank"
-            >
+            <a href="https://www.xyfir.com/contact" target="_blank">
               <ListItem primaryText="Contact" />
             </a>
           ]}
